@@ -28,7 +28,6 @@ CSS
 JavaScript
 Symfony
 Bootstrap
-Font Awesome
 Google Fonts
 
 Auteur :
