@@ -17,11 +17,11 @@ class Comment
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\Column]
-    private ?int $recipe_id = null;
+    #[ORM\ManyToOne(inversedBy: 'comment')]
+    private ?Recipe $commentRecipe = null;
 
-    #[ORM\Column]
-    private ?int $user_id = null;
+    #[ORM\ManyToOne(inversedBy: 'comment')]
+    private ?User $userComment = null;
 
     public function getId(): ?int
     {
@@ -40,26 +40,26 @@ class Comment
         return $this;
     }
 
-    public function getRecipeId(): ?int
+    public function getCommentRecipe(): ?Recipe
     {
-        return $this->recipe_id;
+        return $this->commentRecipe;
     }
 
-    public function setRecipeId(int $recipe_id): self
+    public function setCommentRecipe(?Recipe $commentRecipe): self
     {
-        $this->recipe_id = $recipe_id;
+        $this->commentRecipe = $commentRecipe;
 
         return $this;
     }
 
-    public function getUserId(): ?int
+    public function getUserComment(): ?User
     {
-        return $this->user_id;
+        return $this->userComment;
     }
 
-    public function setUserId(int $user_id): self
+    public function setUserComment(?User $userComment): self
     {
-        $this->user_id = $user_id;
+        $this->userComment = $userComment;
 
         return $this;
     }

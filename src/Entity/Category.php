@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -14,51 +16,108 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $starter = null;
+    private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $dish = null;
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'subCategories')]
+    private ?self $parent = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $dessert = null;
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    private Collection $subCategories;
+
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Recipe::class)]
+    private Collection $recipes;
+
+    public function __construct()
+    {
+        $this->subCategories = new ArrayCollection();
+        $this->recipes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getStarter(): ?string
+    public function getName(): ?string
     {
-        return $this->starter;
+        return $this->name;
     }
 
-    public function setStarter(string $starter): self
+    public function setName(string $name): self
     {
-        $this->starter = $starter;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getDish(): ?string
+    public function getParent(): ?self
     {
-        return $this->dish;
+        return $this->parent;
     }
 
-    public function setDish(string $dish): self
+    public function setParent(?self $parent): self
     {
-        $this->dish = $dish;
+        $this->parent = $parent;
 
         return $this;
     }
 
-    public function getDessert(): ?string
+    /**
+     * @return Collection<int, self>
+     */
+    public function getSubCategories(): Collection
     {
-        return $this->dessert;
+        return $this->subCategories;
     }
 
-    public function setDessert(string $dessert): self
+    public function addSubCategory(self $subCategory): self
     {
-        $this->dessert = $dessert;
+        if (!$this->subCategories->contains($subCategory)) {
+            $this->subCategories->add($subCategory);
+            $subCategory->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubCategory(self $subCategory): self
+    {
+        if ($this->subCategories->removeElement($subCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($subCategory->getParent() === $this) {
+                $subCategory->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Recipe>
+     */
+    public function getRecipes(): Collection
+    {
+        return $this->recipes;
+    }
+
+    public function addRecipe(Recipe $recipe): self
+    {
+        if (!$this->recipes->contains($recipe)) {
+            $this->recipes->add($recipe);
+            $recipe->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipe(Recipe $recipe): self
+    {
+        if ($this->recipes->removeElement($recipe)) {
+            // set the owning side to null (unless already changed)
+            if ($recipe->getCategory() === $this) {
+                $recipe->setCategory(null);
+            }
+        }
 
         return $this;
     }

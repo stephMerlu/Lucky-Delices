@@ -13,37 +13,38 @@ class Media
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $recipe_id = null;
-
     #[ORM\Column(length: 255)]
-    private ?string $picture = null;
+    private ?string $image = null;
+
+    #[ORM\ManyToOne(inversedBy: 'media')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Recipe $recipe = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getRecipeId(): ?int
+    public function getImage(): ?string
     {
-        return $this->recipe_id;
+        return $this->image;
     }
 
-    public function setRecipeId(int $recipe_id): self
+    public function setImage(string $image): self
     {
-        $this->recipe_id = $recipe_id;
+        $this->image = $image;
 
         return $this;
     }
 
-    public function getPicture(): ?string
+    public function getRecipe(): ?Recipe
     {
-        return $this->picture;
+        return $this->recipe;
     }
 
-    public function setPicture(string $picture): self
+    public function setRecipe(?Recipe $recipe): self
     {
-        $this->picture = $picture;
+        $this->recipe = $recipe;
 
         return $this;
     }
