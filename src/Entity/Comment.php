@@ -20,9 +20,6 @@ class Comment
     #[ORM\ManyToOne(inversedBy: 'comment')]
     private ?Recipe $commentRecipe = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comment')]
-    private ?User $userComment = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -48,18 +45,6 @@ class Comment
     public function setCommentRecipe(?Recipe $commentRecipe): self
     {
         $this->commentRecipe = $commentRecipe;
-
-        return $this;
-    }
-
-    public function getUserComment(): ?User
-    {
-        return $this->userComment;
-    }
-
-    public function setUserComment(?User $userComment): self
-    {
-        $this->userComment = $userComment;
 
         return $this;
     }

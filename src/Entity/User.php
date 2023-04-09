@@ -3,59 +3,36 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $username = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column]
-    private ?bool $is_verified = null;
-
-    #[ORM\Column]
-    private ?bool $is_subscribe = null;
-
-    #[ORM\OneToMany(mappedBy: 'userComment', targetEntity: Comment::class)]
-    private Collection $comment;
-
-    public function __construct()
-    {
-        $this->comment = new ArrayCollection();
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $username = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
     }
 
     public function getEmail(): ?string
@@ -70,9 +47,26 @@ class User
         return $this;
     }
 
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
     public function getRoles(): array
     {
-        return $this->roles;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
     public function setRoles(array $roles): self
@@ -82,7 +76,10 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -94,56 +91,23 @@ class User
         return $this;
     }
 
-    public function isIsVerified(): ?bool
-    {
-        return $this->is_verified;
-    }
-
-    public function setIsVerified(bool $is_verified): self
-    {
-        $this->is_verified = $is_verified;
-
-        return $this;
-    }
-
-    public function isIsSubscribe(): ?bool
-    {
-        return $this->is_subscribe;
-    }
-
-    public function setIsSubscribe(bool $is_subscribe): self
-    {
-        $this->is_subscribe = $is_subscribe;
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Comment>
+     * @see UserInterface
      */
-    public function getComment(): Collection
+    public function eraseCredentials()
     {
-        return $this->comment;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
-    public function addComment(Comment $comment): self
+    public function getUsername(): ?string
     {
-        if (!$this->comment->contains($comment)) {
-            $this->comment->add($comment);
-            $comment->setUserComment($this);
-        }
-
-        return $this;
+        return $this->username;
     }
 
-    public function removeComment(Comment $comment): self
+    public function setUsername(string $username): self
     {
-        if ($this->comment->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getUserComment() === $this) {
-                $comment->setUserComment(null);
-            }
-        }
+        $this->username = $username;
 
         return $this;
     }

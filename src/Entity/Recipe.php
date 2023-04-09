@@ -47,15 +47,11 @@ class Recipe
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Media::class)]
     private Collection $images;
 
-    #[ORM\ManyToMany(targetEntity: Newsletter::class, mappedBy: 'recipe')]
-    private Collection $newsletters;
-
     public function __construct()
     {
         $this->ingredient = new ArrayCollection();
         $this->comment = new ArrayCollection();
         $this->images = new ArrayCollection();
-        $this->newsletters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -226,33 +222,6 @@ class Recipe
             if ($image->getRecipe() === $this) {
                 $image->setRecipe(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Newsletter>
-     */
-    public function getNewsletters(): Collection
-    {
-        return $this->newsletters;
-    }
-
-    public function addNewsletter(Newsletter $newsletter): self
-    {
-        if (!$this->newsletters->contains($newsletter)) {
-            $this->newsletters->add($newsletter);
-            $newsletter->addRecipe($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNewsletter(Newsletter $newsletter): self
-    {
-        if ($this->newsletters->removeElement($newsletter)) {
-            $newsletter->removeRecipe($this);
         }
 
         return $this;
