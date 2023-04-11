@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recipe{% endblock %}
+
+{% block body %}
+    <h1>Recipe</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ recipe.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ recipe.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ recipe.description }}</td>
+            </tr>
+            <tr>
+                <th>Youtube</th>
+                <td>{{ recipe.youtube }}</td>
+            </tr>
+            <tr>
+                <th>Nbs de personnes</th>
+                <td>{{ recipe.people }}</td>
+            </tr>
+            <tr>
+                <th>Niveau de difficulté</th>
+                <td>{{ recipe.level }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ recipe.image }}</td>
+            </tr>
+        </tbody>
+        <div class="d-flex justify-content-between">
+            <a href="{{ path('app_admin_recipe_edit', {'id': recipe.id}) }}" class="btn btn-add active mt-2">Modifier</a>
+            {{ include('admin/recipe/_delete_form.html.twig') }}
+        </div>
+        <a href="{{ path('app_admin_recipe_index') }}" class="btn btn-return active mt-2 mb-2">Retour à la liste</a>
+{% endblock %}

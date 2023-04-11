@@ -1,3 +1,102 @@
+$main-color: rgb(167, 199, 150);
+$second-color: rgba(242, 219, 132, 1);
+$light-color: lightgray;
+
 body {
-    background-color: lightgray;
+  background-color: $light-color;
+}
+
+
+/*---------------------------NavBar--------------------*/
+
+
+.nav-link {
+  color: $main-color;
+  text-transform: uppercase;
+
+  &:hover {
+    color: $second-color;
+  }
+}
+
+.btn-my-custom {
+  background-color: $main-color;
+  color: #fff;
+
+  &:focus,
+  &:hover {
+    background-color: $second-color;
+    color: #fff;
+  }
+}
+
+.btn-outline-my-custom {
+  background-color: transparent;
+  color: $main-color;
+  border: 1px solid $main-color;
+
+  &:hover {
+    background-color: $second-color;
+    color: #fff;
+  }
+}
+
+.form-control {
+  border: none;
+  border-bottom: 2px solid $main-color;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.navbar-toggler {
+  background-color: $second-color;
+  border-color: $second-color;
+}
+
+
+/*------------------------------------CRUD Admin-------------------------------*/
+
+
+.btn-return.active {
+  background-color: $second-color;
+  border-color: $second-color;
+  color: #fff;
+
+  &:hover {
+    background-color: darken($second-color, 10%);
+    border-color: darken($second-color, 10%);
+    color:rgb(167, 199, 150);
+  }
+
+  &:active {
+    background-color: darken($second-color, 30%);
+    border-color: darken($second-color, 30%);
+    color:rgb(167, 199, 150);
+  }
+}
+
+.btn-add.active {
+  background-color: $main-color;
+  border-color: $main-color;
+  color: #fff;
+
+  &:hover {
+    background-color: darken($main-color, 10%);
+    border-color: darken($main-color, 10%);
+    color:rgba(242, 219, 132, 1);
+  }
+
+  &:active {
+    background-color: darken($main-color, 30%);
+    border-color: darken($main-color, 30%);
+    color: rgba(242, 219, 132, 1);
+  }
+}
+
+.fa-solid.fa-eye {
+  color: $main-color;
+}
+
+.fa-solid.fa-pen {
+  color: $second-color;
 }

@@ -1,0 +1,10 @@
+{% set cancel_route = "app_admin_category_index" %}
+{% set title = "Ajouter une catégorie" %}
+{% extends 'admin_with_form.html.twig' %}
+
+{% block forms %}
+
+    {{ include('admin/category/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_category_index') }}" class="btn btn-return active mt-2">Retour à la liste</a>
+{% endblock %}
