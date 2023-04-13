@@ -3,15 +3,18 @@
 namespace App\Form;
 
 use App\Entity\Recipe;
+use App\Form\MediaType;
 use App\Entity\Category;
 use App\Entity\Ingredient;
 use App\Repository\IngredientRepository;
 use Symfony\Component\Form\AbstractType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class RecipeType extends AbstractType
 {
@@ -62,7 +65,18 @@ class RecipeType extends AbstractType
                     'Plutôt difficile' => 'plutôt difficile',
                 ],
             ])            
-            ->add('image')
+            ->add('imageFile', VichFileType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'asset_helper' => true,
+            ])
+            ->add('images', CollectionType::class, [
+                'entry_type' => MediaType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+            ])
             ->add('category', EntityType::class, [
                 'required' => true,
                 'class' => Category::class,

@@ -7,7 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 class Recipe
 {
@@ -44,7 +47,13 @@ class Recipe
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Media::class)]
+    #[Vich\UploadableField(mapping:"recipe", fileNameProperty:"image")]
+    private ?File $imageFile = null; 
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Media::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $images;
 
     public function __construct()
@@ -197,6 +206,29 @@ class Recipe
         return $this;
     }
 
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * Set the value of imageFile
+     *
+     * @return  self
+     */ 
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTimeImmutable('now');
+        }
+    }
+
     /**
      * @return Collection<int, Media>
      */
@@ -205,7 +237,7 @@ class Recipe
         return $this->images;
     }
 
-    public function addMedium(Media $image): self
+    public function addImage(Media $image): self
     {
         if (!$this->images->contains($image)) {
             $this->images->add($image);
@@ -215,7 +247,7 @@ class Recipe
         return $this;
     }
 
-    public function removeMedium(Media $image): self
+    public function removeImage(Media $image): self
     {
         if ($this->images->removeElement($image)) {
             // set the owning side to null (unless already changed)

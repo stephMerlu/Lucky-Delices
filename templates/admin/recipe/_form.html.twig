@@ -4,8 +4,24 @@
     {{ form_row(form.youtube, {'attr': {'class': 'mb-3 ms-2'}}) }}
     {{ form_row(form.people, {'attr': {'class': 'mb-3 ms-2'}}) }}
     {{ form_row(form.level, {'attr': {'class': 'mb-3 ms-2'}}) }}
-    {{ form_row(form.image, {'attr': {'class': 'mb-3 ms-2'}}) }}
     {{ form_row(form.category, {'attr': {'class': 'mb-3 ms-2'}}) }}
     {{ form_row(form.ingredient, {'attr': {'class': 'mb-3 ms-2'}}) }}
+    {{ form_row(form.imageFile, {'attr': {'class': 'mb-3 ms-2'}}) }}
+    <div {{ stimulus_controller('form-collection', {
+            index: form.images|length > 0 ? form.images|last.vars.name + 1 : 0,
+            prototype: form_widget(form.images.vars.prototype)
+        }) }}>
+        <ul class="images" {{ stimulus_target('form-collection', 'collectionContainer') }}>
+            {% for image in form.images %}
+                <li>{{ form_row(image.name) }}</li>
+            {% endfor %}
+        </ul>
+        <button type="button" {{ stimulus_action('form-collection', 'addCollectionElement') }}>Ajouter une autre image</button>
+    </div>
+{{ form_widget(form) }}
     <button class="btn btn-add active mt-2">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
+
+    <script src="{{ asset('js/stimulus.js') }}"></script>
+    <script src="{{ asset('js/stimulus-form-collection.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
