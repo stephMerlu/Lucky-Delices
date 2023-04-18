@@ -1,0 +1,95 @@
+body {
+  background-color: lightgray;
+}
+
+/*---------------------------NavBar--------------------*/
+.nav-link {
+  color: rgb(167, 199, 150);
+  text-transform: uppercase;
+}
+.nav-link:hover {
+  color: rgb(242, 219, 132);
+}
+
+.btn-my-custom {
+  background-color: rgb(167, 199, 150);
+  color: #fff;
+}
+.btn-my-custom:focus, .btn-my-custom:hover {
+  background-color: rgb(242, 219, 132);
+  color: #fff;
+}
+
+.btn-outline-my-custom {
+  background-color: transparent;
+  color: rgb(167, 199, 150);
+  border: 1px solid rgb(167, 199, 150);
+}
+.btn-outline-my-custom:hover {
+  background-color: rgb(242, 219, 132);
+  color: #fff;
+}
+
+.form-control {
+  border: none;
+  border-bottom: 2px solid rgb(167, 199, 150);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.navbar-toggler {
+  background-color: rgb(242, 219, 132);
+  border-color: rgb(242, 219, 132);
+}
+
+/*------------------------------------CRUD Admin-------------------------------*/
+.btn-return.active {
+  background-color: rgb(242, 219, 132);
+  border-color: rgb(242, 219, 132);
+  color: #fff;
+}
+.btn-return.active:hover {
+  background-color: #edce56;
+  border-color: #edce56;
+  color: rgb(167, 199, 150);
+}
+.btn-return.active:active {
+  background-color: #c8a315;
+  border-color: #c8a315;
+  color: rgb(167, 199, 150);
+}
+
+.btn-add.active {
+  background-color: rgb(167, 199, 150);
+  border-color: rgb(167, 199, 150);
+  color: #fff;
+}
+.btn-add.active:hover {
+  background-color: #8bb575;
+  border-color: #8bb575;
+  color: rgb(242, 219, 132);
+}
+.btn-add.active:active {
+  background-color: #598044;
+  border-color: #598044;
+  color: rgb(242, 219, 132);
+}
+
+.fa-solid.fa-eye {
+  color: rgb(167, 199, 150);
+}
+
+.fa-solid.fa-pen {
+  color: rgb(242, 219, 132);
+}
+
+.my-custom-header {
+  background-color: rgb(167, 199, 150);
+  color: rgb(242, 219, 132);
+}
+
+button, input, optgroup, select, textarea {
+  margin-left: 10px;
+}
+
+/*# sourceMappingURL=app.css.map */

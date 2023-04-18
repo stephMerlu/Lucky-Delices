@@ -100,3 +100,12 @@ body {
 .fa-solid.fa-pen {
   color: $second-color;
 }
+
+.my-custom-header {
+  background-color: $main-color;
+  color: $second-color;
+}
+
+button, input, optgroup, select, textarea {
+  margin-left: 10px;
+}

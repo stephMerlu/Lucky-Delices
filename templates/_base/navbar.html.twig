@@ -21,12 +21,21 @@
         <button class="btn mt-2" type="submit" style="background-image: url('/images/search.png'); background-repeat: no-repeat";></button>
       </form>
       <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-        <li class="nav-item">
-          <button class="btn btn-outline-my-custom me-2 btn-signup mt-2 mt-lg-0">S'inscrire</button>
-        </li>
-        <li class="nav-item">
-          <button class="btn btn-my-custom btn-login mt-2 mt-lg-0">Se connecter</button>
-        </li>
+        {% if app.user %}
+          <li class="nav-item">
+            <button class="btn btn-outline-my-custom me-2 btn-signup mt-2 mt-lg-0"><a href="#" style="text-decoration: none; color: inherit;">Mon compte</a></button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-my-custom btn-login mt-2 mt-lg-0"><a href="{{ path('app_logout') }}" style="text-decoration: none; color: inherit;">Me déconnecter</a></button>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <button class="btn btn-outline-my-custom me-2 btn-signup mt-2 mt-lg-0"><a href="{{ path('app_register') }}" style="text-decoration: none; color: inherit;">S'inscrire</a></button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-my-custom btn-login mt-2 mt-lg-0"><a href="{{ path('app_login') }}" style="text-decoration: none; color: inherit;">Se connecter</a></button>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </div>
