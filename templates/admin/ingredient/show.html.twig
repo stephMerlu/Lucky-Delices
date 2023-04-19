@@ -13,8 +13,8 @@
             </tr>
         </tbody>
     <div class="d-flex justify-content-between">
-    <a href="{{ path('app_admin_ingredient_edit', {'id': ingredient.id}) }}" class="btn btn-add active mt-2">Modifier</a>
-    {{ include('admin/ingredient/_delete_form.html.twig') }}
+        <a href="{{ path('app_admin_ingredient_edit', {'id': ingredient.id}) }}" class="btn btn-add active mt-2">Modifier</a>
+        {{ include('admin/ingredient/_delete_form.html.twig') }}
     </div>
     <a href="{{ path('app_admin_ingredient_index') }}" class="btn btn-return active mt-2 mb-2">Retour à la liste</a>
 {% endblock %}
