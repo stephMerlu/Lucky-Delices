@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello StarterController!{% endblock %}
+
+{% block body %}
+<section class="presentation-entree">
+    <h1>Les Entrées</h1>
+    <img src="/images/Le soleil pesto.jpg" alt="">
+    <ul class="choix">
+        <li><a href="#apero">Pour l'apéritif</a></li>
+        <li><a href="#entree-froide">Les entrées froides</a></li>
+        <li><a href="#entree-chaude">Les entrées chaudes</a></li>
+        <li><a href="#sauces">Les sauces</a></li>
+    </ul>
+</section>
+<section class="apero">
+  <h2 id="apero">Pour l'apéritif</h2>
+    <div class="painting-presentation">
+        <div class="cards">
+            <div class="card">
+                <div class="card__face card__face--front">
+                    <img src="/image/Couronne poireau.jpg" />
+                    <h5 class="card-title">Ma couronne poireau chèvre miel</h5>
+                </div>
+            <div class="card__face card__face--back">
+                <img src="/image/lucky2.png" />
+                <div class="card-body"> 
+                    <p class="card-text">
+                        <ul>
+                            <li>Temps : <span>20 minutes</span></li>
+                            <li>Lien Youtube : <span><a href="https://www.youtube.com/watch?v=bDGhZtNHZKc&t=1s">Cliquez ici</a></span></li>
+                            <li>Difficulté : <span>Facile</span></li>
+                            <li>Nombre de personnes : <span>4</span></li>
+                        </ul>
+                    </p>
+                  <a href="couronne-aux-poireaux.html" class="btn btn-primary">Voir la recette</a>
+                </div>
+            </div>
+        </div>
+    </div> 
+</section>
+<section class="entrees-froides">
+  <h2 id="entree-froide">Mes entrées froides</h2>
+<div class="painting-presentation">
+        <div class="cards">
+            <div class="card">
+                <div class="card__face card__face--front">
+                    <img src="/image/Couronne poireau.jpg" />
+                    <h5 class="card-title">Ma couronne poireau chèvre miel</h5>
+                </div>
+            <div class="card__face card__face--back">
+                <img src="/image/lucky2.png" />
+                <div class="card-body"> 
+                    <p class="card-text">
+                        <ul>
+                            <li>Temps : <span>20 minutes</span></li>
+                            <li>Lien Youtube : <span><a href="https://www.youtube.com/watch?v=bDGhZtNHZKc&t=1s">Cliquez ici</a></span></li>
+                            <li>Difficulté : <span>Facile</span></li>
+                            <li>Nombre de personnes : <span>4</span></li>
+                        </ul>
+                    </p>
+                  <a href="couronne-aux-poireaux.html" class="btn btn-primary">Voir la recette</a>
+                </div>
+            </div>
+        </div>
+    </div> 
+</section>
+<section class="entrees-chaudes">
+  <h2 id="entree-chaude">Mes entrées chaudes</h2>
+<div class="painting-presentation">
+        <div class="cards">
+            <div class="card">
+                <div class="card__face card__face--front">
+                    <img src="/image/Couronne poireau.jpg" />
+                    <h5 class="card-title">Ma couronne poireau chèvre miel</h5>
+                </div>
+            <div class="card__face card__face--back">
+                <img src="/image/lucky2.png" />
+                <div class="card-body"> 
+                    <p class="card-text">
+                        <ul>
+                            <li>Temps : <span>20 minutes</span></li>
+                            <li>Lien Youtube : <span><a href="https://www.youtube.com/watch?v=bDGhZtNHZKc&t=1s">Cliquez ici</a></span></li>
+                            <li>Difficulté : <span>Facile</span></li>
+                            <li>Nombre de personnes : <span>4</span></li>
+                        </ul>
+                    </p>
+                  <a href="couronne-aux-poireaux.html" class="btn btn-primary">Voir la recette</a>
+                </div>
+            </div>
+        </div>
+    </div> 
+</section>
+<section class="sauce">
+  <h2 id="sauces">Mes sauces</h2>
+<div class="painting-presentation">
+        <div class="cards">
+            <div class="card">
+                <div class="card__face card__face--front">
+                    <img src="/image/Couronne poireau.jpg" />
+                    <h5 class="card-title">Ma couronne poireau chèvre miel</h5>
+                </div>
+            <div class="card__face card__face--back">
+                <img src="/image/lucky2.png" />
+                <div class="card-body"> 
+                    <p class="card-text">
+                        <ul>
+                            <li>Temps : <span>20 minutes</span></li>
+                            <li>Lien Youtube : <span><a href="https://www.youtube.com/watch?v=bDGhZtNHZKc&t=1s">Cliquez ici</a></span></li>
+                            <li>Difficulté : <span>Facile</span></li>
+                            <li>Nombre de personnes : <span>4</span></li>
+                        </ul>
+                    </p>
+                  <a href="couronne-aux-poireaux.html" class="btn btn-primary">Voir la recette</a>
+                </div>
+            </div>
+        </div>
+    </div> 
+</section>
+
+{% endblock %}

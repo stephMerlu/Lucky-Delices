@@ -24,7 +24,7 @@ class RecipeType extends AbstractType
             ->add('name', null, [
                 'required' => true,
                 'attr' => [
-                'placeholder' => 'Nom de la recette'
+                    'placeholder' => 'Nom de la recette'
                 ]
             ])
             ->add('description', TextareaType::class, [
@@ -64,7 +64,7 @@ class RecipeType extends AbstractType
                     'Un peu compliqué' => 'un peu compliqué',
                     'Plutôt difficile' => 'plutôt difficile',
                 ],
-            ])            
+            ])
             ->add('imageFile', VichFileType::class, [
                 'required' => false,
                 'allow_delete' => true,
@@ -94,8 +94,7 @@ class RecipeType extends AbstractType
                 },
                 'choice_label' => 'name',
                 'placeholder' => 'Choisissez des ingrédients',
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -1,19 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg">
   <div class="container-fluid me-3 d-flex justify-content-between">
-    <a class="navbar-brand me-2" href="#home"><img src="/images/logo.jpeg" alt="Logo" style="width: 60px;"></a>
+    <a class="navbar-brand me-2" href="{{ path('app_home') }}"><img src="/images/logo.jpeg" alt="Logo" style="width: 60px;"></a>    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-3 me-auto">
         <li class="nav-item">
-          <a class="nav-link" href="entrees.html">Entrées</a>
+          <a class="nav-link" href="{{ path('app_entrees') }}">Entrées</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="plats.html">Plats</a>
+          <a class="nav-link" href="{{ path('app_plats') }}">Plats</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="dessert.html">Desserts</a>
+          <a class="nav-link" href="{{ path('app_desserts') }}">Desserts</a>
         </li>
       </ul>
       <form class="d-flex justify-content-center">
@@ -40,6 +40,5 @@
     </div>
   </div>
 </nav>
-
 
 

@@ -4,11 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Recipe;
 use App\Form\RecipeType;
+use Symfony\Component\Mime\Email;
 use App\Repository\RecipeRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\MailerInterface;
 
 #[Route('/admin/recipe')]
 class RecipeController extends AbstractController
@@ -22,7 +24,7 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_recipe_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, RecipeRepository $recipeRepository): Response
+    public function new(Request $request, RecipeRepository $recipeRepository, MailerInterface $mailer): Response
     {
         $recipe = new Recipe();
         $form = $this->createForm(RecipeType::class, $recipe);
@@ -30,7 +32,7 @@ class RecipeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $recipeRepository->save($recipe, true);
-
+            $this->sendNewsletter($recipe, $mailer);
             return $this->redirectToRoute('app_admin_recipe_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -38,6 +40,24 @@ class RecipeController extends AbstractController
             'recipe' => $recipe,
             'form' => $form,
         ]);
+    }
+
+    private function sendNewsletter(Recipe $recipe, MailerInterface $mailer): void
+    {
+        $email = (new Email())
+            ->from('hello@example.com')
+            //->to('you@example.com')
+            ->cc('cc@example.com')// recuperer les user abonner et recuperer adresse email
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Time for Symfony Mailer!')
+            ->text('Sending emails is fun again!')
+            ->html('<p>See Twig integration for better HTML integration!</p>');// recuperer mon lien le nom l'image
+
+        $mailer->send($email);
+
+        // ...
     }
 
     #[Route('/{id}', name: 'app_admin_recipe_show', methods: ['GET'])]
@@ -69,7 +89,7 @@ class RecipeController extends AbstractController
     #[Route('/{id}', name: 'app_admin_recipe_delete', methods: ['POST'])]
     public function delete(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$recipe->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $recipe->getId(), $request->request->get('_token'))) {
             $recipeRepository->remove($recipe, true);
         }
 
