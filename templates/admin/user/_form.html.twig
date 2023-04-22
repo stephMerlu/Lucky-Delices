@@ -1,4 +1,24 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <div class="mb-3 ms-2">
+        {{ form_label(form.email, 'Adresse email', {'label_attr': {'class': 'my-custom-label'}}) }}
+        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3 ms-2">
+        {{ form_label(form.roles, 'Rôles', {'label_attr': {'class': 'my-custom-label'}}) }}
+        {{ form_widget(form.roles) }}
+    </div>
+    <div class="mb-3 ms-2">
+        {{ form_label(form.password, 'Mot de passe', {'label_attr': {'class': 'my-custom-label'}}) }}
+        {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3 ms-2">
+        {{ form_label(form.username, 'Nom d\'utilisateur', {'label_attr': {'class': 'my-custom-label'}}) }}
+        {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3 ms-2">
+        {{ form_label(form.isVerified, 'Compte vérifié', {'label_attr': {'class': 'my-custom-label'}}) }}
+        {{ form_widget(form.isVerified) }}
+    </div>
     <button class="btn btn-add active mt-2">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
+

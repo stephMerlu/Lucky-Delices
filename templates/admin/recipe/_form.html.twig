@@ -1,27 +1,61 @@
-{{ form_start(form) }}
-    {{ form_row(form.name, {'attr': {'class': 'mb-3 ms-2'}}) }}
-    {{ form_row(form.description, {'attr': {'class': 'mb-2 ms-2'}}) }}
-    {{ form_row(form.youtube, {'attr': {'class': 'mb-3 ms-2'}}) }}
-    {{ form_row(form.people, {'attr': {'class': 'mb-3 ms-2'}}) }}
-    {{ form_row(form.level, {'attr': {'class': 'mb-3 ms-2'}}) }}
-    {{ form_row(form.category, {'attr': {'class': 'mb-3 ms-2'}}) }}
-    {{ form_row(form.ingredient, {'attr': {'class': 'mb-3 ms-2'}}) }}
-    {{ form_row(form.imageFile, {'attr': {'class': 'mb-3 ms-2'}}) }}
-    <div {{ stimulus_controller('form-collection', {
-            index: form.images|length > 0 ? form.images|last.vars.name + 1 : 0,
-            prototype: form_widget(form.images.vars.prototype)
-        }) }}>
-        <ul class="images" {{ stimulus_target('form-collection', 'collectionContainer') }}>
-            {% for image in form.images %}
-                <li>{{ form_row(image.name) }}</li>
-            {% endfor %}
-        </ul>
-        <button type="button" {{ stimulus_action('form-collection', 'addCollectionElement') }}>Ajouter une autre image</button>
+{{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
+    <div class="row mb-3 ms-2">
+        <div class="col-md-7 mb-3">{{ form_label(form.name, null, {'label_attr': {'class': 'my-custom-label'}}) }}</div>
+        <div class="col-md-10">{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}</div>
     </div>
-{{ form_widget(form) }}
-    <button class="btn btn-add active mt-2">{{ button_label|default('Enregistrer') }}</button>
+    <div class="row mb-3 ms-2">
+        <div class="col-md-7 mb-3">{{ form_label(form.description, null, {'label_attr': {'class': 'my-custom-label'}}) }}</div>
+        <div class="col-md-10">{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}</div>
+    </div>
+    <div class="row mb-3 ms-2">
+        <div class="col-md-7 mb-3">{{ form_label(form.youtube, null, {'label_attr': {'class': 'my-custom-label'}}) }}</div>
+        <div class="col-md-10">{{ form_widget(form.youtube, {'attr': {'class': 'form-control'}}) }}</div>
+    </div>
+    <div class="row mb-3 ms-2">
+        <div class="col-md-7 mb-3">{{ form_label(form.people, null, {'label_attr': {'class': 'my-custom-label'}}) }}</div>
+        <div class="col-md-10">{{ form_widget(form.people, {'attr': {'class': 'form-control'}}) }}</div>
+    </div>
+    <div class="row mb-3 ms-2">
+        <div class="col-md-7 mb-3">{{ form_label(form.level, null, {'label_attr': {'class': 'my-custom-label'}}) }}</div>
+        <div class="col-md-10">{{ form_widget(form.level, {'attr': {'class': 'form-control'}}) }}</div>
+    </div>
+    <div class="row mb-3 ms-2">
+        <div class="col-md-7 mb-3">{{ form_label(form.category, null, {'label_attr': {'class': 'my-custom-label'}}) }}</div>
+        <div class="col-md-10">{{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}</div>
+    </div>
+    <div class="row mb-3 ms-2">
+        <div class="col-md-7 mb-3">{{ form_label(form.ingredient, null, {'label_attr': {'class': 'my-custom-label'}}) }}</div>
+        <div class="col-md-10">{{ form_widget(form.ingredient, {'attr': {'class': 'form-control'}}) }}</div>
+    </div>
+    <div class="row mb-3 ms-2">
+        <div class="col-md-7 mb-3">{{ form_label(form.subtitle, null, {'label_attr': {'class': 'my-custom-label'}}) }}</div>
+        <div class="col-md-10">{{ form_widget(form.subtitle, {'attr': {'class': 'form-control'}}) }}</div>
+    </div>
+    <div class="row mb-3 ms-2">
+        <div class="col-md-7 mb-3">{{ form_label(form.time, null, {'label_attr': {'class': 'my-custom-label'}}) }}</div>
+        <div class="col-md-10">{{ form_widget(form.time, {'attr': {'class': 'form-control'}}) }}</div>
+    </div>
+    <div class="row mb-3 ms-2">
+        <div class="col-md-7 mb-3">{{ form_label(form.imageFile, null, {'label_attr': {'class': 'my-custom-label'}}) }}</div>
+        <div class="col-md-10">{{ form_widget(form.imageFile) }}</div>
+    </div>
+    <div class="row mb-3 ms-2">
+        <div class="col-md-7 mb-3"></div>
+        <div class="col-md-10">
+            <div {{ stimulus_controller('form-collection', {
+                    index: form.images|length > 0 ? form.images|last.vars.name + 1 : 0,
+                    prototype: form_widget(form.images.vars.prototype)
+                }) }}>
+                <ul class="images" {{ stimulus_target('form-collection', 'collectionContainer') }}>
+                    {% for image in form.images %}
+                        <li>{{ form_row(image.name) }}</li>
+                    {% endfor %}
+                </ul>
+                <button type="button" {{ stimulus_action('form-collection', 'addCollectionElement') }}>Ajouter une autre image</button>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-add active mt-2">{{ button_label|default('Enregistrer') }}</button>
+    </div>
 {{ form_end(form) }}
-
-    <script src="{{ asset('js/stimulus.js') }}"></script>
-    <script src="{{ asset('js/stimulus-form-collection.js') }}"></script>
-    <script src="{{ asset('js/app.js') }}"></script>

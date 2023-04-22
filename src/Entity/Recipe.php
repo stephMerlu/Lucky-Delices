@@ -56,6 +56,12 @@ class Recipe
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Media::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $images;
 
+    #[ORM\Column(length: 255)]
+    private ?string $subtitle = null;
+
+    #[ORM\Column]
+    private ?int $time = null;
+
     public function __construct()
     {
         $this->ingredient = new ArrayCollection();
@@ -255,6 +261,34 @@ class Recipe
                 $image->setRecipe(null);
             }
         }
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    public function getSubtitle(): ?string
+    {
+        return $this->subtitle;
+    }
+
+    public function setSubtitle(string $subtitle): self
+    {
+        $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    public function getTime(): ?int
+    {
+        return $this->time;
+    }
+
+    public function setTime(int $time): self
+    {
+        $this->time = $time;
 
         return $this;
     }

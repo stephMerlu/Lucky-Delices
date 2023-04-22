@@ -2,6 +2,10 @@ body {
   background-color: rgb(255, 255, 255);
 }
 
+h1 {
+  color: rgb(167, 199, 150);
+}
+
 /*---------------------------NavBar--------------------*/
 .navbar {
   position: sticky;
@@ -770,6 +774,22 @@ path {
   border-color: rgb(242, 219, 132);
   display: flex;
   justify-content: center;
+}
+
+.form-label {
+  display: inline-block;
+  width: 150px; /* Ajustez la largeur en fonction de vos besoins */
+  text-align: right;
+  margin-right: 10px; /* Ajustez la marge en fonction de vos besoins */
+}
+
+.form-input {
+  display: inline-block;
+  width: 300px; /* Ajustez la largeur en fonction de vos besoins */
+}
+
+.my-custom-label {
+  color: rgb(167, 199, 150);
 }
 
 /*# sourceMappingURL=app.css.map */

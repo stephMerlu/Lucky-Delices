@@ -6,6 +6,9 @@ body {
   background-color: $light-color;
 }
 
+h1 {
+  color: $main-color;
+}
 
 /*---------------------------NavBar--------------------*/
 .navbar {
@@ -823,3 +826,18 @@ img {
   }
 }
 
+.form-label {
+  display: inline-block;
+  width: 150px; /* Ajustez la largeur en fonction de vos besoins */
+  text-align: right;
+  margin-right: 10px; /* Ajustez la marge en fonction de vos besoins */
+}
+
+.form-input {
+  display: inline-block;
+  width: 300px; /* Ajustez la largeur en fonction de vos besoins */
+}
+
+.my-custom-label {
+  color: rgb(167, 199, 150);
+}
