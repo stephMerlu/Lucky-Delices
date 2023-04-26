@@ -1,0 +1,19 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg d-inline-block">
+            <h1 class="card-header">{{ title|default('Liste') }}</h1>
+            <div class="card-body">
+                {% block actions %}
+                {% endblock %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        {% block table_content %}
+                        {% endblock %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

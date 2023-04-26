@@ -1,0 +1,9 @@
+{% set title = "Ajouter une recette" %}
+{% extends 'admin_with_form.html.twig' %}
+
+{% block forms %}
+
+    {{ include('admin/recipe/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_recipe_index') }}"class="btn btn-return active mt-2">Retour à la liste</a>
+{% endblock %}

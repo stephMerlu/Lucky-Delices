@@ -1,0 +1,50 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Bienvenue sur l'interface administrateur de Lucky Délices</h1>
+    <div class="d-flex flex-wrap justify-content-between mt-5">
+        <article class="card text-center">
+            <div class="card-header">
+                <img src="images/categorie.jpg" alt="categorie de plat" width="250">
+            </div>
+            <div class="card-body">
+                <a href="{{ path('app_admin_category_index') }}" class="btn btn-add active btn-block">Index des catégories</a>
+            </div>
+        </article>
+        <article class="card text-center">
+            <div class="card-header">
+                <img src="images/recette.jpg" alt="livre de recette" width="250">
+            </div>
+            <div class="card-body">
+                <a href="{{ path('app_admin_recipe_index') }}" class="btn btn-add active btn-block">Index des recettes</a>
+            </div>
+        </article>
+        <article class="card text-center">
+            <div class="card-header">
+                <img src="images/ingredient.jpg" alt="ingredients" width="250">
+            </div>
+            <div class="card-body">
+                <a href="{{ path('app_admin_ingredient_index') }}" class="btn btn-add active btn-block">Index des ingrédients</a>
+            </div>
+        </article>
+        <article class="card text-center">
+            <div class="card-header">
+                <img src="images/utilisateur.jpg" alt="utilisateur enregistrement" width="250">
+            </div>
+            <div class="card-body">
+                <a href="{{ path('app_admin_user_index') }}" class="btn btn-add active btn-block">Index des utilisateurs</a>
+            </div>
+        </article>
+        <article class="card text-center mt-5">
+            <div class="card-header">
+                <img src="images/comment.jpg" alt="image commentaire" width="250">
+            </div>
+            <div class="card-body">
+                <a href="{{ path('app_admin_comment_index') }}" class="btn btn-add active btn-block">Index des commentaires</a>
+            </div>
+        </article>
+    </div>
+</div>
+{% endblock %}
+

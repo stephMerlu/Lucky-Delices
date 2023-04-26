@@ -1,0 +1,34 @@
+{% set title = "Liste des commentaires" %}
+{% extends 'admin_with_table.html.twig' %}
+
+{% block table_content %}
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Content</th>
+                <th>CreatedAt</th>
+                <th>Validated</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for comment in comments %}
+            <tr>
+                <td>{{ comment.id }}</td>
+                <td>{{ comment.content }}</td>
+                <td>{{ comment.createdAt ? comment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ comment.validated ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_admin_comment_show', {'id': comment.id}) }}"><i class="fa-solid fa-eye me-3"></i></a>
+                    <a href="{{ path('app_admin_comment_edit', {'id': comment.id}) }}"><i class="fa-solid fa-pen"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    <a href="{{ path('app_admin_comment_new') }}" class="btn btn-add active">Ajouter un commentaire</a>
+{% endblock %}

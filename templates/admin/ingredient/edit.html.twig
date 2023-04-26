@@ -1,0 +1,11 @@
+{% set title = "Modifier un ingrédient" %}
+{% extends 'admin_with_form.html.twig' %}
+
+{% block forms %}
+
+    {{ include('admin/ingredient/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('app_admin_ingredient_index') }}" class="btn btn-return active mt-2">Retour à la liste</a>
+
+    {{ include('admin/ingredient/_delete_form.html.twig') }}
+{% endblock %}

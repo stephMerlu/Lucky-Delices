@@ -30,15 +30,27 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Category $entity, bool $flush = false): void
+    public function remove(Category $entity, bool $flush = false, $registry): void
     {
         $this->getEntityManager()->remove($entity);
+        parent::__construct($registry, Category::class);
 
         if ($flush) {
             $this->getEntityManager()->flush();
         }
     }
 
+    public function findEntreePlatDessertCategories()
+        {
+            $qb = $this->createQueryBuilder('s');
+            $qb->where('s.name IN (:categories)')
+               ->orderBy('s.name', 'ASC')
+               ->setParameter('categories', ['Entrée', 'Plat', 'Dessert']);
+            
+            return $qb->getQuery()->getResult();
+        }
+
+}
 //    /**
 //     * @return Category[] Returns an array of Category objects
 //     */
@@ -63,4 +75,3 @@ class CategoryRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-}

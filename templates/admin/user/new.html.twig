@@ -1,0 +1,9 @@
+{% set title = "Ajouter un utilisateur" %}
+{% extends 'admin_with_form.html.twig' %}
+
+{% block forms %}
+
+    {{ include('admin/user/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_user_index') }}"class="btn btn-return active mt-2">Retour à la liste</a>
+{% endblock %}

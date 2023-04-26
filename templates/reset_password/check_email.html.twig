@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Email de réinitialisation de mot de passe envoyé{% endblock %}
+
+{% block body %}
+    <div class="card mt-5 mx-auto" style="max-width: 500px;">
+        <div class="card-body">
+            <h2 class="card-title">Email de réinitialisation de mot de passe envoyé</h2>
+            <p>
+                Si un compte correspondant à votre adresse email existe, un email vient d'être envoyé contenant un lien pour réinitialiser votre mot de passe.
+                Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+            </p>
+            <p>Si vous ne recevez pas d'email, veuillez vérifier votre dossier spam ou <a href="{{ path('app_forgot_password_request') }}">réessayer</a>.</p>
+        </div>
+    </div>
+{% endblock %}
