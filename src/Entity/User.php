@@ -127,22 +127,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isVerified(): bool
+    public function getIsVerified(): bool
     {
         return $this->isVerified;
     }
 
-    public function setIsVerified(bool $isVerified): self
+    public function setIsVerified(bool $isVerified): void
     {
         $this->isVerified = $isVerified;
-
-        return $this;
     }
 
     public function __toString()
     {
         return implode(', ', $this->roles);
-        return $this->username ?? $this->email ?? 'n/a';
     }
 
     /**
