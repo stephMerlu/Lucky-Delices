@@ -141,7 +141,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString()
     {
-        return $this->roles;
+        return implode(', ', $this->roles);
+        return $this->username ?? $this->email ?? 'n/a';
     }
 
     /**

@@ -7,12 +7,15 @@ use App\Form\RecipeType;
 use Symfony\Component\Mime\Email;
 use App\Repository\RecipeRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Mailer\MailerInterface;
 
 #[Route('/admin/recipe')]
+#[Security("is_granted('ROLE_ADMIN')")]
+
 class RecipeController extends AbstractController
 {
     #[Route('/', name: 'app_admin_recipe_index', methods: ['GET'])]

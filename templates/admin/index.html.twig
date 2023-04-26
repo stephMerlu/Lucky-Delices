@@ -3,7 +3,7 @@
 {% block body %}
 <div class="container mt-5">
     <h1>Bienvenue sur l'interface administrateur de Lucky Délices</h1>
-    <div class="d-flex justify-content-between mt-5">
+    <div class="d-flex flex-wrap justify-content-between mt-5">
         <article class="card text-center">
             <div class="card-header">
                 <img src="images/categorie.jpg" alt="categorie de plat" width="250">
@@ -34,6 +34,14 @@
             </div>
             <div class="card-body">
                 <a href="{{ path('app_admin_user_index') }}" class="btn btn-add active btn-block">Index des utilisateurs</a>
+            </div>
+        </article>
+        <article class="card text-center mt-5">
+            <div class="card-header">
+                <img src="images/comment.jpg" alt="image commentaire" width="250">
+            </div>
+            <div class="card-body">
+                <a href="{{ path('app_admin_comment_index') }}" class="btn btn-add active btn-block">Index des commentaires</a>
             </div>
         </article>
     </div>
