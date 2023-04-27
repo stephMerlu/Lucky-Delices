@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserProfileController!{% endblock %}
+
+{% block body %}
+    <h1>My profile</h1>
+
+    <h2>User information</h2>
+    <dl>
+        <dt>Email:</dt>
+        <dd>{{ app.user.email }}</dd>
+        <dt>Username:</dt>
+        <dd>{{ app.user.username }}</dd>
+        <dt>Password:</dt>
+        <dd>*****</dd>
+    </dl>
+
+    <h2>Profile information</h2>
+    <dl>
+        <dt>First name:</dt>
+        <dd>{{ firstName }}</dd>
+        <dt>Last name:</dt>
+        <dd>{{ lastName }}</dd>
+        <dt>Description:</dt>
+        <dd>{{ description }}</dd>
+    </dl>
+
+    <a href="{{ path('user_profile_edit') }}">Edit profile</a>
+{% endblock %}

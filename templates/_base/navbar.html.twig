@@ -28,7 +28,7 @@
             </li>
           {% endif %}
           <li class="nav-item">
-            <button class="btn btn-outline-my-custom me-2 btn-signup mt-2 mt-lg-0"><a href="#" style="text-decoration: none; color: inherit;">Mon compte</a></button>
+            <button class="btn btn-outline-my-custom me-2 btn-signup mt-2 mt-lg-0"><a href="{{ path('app_user_profile') }}" style="text-decoration: none; color: inherit;">Mon compte</a></button>
           </li>
           <li class="nav-item">
             <button class="btn btn-my-custom btn-login mt-2 mt-lg-0"><a href="{{ path('app_logout') }}" style="text-decoration: none; color: inherit;">Me déconnecter</a></button>
