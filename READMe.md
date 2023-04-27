@@ -24,7 +24,7 @@ Technologies utilisées
 Notre site web utilise les technologies suivantes :
 
 HTML
-CSS
+SCSS
 JavaScript
 Symfony
 Bootstrap
