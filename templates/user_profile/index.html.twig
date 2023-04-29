@@ -1,29 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserProfileController!{% endblock %}
+{% block title %}Mon compte{% endblock %}
 
 {% block body %}
-    <h1>My profile</h1>
+    <div class="container my-5">
+        <h1 class="mb-5">Mon compte</h1>
 
-    <h2>User information</h2>
-    <dl>
-        <dt>Email:</dt>
-        <dd>{{ app.user.email }}</dd>
-        <dt>Username:</dt>
-        <dd>{{ app.user.username }}</dd>
-        <dt>Password:</dt>
-        <dd>*****</dd>
-    </dl>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h2>Mes informations</h2>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4 mt-2">Mon e-mail:</dt>
+                            <dd class="col-sm-8 mt-2">{{ app.user.email }}</dd>
+                            <dt class="col-sm-4 mt-2">Mon username:</dt>
+                            <dd class="col-sm-8 mt-2">{{ app.user.username }}</dd>
+                            <dt class="col-sm-4 mt-3">Mon mot de passe:</dt>
+                            <dd class="col-sm-8 mt-2"><a href="{{ path('change_password') }}" class="btn btn-add active">Changer mon mot de passe</a></dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
 
-    <h2>Profile information</h2>
-    <dl>
-        <dt>First name:</dt>
-        <dd>{{ firstName }}</dd>
-        <dt>Last name:</dt>
-        <dd>{{ lastName }}</dd>
-        <dt>Description:</dt>
-        <dd>{{ description }}</dd>
-    </dl>
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h2>Informations supplémentaires</h2>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">Mon nom de famille:</dt>
+                            <dd class="col-sm-8">{{ firstName }}</dd>
+                            <dt class="col-sm-4">Mon prénom:</dt>
+                            <dd class="col-sm-8">{{ lastName }}</dd>
+                            <dt class="col-sm-4">Ma description:</dt>
+                            <dd class="col-sm-8">{{ description }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <a href="{{ path('user_profile_edit') }}">Edit profile</a>
+        <a href="{{ path('user_profile_edit') }}" class="btn btn-add active float-end">Modifier le profil</a>
+    </div>
 {% endblock %}
