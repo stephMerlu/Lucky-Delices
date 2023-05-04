@@ -1,12 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Profile{% endblock %}
-
 {% block body %}
-    <h1>Edit Profile</h1>
-
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit" class="btn btn-primary">Save</button>
-    {{ form_end(form) }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h1 class="card-title">Modifier mes informations</h1>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            {{ form_start(userProfileForm) }}
+                                <div class="mb-3">
+                                    {{ form_label(userProfileForm.firstName, 'Mon nom de famille', {'label_attr': {'class': 'form-label', 'style': 'text-align: left'}}) }}
+                                    {{ form_widget(userProfileForm.firstName, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form_label(userProfileForm.lastName, 'Mon prénom', {'label_attr': {'class': 'form-label', 'style': 'text-align: left'}}) }}
+                                    {{ form_widget(userProfileForm.lastName, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form_label(userProfileForm.description, 'Ma description', {'label_attr': {'class': 'form-label', 'style': 'text-align: left'}}) }}
+                                    {{ form_widget(userProfileForm.description, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form_row(userProfileForm.id, {'label': 'ID', 'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <button type="submit" class="btn btn-add active float-end">Enregistrer</button>
+                            {{ form_end(userProfileForm) }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h1 class="card-title">Modifier mes identifiants</h1>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            {{ form_start(userInfoForm) }}
+                                <div class="mb-3">
+                                    {{ form_label(userInfoForm.username, 'Mon username', {'label_attr': {'class': 'form-label', 'style': 'text-align: left'}}) }}
+                                    {{ form_widget(userInfoForm.username, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form_label(userInfoForm.email, 'Mon e-mail', {'label_attr': {'class': 'form-label', 'style': 'text-align: left'}}) }}
+                                    {{ form_widget(userInfoForm.email, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <button type="submit" class="btn btn-add active float-end">Enregistrer</button>
+                            {{ form_end(userInfoForm) }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

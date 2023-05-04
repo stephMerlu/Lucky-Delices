@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Form\UserProfileType;
+use App\Form\EditUserInfoType;
 use App\Form\ChangePasswordType;
 use App\Repository\UserProfileRepository;
 use App\Repository\UserRepository;
@@ -66,30 +67,45 @@ public function index(Request $request, UserProfileRepository $userProfileReposi
 }
 
 
-    #[Route('/user/profile/edit', name: 'user_profile_edit')]
-    #[IsGranted("ROLE_USER")]
-    public function edit(Request $request, UserProfileRepository $userProfileRepository): Response
-    {
-        $user = $this->getUser();
-        $userProfile = $user->getUserProfile() ?? new UserProfile();
+#[Route('/user/profile/edit', name: 'user_profile_edit')]
+#[IsGranted("ROLE_USER")]
+public function edit(Request $request, UserProfileRepository $userProfileRepository, UserRepository $userRepository): Response
+{
+    $user = $this->getUser();
 
-        $form = $this->createForm(UserProfileType::class, $userProfile);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setUserProfile($userProfile);
-            $userProfileRepository->save($userProfile, true);
-
-            $this->addFlash('success', 'Your profile has been updated.');
-
-            return $this->redirectToRoute('app_user_profile');
-        }
-
-        return $this->render('user_profile/edit.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
+    $userProfile = $user->getUserProfile();
+    if (!$userProfile) {
+        $userProfile = new UserProfile();
+        $userProfile->setUser($user); 
+        $user->setUserProfile($userProfile);
     }
+
+    $userProfileForm = $this->createForm(UserProfileType::class, $userProfile);
+    $userInfoForm = $this->createForm(EditUserInfoType::class, $user);
+    
+    $userProfileForm->handleRequest($request);
+    $userInfoForm->handleRequest($request);
+
+
+    if ($userProfileForm->isSubmitted() && $userProfileForm->isValid()) {
+        $userProfileRepository->save($userProfile, true);
+        $this->addFlash('success', 'Your profile has been updated.');
+        return $this->redirectToRoute('app_user_profile');
+    }
+    
+    if ($userInfoForm->isSubmitted() && $userInfoForm->isValid()) {
+        $userRepository->save($user, true);
+        $this->addFlash('success', 'User info has been updated.');
+        return $this->redirectToRoute('app_user_profile');
+    }
+
+    return $this->render('user_profile/edit.html.twig', [
+        'user' => $user,
+        'userProfileForm' => $userProfileForm->createView(),
+        'userInfoForm' => $userInfoForm->createView(),
+    ]);
+}
+
 
     #[Route("/profile/change-password", name:"change_password")]
     #[IsGranted("ROLE_USER")]
@@ -117,6 +133,4 @@ public function index(Request $request, UserProfileRepository $userProfileReposi
             'form' => $form->createView(),
         ]);
     }
-    
-    
 }

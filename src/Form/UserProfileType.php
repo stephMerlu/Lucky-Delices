@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -29,11 +30,8 @@ class UserProfileType extends AbstractType
                 'label' => 'Description',
                 'required' => false,
             ])
-            ->add('username', TextType::class, [
-                'label' => 'Username'
-            ])
-            ->add('email', EmailType::class, [
-                'label' => 'Email'
+            ->add('id', HiddenType::class, [
+                'mapped' => false,
             ])
         ;
     }
