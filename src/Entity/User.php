@@ -43,9 +43,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(targetEntity: UserProfile::class, mappedBy: 'user')]
     private ?UserProfile $userProfile = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Liked::class)]
+    private Collection $likeds;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->likeds = new ArrayCollection();
     }
 
     public function getUserProfile(): ?UserProfile
@@ -197,6 +201,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPlainPassword(string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Liked>
+     */
+    public function getLikeds(): Collection
+    {
+        return $this->likeds;
+    }
+
+    public function addLiked(Liked $liked): self
+    {
+        if (!$this->likeds->contains($liked)) {
+            $this->likeds->add($liked);
+            $liked->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLiked(Liked $liked): self
+    {
+        if ($this->likeds->removeElement($liked)) {
+            // set the owning side to null (unless already changed)
+            if ($liked->getUser() === $this) {
+                $liked->setUser(null);
+            }
+        }
 
         return $this;
     }

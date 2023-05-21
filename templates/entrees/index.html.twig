@@ -17,25 +17,29 @@
   <h2 id="apero">Pour l'apéritif</h2>
     <div class="painting-presentation">
         <div class="cards">
+            {% for recipe in recipes %}
             <div class="card">
                 <div class="card__face card__face--front">
-                    <img src="/image/Couronne poireau.jpg" />
-                    <h5 class="card-title">Ma couronne poireau chèvre miel</h5>
+                    <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" />
+                    <h5 class="card-title">{{ recipe.name }}</h5>
                 </div>
-            <div class="card__face card__face--back">
-                <img src="/image/lucky2.png" />
-                <div class="card-body"> 
-                    <p class="card-text">
-                        <ul>
-                            <li>Temps : <span>20 minutes</span></li>
-                            <li>Lien Youtube : <span><a href="https://www.youtube.com/watch?v=bDGhZtNHZKc&t=1s">Cliquez ici</a></span></li>
-                            <li>Difficulté : <span>Facile</span></li>
-                            <li>Nombre de personnes : <span>4</span></li>
-                        </ul>
-                    </p>
-                  <a href="couronne-aux-poireaux.html" class="btn btn-primary">Voir la recette</a>
+                <div class="card__face card__face--back">
+                    <img src="/images/lucky2.png" />
+                    <div class="card-body"> 
+                        <p class="card-text">
+                            <a href=""><i class="fa-regular fa-bookmark float-end"></i></a>
+                            <ul>
+                                <li>Temps : <span>{{ recipe.time }}</span></li>
+                                <li>Lien Youtube : <span><a href="{{ recipe.youtube }}">Cliquez ici</a></span></li>
+                                <li>Difficulté : <span>{{ recipe.level }}</span></li>
+                                <li>Nombre de personnes : <span>{{ recipe.people }}</span></li>
+                            </ul>
+                        </p>
+                        <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}" class="btn btn-primary">Voir la recette</a>
+                    </div>
                 </div>
-            </div>
+            </div> 
+            {% endfor %}
         </div>
     </div> 
 </section>

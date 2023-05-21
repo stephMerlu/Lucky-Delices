@@ -5,18 +5,18 @@
 {% block body %}
     <header class="container-fluid bg-light py-3">
         <div class="container">
-            <h1 class="text-center">Ma Praluline</h1>
-            <img src="/images/Tarte fraise.jpg" alt="Praluline" class="mx-auto d-block" width="300px">
-            <h2 class="text-center">Recette facile</h2>
+            <h1 class="text-center">{{ recipe.name }}</h1>
+            <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" alt="Praluline" class="mx-auto d-block" width="300px">
+            <h2 class="text-center">{{ recipe.subtitle }}</h2>
         </div>
     </header>
 
     <main class="container my-5">
         <section class="row d-flex align-items-center">
             <article class="col-md-6 text-center">
-                <p>Il vous faudra en moyenne pour réaliser ce mets : 35 minutes.</p>
-                <p>Cette recette est facile à préparer.</p>
-                <p>Avec les quantités ci-dessous, vous cuisinez pour 8 personnes.</p>
+                <p>Il vous faudra en moyenne pour réaliser ce mets : {{ recipe.time }} minutes.</p>
+                <p>Cette recette est {{ recipe.level }} à préparer.</p>
+                <p>Avec les quantités ci-dessous, vous cuisinez pour {{ recipe.people }} personnes.</p>
                 <p>N'hésitez pas à regarder la vidéo Youtube pour plus de facilité.</p>
             </article>
             <div class="col-md-6 text-center">
@@ -25,7 +25,7 @@
         </section>
 
         <div class="text-center">
-            <a href="https://www.youtube.com/watch?v=2b0RMY33h1w" class="btn btn-add active mt-4">Voir la vidéo Youtube</a>
+            <a href="{{ recipe.youtube }}" class="btn btn-add active mt-4">Voir la vidéo Youtube</a>
         </div>
 
         <section class="row my-5">

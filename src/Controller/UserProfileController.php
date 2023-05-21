@@ -7,8 +7,9 @@ use App\Entity\UserProfile;
 use App\Form\UserProfileType;
 use App\Form\EditUserInfoType;
 use App\Form\ChangePasswordType;
-use App\Repository\UserProfileRepository;
 use App\Repository\UserRepository;
+use App\Repository\LikedRepository;
+use App\Repository\UserProfileRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,11 +22,10 @@ class UserProfileController extends AbstractController
 
 #[Route('/user/profile', name: 'app_user_profile')]
 #[IsGranted("ROLE_USER")]
-public function index(Request $request, UserProfileRepository $userProfileRepository): Response
+public function index(Request $request, UserProfileRepository $userProfileRepository, LikedRepository $likedRepository): Response
 {
     $user = $this->getUser();
     if (!$user instanceof User) {
-        // Rediriger vers la page de connexion ou afficher un message d'erreur
         return $this->redirectToRoute('app_login');
     }
 
@@ -55,6 +55,8 @@ public function index(Request $request, UserProfileRepository $userProfileReposi
         $firstName = $user->getUsername();
     }
 
+    $likedRecipes = $likedRepository->findLikedRecipesByUserProfile($userProfile);
+
     return $this->render('user_profile/index.html.twig', [
         'user' => $user,
         'userProfile' => $userProfile,
@@ -63,6 +65,7 @@ public function index(Request $request, UserProfileRepository $userProfileReposi
         'description' => $description ?? null,
         'email' => $email ?? null,
         'form' => $form->createView(),
+        'likedRecipes' => $likedRecipes,
     ]);
 }
 

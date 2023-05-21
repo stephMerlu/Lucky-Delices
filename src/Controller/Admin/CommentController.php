@@ -24,10 +24,12 @@ class CommentController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_admin_comment_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CommentRepository $commentRepository): Response
+    #[Route('/new/{CommentRecipe}', name: 'app_admin_comment_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, CommentRepository $commentRepository, $recipeId): Response
     {
         $comment = new Comment();
+        $recipe = $commentRepository->getEntityManager()->getRepository('App:Recipe')->find($recipeId);
+        $comment->setRecipe($recipe);
         $form = $this->createForm(CommentAdminType::class, $comment);
         $form->handleRequest($request);
 
@@ -79,3 +81,4 @@ class CommentController extends AbstractController
         return $this->redirectToRoute('app_admin_comment_index', [], Response::HTTP_SEE_OTHER);
     }
 }
+

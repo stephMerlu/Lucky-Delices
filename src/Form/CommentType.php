@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class CommentType extends AbstractType
@@ -19,6 +20,9 @@ class CommentType extends AbstractType
                 'placeholder' => 'Votre commentaire'
                 ]
             ])
+            ->add('commentRecipe', HiddenType::class, [
+                'data' => $options['recipe_id'],
+            ])
         ;
     }
 
@@ -26,6 +30,7 @@ class CommentType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Comment::class,
+            'recipe_id' => null,
         ]);
     }
 }

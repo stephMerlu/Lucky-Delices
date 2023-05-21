@@ -62,11 +62,15 @@ class Recipe
     #[ORM\Column]
     private ?int $time = null;
 
+    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Liked::class)]
+    private Collection $likeds;
+
     public function __construct()
     {
         $this->ingredient = new ArrayCollection();
         $this->comment = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->likeds = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -289,6 +293,36 @@ class Recipe
     public function setTime(int $time): self
     {
         $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Liked>
+     */
+    public function getLikeds(): Collection
+    {
+        return $this->likeds;
+    }
+
+    public function addLiked(Liked $liked): self
+    {
+        if (!$this->likeds->contains($liked)) {
+            $this->likeds->add($liked);
+            $liked->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLiked(Liked $liked): self
+    {
+        if ($this->likeds->removeElement($liked)) {
+            // set the owning side to null (unless already changed)
+            if ($liked->getRecipe() === $this) {
+                $liked->setRecipe(null);
+            }
+        }
 
         return $this;
     }

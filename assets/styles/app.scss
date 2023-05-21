@@ -459,9 +459,8 @@ path {
     
     .cards{
       display: flex;
-      flex-wrap: wrap;
+      justify-content: space-between;
       margin-top: 20px;
-      display: flex;
       width: 100%;
       @media (max-width: 568px){
         margin-top: 200px;
@@ -751,12 +750,12 @@ img {
   perspective: 800px;
 
   .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
     margin-left: 50px;
     margin-top: 150px;
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
     perspective: 800px;
     margin-left: -50px;
     @media (max-width: 568px){
@@ -803,9 +802,11 @@ img {
       }
 
       h5 {
-        color:rgb(91, 158, 55); 
+        color:rgb(167, 199, 150); 
+        font-size: x-large;
+        font-weight: 700;
         text-align: center;
-        margin-top: 10px;
+        margin-top: 90px;
       }
       .card-body {
         color:rgb(91, 158, 55);    
@@ -828,14 +829,14 @@ img {
 
 .form-label {
   display: inline-block;
-  width: 150px; /* Ajustez la largeur en fonction de vos besoins */
+  width: 150px; 
   text-align: right;
-  margin-right: 10px; /* Ajustez la marge en fonction de vos besoins */
+  margin-right: 10px;
 }
 
 .form-input {
   display: inline-block;
-  width: 300px; /* Ajustez la largeur en fonction de vos besoins */
+  width: 300px; 
 }
 
 .my-custom-label {

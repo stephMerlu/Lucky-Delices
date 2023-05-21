@@ -54,6 +54,16 @@ class CommentRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+public function findByRecipeId(int $recipeId): array
+{
+    return $this->createQueryBuilder('c')
+        ->join('c.commentRecipe', 'r')
+        ->andWhere('r.id = :recipeId')
+        ->setParameter('recipeId', $recipeId)
+        ->getQuery()
+        ->getResult();
+}
+
 //    public function findOneBySomeField($value): ?Comment
 //    {
 //        return $this->createQueryBuilder('c')

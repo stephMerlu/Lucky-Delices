@@ -64,10 +64,12 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_recipe_show', methods: ['GET'])]
-    public function show(Recipe $recipe): Response
+    public function show(Recipe $recipe, CommentRepository $commentRepository): Response
     {
-        return $this->render('admin/recipe/show.html.twig', [
+        $comments = $commentRepository->showCommentsByRecipeId($recipe->getId());
+        return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
+            'comments' => $comments,
         ]);
     }
 
