@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SearchController!{% endblock %}
+
+{% block body %}
+    <h1 class="mt-5 ms-4">Résultats de la recherche</h1>
+
+  <p class="mt-4 ms-5">Vous avez recherché : "{{ searchTerm }}"</p>
+
+  {% if results is not empty %}
+    <ul class="ms-5">
+      {% for recipe in results %}
+        <li>
+          <a href="{{ path('app_presentation_recette', {'id': recipe.id}) }}">
+            {{ recipe.name }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Aucun résultat trouvé.</p>
+  {% endif %}
+{% endblock %}

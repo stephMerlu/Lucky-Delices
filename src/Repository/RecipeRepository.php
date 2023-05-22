@@ -64,6 +64,29 @@ public function findByCategory(string $category): array
         ->getResult();
 }
 
+public function searchRecipes($searchTerm, $searchBy)
+{
+    $queryBuilder = $this->createQueryBuilder('r');
+
+    if ($searchTerm) {
+        if ($searchBy === 'name') {
+            $queryBuilder->andWhere(
+                $queryBuilder->expr()->like('r.name', ':searchTerm')
+            );
+        } elseif ($searchBy === 'ingredient') {
+            $queryBuilder->join('r.ingredient', 'i')
+                ->andWhere(
+                    $queryBuilder->expr()->like('i.name', ':searchTerm')
+                );
+        }
+
+        $queryBuilder->setParameter('searchTerm', '%' . $searchTerm . '%');
+    }
+
+    return $queryBuilder->getQuery()->getResult();
+}
+
+
 //    public function findOneBySomeField($value): ?Recipe
 //    {
 //        return $this->createQueryBuilder('r')
