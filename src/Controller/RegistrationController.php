@@ -15,14 +15,17 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
+    private AuthorizationCheckerInterface $authorizationChecker;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(EmailVerifier $emailVerifier, AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->emailVerifier = $emailVerifier;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     #[Route('/register', name: 'app_register')]
@@ -41,6 +44,10 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setIsVerified(true);
+
+            if (!$this->authorizationChecker->isGranted('ROLE_USER')) {
+                $user->setRoles(['ROLE_USER']);
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();

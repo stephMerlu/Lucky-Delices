@@ -3,19 +3,27 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Liked;
+use App\Entity\Recipe;
 use App\Entity\UserProfile;
 use App\Form\UserProfileType;
 use App\Form\EditUserInfoType;
 use App\Form\ChangePasswordType;
+use App\Form\CommentType;
 use App\Repository\UserRepository;
 use App\Repository\LikedRepository;
 use App\Repository\UserProfileRepository;
+use App\Repository\RecipeRepository;
+use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 class UserProfileController extends AbstractController
 {
@@ -134,6 +142,49 @@ public function edit(Request $request, UserProfileRepository $userProfileReposit
     
         return $this->render('user_profile/change_password.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+    #[Route('/presentation/recipe/{recipeId}', name: 'presentation_recipe', methods: ['GET', 'POST', 'DELETE'])]
+    #[IsGranted("ROLE_USER")]
+    public function likeRecipe(
+        Request $request,
+        int $recipeId,
+        LikedRepository $likedRepository,
+        EntityManagerInterface $entityManager,
+        RecipeRepository $recipeRepository,
+        CommentRepository $commentRepository
+    ): Response {
+        $user = $this->getUser();
+        $recipe = $entityManager->getRepository(Recipe::class)->find($recipeId);
+
+        if (!$user || !$recipe) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        $liked = $likedRepository->findOneBy(['user' => $user, 'recipe' => $recipe]);
+
+        if ($request->isMethod('POST')) {
+            if (!$liked) {
+                $liked = new Liked();
+                $liked->setUser($user);
+                $liked->setRecipe($recipe);
+
+                $likedRepository->save($liked, true);
+            }
+        } elseif ($request->isMethod('DELETE')) {
+            if ($liked) {
+                $likedRepository->remove($liked, true);
+            }
+        }
+
+        $recipe = $recipeRepository->find($recipeId);
+        $comments = $commentRepository->findByRecipeId($recipeId);
+        $commentForm = $this->createForm(CommentType::class);
+
+        return $this->render('presentation_recette/index.html.twig', [
+            'recipe' => $recipe,
+            'comments' => $comments,
+            'commentForm' => $commentForm->createView(),
         ]);
     }
 }

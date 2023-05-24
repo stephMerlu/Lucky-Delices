@@ -37,10 +37,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, cascade: ['remove'])]
     private Collection $comments;
 
-    #[ORM\OneToOne(targetEntity: UserProfile::class, mappedBy: 'user')]
+    #[ORM\OneToOne(targetEntity: UserProfile::class, mappedBy: 'user', cascade: ['remove'])]
     private ?UserProfile $userProfile = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Liked::class)]
