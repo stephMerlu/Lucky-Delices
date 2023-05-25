@@ -52,15 +52,14 @@
                 {% if likedRecipes is empty %}
                     <p>Aucune recette aimée pour le moment.</p>
                 {% else %}
-                <ul>
-{% for liked in likedRecipes %}
-    <a href="{{ path('presentation_recipe', {'recipeId': liked.recipe.id}) }}">{{ liked.recipe.name }}</a>
-    <br>
-{% endfor %}
-                </ul>
+                    <ul>
+                    {% for liked in likedRecipes %}
+                    <a href="{{ path('presentation_recipe', {'recipeId': liked.recipe.id}) }}">{{ liked.recipe.name }}</a>
+                    <br>
+                {% endfor %}
+                    </ul>
                 {% endif %}
             </div>
         </div>
-    
     </div>
 {% endblock %}

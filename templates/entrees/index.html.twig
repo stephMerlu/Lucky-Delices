@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       const isCurrentlyLiked = this.classList.contains('liked');
 
-      fetch(`/presentation/recipe/${recipeId}`, {
+        fetch(`/like-recipe/${recipeId}`, {
         method: isCurrentlyLiked ? 'DELETE' : 'POST'
       })
         .then(response => response.json())
