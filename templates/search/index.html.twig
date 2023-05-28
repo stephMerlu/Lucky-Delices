@@ -11,7 +11,7 @@
     <ul class="ms-5">
       {% for recipe in results %}
         <li>
-          <a href="{{ path('app_presentation_recette', {'id': recipe.id}) }}">
+          <a href="{{ path('app_presentation_recette', {'id': recipe.id}) }}" class="site-link">
             {{ recipe.name }}
           </a>
         </li>

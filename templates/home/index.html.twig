@@ -3,20 +3,26 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    <svg class="background--custom" id="demo" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <path fill="#A5DB68" fill-opacity="0.7" d="M-100 -100L200 -100L200 50L-100 50Z" style="animation: path0 5s linear infinite alternate;" /><path fill="#F8DA3A" fill-opacity="0.7" d="M-100 -100L200 -100L200 50L-100 50Z" style="animation: path1 12.5s linear infinite alternate;" /><path fill="#FFFFFF" fill-opacity="0.2" d="M-100 -100L200 -100L200 20L-100 20Z" style="animation: path2 30s linear infinite alternate;" />
-      </svg>
-    <section class="presentation">
-        <img class="crepe" src="/images/20220330_185609.jpg" alt="">
-        <div class="text">
-            <h1>Lucky Délices</h1>
-            <h2>La crème, de la crème.</h2>
-            <h3>Venez découvrir sans plus tarder, mes délicieuses recettes... </h3>
-        </div>
-    </section>
-</div>
+<svg class="background--custom" id="demo" viewBox="0 0 100 100" preserveAspectRatio="none">
+  <path fill="#A5DB68" fill-opacity="0.7" d="M-100 -100L200 -100L200 50L-100 50Z" style="animation: path0 5s linear infinite alternate;" /><path fill="#F8DA3A" fill-opacity="0.7" d="M-100 -100L200 -100L200 50L-100 50Z" style="animation: path1 12.5s linear infinite alternate;" /><path fill="#FFFFFF" fill-opacity="0.2" d="M-100 -100L200 -100L200 20L-100 20Z" style="animation: path2 30s linear infinite alternate;" />
+</svg>
+<section class="presentation">
+  <div class="row">
+    <div class="col-sm-6">
+      <img class="crepe" src="/images/20220330_185609.jpg" alt="">
+    </div>
+    <div class="col-sm-6">
+      <div class="text">
+        <h1 class="display-4">Lucky Délices</h1>
+        <h2 class="subscribe1">La crème, de la crème.</h2>
+        <h3 class="subscribe2">Venez découvrir sans plus tarder, mes délicieuses recettes...</h3>
+      </div>
+    </div>
+  </div>
+</section>
     <section class="news">
         <h1>Mes dernières recettes </h1>
+        <div class="cards">
         <div class="card">
             <a href="galette-des-rois.html">
               <div class="card-image">
@@ -119,25 +125,4 @@
           </div>
         </div>
       </section>
-    <section class="networks">
-        <h2>Mes réseaux</h2>
-        <div class="contenair">
-            <div class="icon facebook">
-                <span><img src="/images/logoFace.png" alt=""></span>
-              </div>
-              <div class="icon instagram">
-                <span><img src="/images/logoInsta.png" alt=""></span>
-              </div>
-              <div class="icon youtube">
-                <span><img src="/images/logoYoutube.png" alt=""></span>
-              </div>
-        </div>
-    </section>
-        <footer>
-            <div class="copyright">
-                &copy; Copyright 2022 LuckyDelices <br> 
-                Made by Stéphanie Merluzzo
-            </div>
-        </footer>
-
 {% endblock %}

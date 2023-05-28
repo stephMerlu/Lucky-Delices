@@ -12,11 +12,18 @@ class StarterController extends AbstractController
     #[Route('/entrees', name: 'app_entrees')]
     public function index(RecipeRepository $recipeRepository): Response
     {
-        $recipes = $recipeRepository->findByCategory("Pour l'apéritif");
+        $aperoRecipes = $recipeRepository->findByCategory("Pour l'apéritif");
+        $entreeFroideRecipes = $recipeRepository->findByCategory("Entrée froide");
+        $entreeChaudeRecipes = $recipeRepository->findByCategory("Entrée chaude");
+        $saucesRecipes = $recipeRepository->findByCategory("Les sauces");
         
+    
         return $this->render('entrees/index.html.twig', [
             'controller_name' => 'EntreesController',
-            'recipes' => $recipes,
+            'aperoRecipes' => $aperoRecipes,
+            'entreeFroideRecipes' => $entreeFroideRecipes,
+            'entreeChaudeRecipes' => $entreeChaudeRecipes,
+            'saucesRecipes' => $saucesRecipes,
         ]);
     }
 }

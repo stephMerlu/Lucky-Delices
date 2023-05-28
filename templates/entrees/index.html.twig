@@ -17,7 +17,7 @@
   <h2 id="apero">Pour l'apéritif</h2>
     <div class="painting-presentation">
         <div class="cards">
-            {% for recipe in recipes %}
+            {% for recipe in aperoRecipes %}
             <div class="card">
                 <div class="card__face card__face--front">
                     <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" />
@@ -47,122 +47,98 @@
 </section>
 <section class="entrees-froides">
   <h2 id="entree-froide">Mes entrées froides</h2>
-<div class="painting-presentation">
+    <div class="painting-presentation">
         <div class="cards">
+            {% for recipe in entreeFroideRecipes %}
             <div class="card">
                 <div class="card__face card__face--front">
-                    <img src="/image/Couronne poireau.jpg" />
-                    <h5 class="card-title">Ma couronne poireau chèvre miel</h5>
+                    <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" />
+                    <h5 class="card-title">{{ recipe.name }}</h5>
                 </div>
-            <div class="card__face card__face--back">
-                <img src="/image/lucky2.png" />
-                <div class="card-body"> 
-                    <p class="card-text">
-                        <ul>
-                            <li>Temps : <span>20 minutes</span></li>
-                            <li>Lien Youtube : <span><a href="https://www.youtube.com/watch?v=bDGhZtNHZKc&t=1s">Cliquez ici</a></span></li>
-                            <li>Difficulté : <span>Facile</span></li>
-                            <li>Nombre de personnes : <span>4</span></li>
-                        </ul>
-                    </p>
-                  <a href="couronne-aux-poireaux.html" class="btn btn-primary">Voir la recette</a>
+                <div class="card__face card__face--back">
+                    <img src="/images/lucky2.png" />
+                    <div class="card-body"> 
+                        <p class="card-text">
+                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
+                                <i class="fa-regular fa-bookmark float-end"></i>
+                            </a>
+                            <ul>
+                                <li>Temps : <span>{{ recipe.time }}</span></li>
+                                <li>Lien Youtube : <span><a href="{{ recipe.youtube }}">Cliquez ici</a></span></li>
+                                <li>Difficulté : <span>{{ recipe.level }}</span></li>
+                                <li>Nombre de personnes : <span>{{ recipe.people }}</span></li>
+                            </ul>
+                        </p>
+                        <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}" class="btn btn-primary">Voir la recette</a>
+                    </div>
                 </div>
-            </div>
+            </div> 
+            {% endfor %}
         </div>
-    </div> 
+    </div>  
 </section>
 <section class="entrees-chaudes">
   <h2 id="entree-chaude">Mes entrées chaudes</h2>
-<div class="painting-presentation">
+    <div class="painting-presentation">
         <div class="cards">
+            {% for recipe in entreeChaudeRecipes %}
             <div class="card">
                 <div class="card__face card__face--front">
-                    <img src="/image/Couronne poireau.jpg" />
-                    <h5 class="card-title">Ma couronne poireau chèvre miel</h5>
+                    <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" />
+                    <h5 class="card-title">{{ recipe.name }}</h5>
                 </div>
-            <div class="card__face card__face--back">
-                <img src="/image/lucky2.png" />
-                <div class="card-body"> 
-                    <p class="card-text">
-                        <ul>
-                            <li>Temps : <span>20 minutes</span></li>
-                            <li>Lien Youtube : <span><a href="https://www.youtube.com/watch?v=bDGhZtNHZKc&t=1s">Cliquez ici</a></span></li>
-                            <li>Difficulté : <span>Facile</span></li>
-                            <li>Nombre de personnes : <span>4</span></li>
-                        </ul>
-                    </p>
-                  <a href="couronne-aux-poireaux.html" class="btn btn-primary">Voir la recette</a>
+                <div class="card__face card__face--back">
+                    <img src="/images/lucky2.png" />
+                    <div class="card-body"> 
+                        <p class="card-text">
+                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
+                                <i class="fa-regular fa-bookmark float-end"></i>
+                            </a>
+                            <ul>
+                                <li>Temps : <span>{{ recipe.time }}</span></li>
+                                <li>Lien Youtube : <span><a href="{{ recipe.youtube }}">Cliquez ici</a></span></li>
+                                <li>Difficulté : <span>{{ recipe.level }}</span></li>
+                                <li>Nombre de personnes : <span>{{ recipe.people }}</span></li>
+                            </ul>
+                        </p>
+                        <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}" class="btn btn-primary">Voir la recette</a>
+                    </div>
                 </div>
-            </div>
+            </div> 
+            {% endfor %}
         </div>
     </div> 
 </section>
 <section class="sauce">
   <h2 id="sauces">Mes sauces</h2>
-<div class="painting-presentation">
+    <div class="painting-presentation">
         <div class="cards">
+            {% for recipe in saucesRecipes %}
             <div class="card">
                 <div class="card__face card__face--front">
-                    <img src="/image/Couronne poireau.jpg" />
-                    <h5 class="card-title">Ma couronne poireau chèvre miel</h5>
+                    <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" />
+                    <h5 class="card-title">{{ recipe.name }}</h5>
                 </div>
-            <div class="card__face card__face--back">
-                <img src="/image/lucky2.png" />
-                <div class="card-body"> 
-                    <p class="card-text">
-                        <ul>
-                            <li>Temps : <span>20 minutes</span></li>
-                            <li>Lien Youtube : <span><a href="https://www.youtube.com/watch?v=bDGhZtNHZKc&t=1s">Cliquez ici</a></span></li>
-                            <li>Difficulté : <span>Facile</span></li>
-                            <li>Nombre de personnes : <span>4</span></li>
-                        </ul>
-                    </p>
-                  <a href="couronne-aux-poireaux.html" class="btn btn-primary">Voir la recette</a>
+                <div class="card__face card__face--back">
+                    <img src="/images/lucky2.png" />
+                    <div class="card-body"> 
+                        <p class="card-text">
+                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
+                                <i class="fa-regular fa-bookmark float-end"></i>
+                            </a>
+                            <ul>
+                                <li>Temps : <span>{{ recipe.time }}</span></li>
+                                <li>Lien Youtube : <span><a href="{{ recipe.youtube }}">Cliquez ici</a></span></li>
+                                <li>Difficulté : <span>{{ recipe.level }}</span></li>
+                                <li>Nombre de personnes : <span>{{ recipe.people }}</span></li>
+                            </ul>
+                        </p>
+                        <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}" class="btn btn-primary">Voir la recette</a>
+                    </div>
                 </div>
-            </div>
+            </div> 
+            {% endfor %}
         </div>
-    </div> 
+    </div>  
 </section>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const bookmarks = document.querySelectorAll('.bookmark');
-  bookmarks.forEach(bookmark => {
-    const recipeId = bookmark.dataset.recipeId;
-    const isLiked = localStorage.getItem(recipeId) === 'liked';
-
-    if (isLiked) {
-      bookmark.classList.add('liked');
-      const icon = bookmark.querySelector('i');
-      icon.classList.add('fas');
-    }
-
-    bookmark.addEventListener('click', function(event) {
-      event.preventDefault();
-
-      const isCurrentlyLiked = this.classList.contains('liked');
-
-        fetch(`/like-recipe/${recipeId}`, {
-        method: isCurrentlyLiked ? 'DELETE' : 'POST'
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            this.classList.toggle('liked');
-            const icon = this.querySelector('i');
-            icon.classList.toggle('fas');
-
-            const newState = this.classList.contains('liked') ? 'liked' : 'unliked';
-            localStorage.setItem(recipeId, newState);
-          }
-        })
-        .catch(error => {
-          console.error('Une erreur s\'est produite lors de la requête :', error);
-        });
-    });
-  });
-});
-</script>
-
-
-
 {% endblock %}
