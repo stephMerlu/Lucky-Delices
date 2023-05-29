@@ -86,6 +86,14 @@ public function searchRecipes($searchTerm, $searchBy)
     return $queryBuilder->getQuery()->getResult();
 }
 
+public function findRecentRecipes($limit)
+{
+    return $this->createQueryBuilder('r')
+        ->orderBy('r.updatedAt', 'DESC')
+        ->setMaxResults($limit)
+        ->getQuery()
+        ->getResult();
+}
 
 //    public function findOneBySomeField($value): ?Recipe
 //    {

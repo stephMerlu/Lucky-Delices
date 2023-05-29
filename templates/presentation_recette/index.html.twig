@@ -32,15 +32,15 @@
             <article class="col-md-6">
                 <h3>Les ingrédients pour réaliser cette recette</h3>
                 <ul>
-                    <li></li>
+                    {% for ingredient in recipe.getIngredient() %}
+                        <li>{{ ingredient }}</li>
+                    {% endfor %}
                 </ul>
             </article>
-            <article class="col-md-6">
-                <h3>Les étapes de la réalisation</h3>
-                <ol>
-                    <li></li>
-                </ol>
-            </article>
+<article class="col-md-6">
+    <h3>Description de la recette</h3>
+    <p>{{ recipe.getDescription() }}</p>
+</article>
         </section>
 
         <section class="comments">

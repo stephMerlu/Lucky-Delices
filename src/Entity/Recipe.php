@@ -65,6 +65,9 @@ class Recipe
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Liked::class)]
     private Collection $likeds;
 
+    #[ORM\Column(type: 'boolean', nullable: true, options: ['default' => false])]
+    private ?bool $favorite = null;
+
     public function __construct()
     {
         $this->ingredient = new ArrayCollection();
@@ -323,6 +326,18 @@ class Recipe
                 $liked->setRecipe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isFavorite(): ?bool
+    {
+        return $this->favorite;
+    }
+
+    public function setFavorite(?bool $favorite): self
+    {
+        $this->favorite = $favorite;
 
         return $this;
     }

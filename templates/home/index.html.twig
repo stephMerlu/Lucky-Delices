@@ -20,109 +20,126 @@
     </div>
   </div>
 </section>
-    <section class="news">
-        <h1>Mes dernières recettes </h1>
-        <div class="cards">
-        <div class="card">
-            <a href="galette-des-rois.html">
-              <div class="card-image">
-                <img src="/image/gallette-des-rois.jpeg" width="250px"/>
-              </div>
-              <div class="card-body">
-                <div class="card-title">
-                  <h3>Galette des rois</h3>
-                </div>
-                <div class="card-excerpt">
-                  <span class="info">Pour l'épiphanie</span>
-                </div>
-              </div>
-            </a>
+<section class="news">
+  <h1>Mes dernières recettes</h1>
+  <div class="cards">
+    {% for recipe in recipes %}
+      <div class="card">
+        <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}">
+          <div class="card-image">
+            <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" />
           </div>
-          <div class="card">
-            <a href="foie-gras.html">
-              <div class="card-image">
-                <img src="/image/fois-gras.jpeg" width="250px"/>
-              </div>
-              <div class="card-body">
-                <div class="card-title">
-                  <h3>Foie gras</h3>
-                </div>
-                <div class="card-excerpt">
-                  <span class="info">Recette facile</span>
-                </div>
-              </div>
-            </a>
+          <div class="card-body">
+            <div class="card-title">
+              <h2>{{ recipe.name }}</h2>
+            </div>
+            <div class="card-excerpt">
+              <span class="info">{{ recipe.subtitle }}</span>
+            </div>
           </div>
-          <div class="card">
-            <a href="cake-tout-chocolat.html">
-              <div class="card-image">
-                <img src="/image/cake-tout-choco.jpeg" width="250px"/>
-              </div>
-              <div class="card-body">
-                <div class="card-title">
-                  <h3>Cake tout chocolat</h3>
-                </div>
-                <div class="card-excerpt">
-                  <span class="info">Pour les gourmands</span>
-                </div>
-              </div>
-            </a>
-          </div>          
-    </section>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+
+</section>
     <section class="video">
           <h2 class="title">Ma sélection du mois </h2>
     <div class="video-responsive">
         <iframe src="https://www.youtube.com/embed/e7LmBozXsH8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     </section>
-    <section class="favorites">
-        <h1>Vos recettes favorites</h1>
-        <div class="cards">
-          <div class="card">
-            <a href="guacamole.html">
-              <div class="card-image">
-                <img src="/image/Guacamole.jpg" width="250px"/>
-              </div>
-              <div class="card-body">
-                <div class="card-title">
-                  <h3>Guacamole</h3>
-                </div>
-                <div class="card-excerpt">
-                  <span class="info">Pour l'apéro</span>
-                </div>
-              </div>
-            </a>
+<section class="favorites">
+  <h1>Vos recettes favorites</h1>
+  <div class="cards">
+    {% set favoriteRecipes = recipes|filter(recipe => recipe.favorite) %}
+    {% for recipe in favoriteRecipes|slice(0, 3) %}
+      <div class="card">
+        <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}">
+          <div class="card-image">
+            <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" />
           </div>
-          <div class="card">
-            <a href="moussaka.html">
-              <div class="card-image">
-                <img src="/image/moussaka.jpg" width="250px"/>
-              </div>
-              <div class="card-body">
-                <div class="card-title">
-                  <h3>Moussaka</h3>
-                </div>
-                <div class="card-excerpt">
-                  <span class="info">Un plat complet</span>
-                </div>
-              </div>
-            </a>
+          <div class="card-body">
+            <div class="card-title">
+              <h2>{{ recipe.name }}</h2>
+            </div>
+            <div class="card-excerpt">
+              <span class="info">{{ recipe.subtitle }}</span>
+            </div>
           </div>
-          <div class="card">
-            <a href="tuile.html">
-              <div class="card-image">
-                <img src="/image/tuile.jpg" width="250px"/>
-              </div>
-              <div class="card-body">
-                <div class="card-title">
-                  <h3>Les tuiles aux amandes</h3>
-                </div>
-                <div class="card-excerpt">
-                  <span class="info">Recette de ma mamie</span>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+  function fetchData(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      }
+    };
+    xhr.open('GET', url, true);
+    xhr.send();
+  }
+
+  function displayRecipes(recipes) {
+    var cardsContainer = document.querySelector('.cards');
+
+    recipes.forEach(function(recipe) {
+      var card = document.createElement('div');
+      card.classList.add('card');
+
+      var link = document.createElement('a');
+      link.href = '/path/to/recipe/' + recipe.id;
+
+      var image = document.createElement('div');
+      image.classList.add('card-image');
+      image.style.backgroundImage = 'url(' + vich_uploader_asset(recipe, 'imageFile') + ')';
+      link.appendChild(image);
+
+      var body = document.createElement('div');
+      body.classList.add('card-body');
+
+      var title = document.createElement('div');
+      title.classList.add('card-title');
+      var titleText = document.createElement('h2');
+      titleText.textContent = recipe.name;
+      title.appendChild(titleText);
+
+      var excerpt = document.createElement('div');
+      excerpt.classList.add('card-excerpt');
+      var excerptText = document.createElement('span');
+      excerptText.classList.add('info');
+      excerptText.textContent = recipe.subtitle;
+      excerpt.appendChild(excerptText);
+
+      body.appendChild(title);
+      body.appendChild(excerpt);
+
+      link.appendChild(image);
+      link.appendChild(body);
+
+      card.appendChild(link);
+
+      cardsContainer.appendChild(card);
+    });
+  }
+
+  fetchData('/recipes/recent', function(data){
+    var recentRecipes = data.slice(0, 3);
+    displayRecipes(recentRecipes);
+  });
+
+</script>
+
+
+
+
+
+
 {% endblock %}

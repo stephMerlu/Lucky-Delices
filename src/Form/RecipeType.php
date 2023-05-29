@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
@@ -113,6 +114,10 @@ class RecipeType extends AbstractType
             ->add('time', IntegerType::class, [
                 'label' => 'Temps de préparation (en minutes)',
                 'required' => true,
+            ])
+            ->add('favorite', CheckboxType::class, [
+                'label' => 'Favorite',
+                'required' => false,
             ])
         ;
     }
