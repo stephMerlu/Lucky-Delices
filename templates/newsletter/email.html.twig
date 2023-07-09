@@ -1,0 +1,18 @@
+    <h1>Hey Salut les Cuistos !</h1>
+    
+    <h2>Une nouvelle recette est disponible : {{ recipe.name }}</h2>
+    
+    <div>
+        <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" alt="Image de la recette">
+    </div>
+    
+    <p>Hey les cuistos, j'ai préparé une délicieuse recette pour vous ! Suivez le lien ci-dessous pour découvrir tous les détails :</p>
+    
+    <p><a href="{{ recipe.youtube }}">{{ recipe.youtube }}</a></p>
+    
+    <p>Alors, qu'attendez-vous ? Mettez votre tablier, préparez vos ustensiles et laissez-vous guider par cette nouvelle recette gourmande.</p>
+    
+    <p>Amusez-vous bien en cuisine et à bientôt !</p>
+    <p>Signé,</p>
+    <p>Lucky Délices</p>
+

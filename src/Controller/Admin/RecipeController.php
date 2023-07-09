@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Recipe;
+use App\Repository\UserRepository;
 use App\Form\RecipeType;
 use Symfony\Component\Mime\Email;
 use App\Repository\RecipeRepository;
@@ -27,40 +28,39 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_recipe_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, RecipeRepository $recipeRepository, MailerInterface $mailer): Response
+    public function new(Request $request, RecipeRepository $recipeRepository, MailerInterface $mailer, UserRepository $userRepository): Response
     {
         $recipe = new Recipe();
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $recipeRepository->save($recipe, true);
-            $this->sendNewsletter($recipe, $mailer);
+            $this->sendNewsletter($recipe, $mailer, $userRepository);
             return $this->redirectToRoute('app_admin_recipe_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->renderForm('admin/recipe/new.html.twig', [
             'recipe' => $recipe,
             'form' => $form,
         ]);
     }
 
-    private function sendNewsletter(Recipe $recipe, MailerInterface $mailer): void
+    private function sendNewsletter(Recipe $recipe, MailerInterface $mailer, UserRepository $userRepository): void
     {
-        $email = (new Email())
-            ->from('hello@example.com')
-            //->to('you@example.com')
-            ->cc('cc@example.com')// recuperer les user abonner et recuperer adresse email
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
-            ->subject('Time for Symfony Mailer!')
-            ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');// recuperer mon lien le nom l'image
-
-        $mailer->send($email);
-
-        // ...
+        $users = $userRepository->findBy(['newsletterSubscription' => true]);
+    
+        foreach ($users as $user) {
+            $email = (new Email())
+                ->from('hello@example.com')
+                ->to($user->getEmail())
+                ->subject('New Recipe Newsletter')
+                ->html($this->renderView('newsletter/email.html.twig', [
+                    'recipe' => $recipe,
+                ]));
+    
+            $mailer->send($email);
+        }
     }
 
     #[Route('/{id}', name: 'app_admin_recipe_show', methods: ['GET'])]

@@ -31,6 +31,7 @@ class UserProfileController extends AbstractController
     #[IsGranted("ROLE_USER")]
     public function index(
         Request $request,
+        UserRepository $userRepository,
         UserProfileRepository $userProfileRepository,
         LikedRepository $likedRepository
     ): Response {
@@ -38,36 +39,38 @@ class UserProfileController extends AbstractController
         if (!$user instanceof User) {
             return $this->redirectToRoute('app_login');
         }
-
+    
         $userProfile = $user->getUserProfile() ?? new UserProfile();
-
+    
         $form = $this->createForm(UserProfileType::class, $userProfile);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setUserProfile($userProfile);
-            $userProfileRepository->save($userProfile, true);
-
+            $userRepository->save($user, true);
             $this->addFlash('success', 'Your profile has been updated.');
-
+    
             return $this->redirectToRoute('app_home');
         }
-
+    
         $firstName = null;
         $lastName = null;
         $description = null;
         $email = null;
+        $newsletterSubscription = false;
         if ($userProfile instanceof UserProfile) {
             $firstName = $userProfile->getFirstName();
             $lastName = $userProfile->getLastName();
             $description = $userProfile->getDescription();
             $email = $userProfile->getEmail();
+            $newsletterSubscription = $user->isNewsletterSubscription();
         } else {
             $firstName = $user->getUsername();
+            $newsletterSubscription = $user->isNewsletterSubscription();
         }
-
+    
         $likedRecipes = $likedRepository->findLikedRecipesByUserProfile($userProfile);
-
+    
         return $this->render('user_profile/index.html.twig', [
             'user' => $user,
             'userProfile' => $userProfile,
@@ -75,6 +78,7 @@ class UserProfileController extends AbstractController
             'firstName' => $firstName,
             'description' => $description ?? null,
             'email' => $email ?? null,
+            'newsletterSubscription' => $newsletterSubscription,
             'form' => $form->createView(),
             'likedRecipes' => $likedRecipes,
         ]);
@@ -217,6 +221,22 @@ class UserProfileController extends AbstractController
         }
 
         return $this->json(['success' => true]);
+    }
+
+    #[Route('/unsubscribe-newsletter', name: 'unsubscribe_newsletter')]
+    public function unsubscribeNewsletter(UserRepository $userRepository): Response
+    {
+        $user = $this->getUser();
+    
+        if ($user instanceof User) {
+            $user->setNewsletterSubscription(false);
+            $userRepository->save($user, true);
+    
+            // Affichez un message de confirmation ou redirigez l'utilisateur vers une autre page
+            $this->addFlash('success', 'Vous avez été désinscrit de la newsletter avec succès.');
+        }
+    
+        return $this->redirectToRoute('app_user_profile');
     }
 }
 

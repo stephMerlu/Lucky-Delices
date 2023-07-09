@@ -6,6 +6,9 @@
 <svg class="background--custom" id="demo" viewBox="0 0 100 100" preserveAspectRatio="none">
   <path fill="#A5DB68" fill-opacity="0.7" d="M-100 -100L200 -100L200 50L-100 50Z" style="animation: path0 5s linear infinite alternate;" /><path fill="#F8DA3A" fill-opacity="0.7" d="M-100 -100L200 -100L200 50L-100 50Z" style="animation: path1 12.5s linear infinite alternate;" /><path fill="#FFFFFF" fill-opacity="0.2" d="M-100 -100L200 -100L200 20L-100 20Z" style="animation: path2 30s linear infinite alternate;" />
 </svg>
+{% if app.session.flashBag.has('success') %}
+    <div class="alert alert-success">{{ app.session.flashBag.get('success')[0] }}</div>
+{% endif %}
 <section class="presentation">
   <div class="row">
     <div class="col-sm-6">
@@ -54,8 +57,7 @@
 <section class="favorites">
   <h1>Vos recettes favorites</h1>
   <div class="cards">
-    {% set favoriteRecipes = recipes|filter(recipe => recipe.favorite) %}
-    {% for recipe in favoriteRecipes|slice(0, 3) %}
+    {% for recipe in favoriteRecipes %}
       <div class="card">
         <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}">
           <div class="card-image">
@@ -74,6 +76,9 @@
     {% endfor %}
   </div>
 </section>
+
+
+
 
 <script>
   function fetchData(url, callback) {
@@ -136,10 +141,4 @@
   });
 
 </script>
-
-
-
-
-
-
 {% endblock %}

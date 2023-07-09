@@ -46,6 +46,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Liked::class)]
     private Collection $likeds;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $newsletterSubscription = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -231,6 +234,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $liked->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isNewsletterSubscription(): ?bool
+    {
+        return $this->newsletterSubscription;
+    }
+
+    public function setNewsletterSubscription(?bool $newsletterSubscription): self
+    {
+        $this->newsletterSubscription = $newsletterSubscription;
 
         return $this;
     }

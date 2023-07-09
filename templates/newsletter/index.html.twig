@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription newsletter{% endblock %}
+
+{% block body %}
+<div class="newsletter newsletter--top">
+ <img src="/images/Newsletter-lucky-delices.png" alt="Image newsletter" class="newsletter-image" >
+
+    <h3 class="newsletter-title">Inscrivez-vous à notre newsletter</h3>
+    <p class="newsletter-description">Recevez les dernières recettes directement dans votre boîte de réception !</p>
+
+    <form action="{{ path('app_newsletter') }}" method="POST" class="newsletter-form">
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-add active mt-3">S'inscrire</button>
+    </form>
+    
+    {% if app.request.query.get('success') == 'subscribed' %}
+        <p class="success-message mt-3">Vous êtes maintenant inscrit à notre newsletter !</p>
+    {% elseif app.request.query.get('error') == 'already_subscribed' %}
+        <p class="error-message mt-3">Vous êtes déjà inscrit à notre newsletter.</p>
+    {% endif %}
+</div>
+{% endblock %}

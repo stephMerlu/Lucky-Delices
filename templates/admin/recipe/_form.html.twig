@@ -35,6 +35,15 @@
         <div class="col-md-7 mb-3">{{ form_label(form.time, null, {'label_attr': {'class': 'my-custom-label'}}) }}</div>
         <div class="col-md-10">{{ form_widget(form.time, {'attr': {'class': 'form-control'}}) }}</div>
     </div>
+<div class="row mb-3 ms-2">
+    <div class="col-md-7 mb-3">
+        {{ form_label(form.favorite, null, {'label_attr': {'class': 'my-custom-label'}}) }}
+    </div>
+    <div class="col-md-10">
+        {{ form_widget(form.favorite, {'attr': {'class': 'form-check-input'}}) }}
+        {{ form_label(form.favorite) }}
+    </div>
+</div>
     <div class="row mb-3 ms-2">
         <div class="col-md-7 mb-3">{{ form_label(form.imageFile, null, {'label_attr': {'class': 'my-custom-label'}}) }}</div>
         <div class="col-md-10">{{ form_widget(form.imageFile) }}</div>

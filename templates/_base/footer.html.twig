@@ -1,73 +1,90 @@
 <footer>
-    <div class="newsletter">
-        <h3>Inscrivez-vous à notre newsletter pour recevoir les dernières recettes directement dans votre boîte de réception ! Vous serez informé à chaque fois qu'une nouvelle recette est publiée.</h3>
-        <form class="d-flex mt-5 justify-content-center">
-            <input id="email" type="email" class="form-control mx-4 w-50 shadow" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Votre adresse mail ...">
-            <button class="btn btn-outline-my-custom btn-login mt-2 mt-lg-0" href="#" type="submit">Envoyer</button>
-        </form>
-    </div>
-        <section class="networks">
-        <div class="contenair">
+<div class="newsletter">
+    {% if app.user %}
+        <a href="{{ path('app_newsletter') }}" style="text-decoration: underline; color: rgb(167, 199, 150);">
+            <h3>
+                Inscrivez-vous à notre newsletter pour recevoir les dernières recettes directement dans votre boîte de réception !
+                Vous serez informé à chaque fois qu'une nouvelle recette est publiée.
+            </h3>
+        </a>
+    {% else %}
+            <h3>
+                Inscrivez-vous à notre newsletter pour recevoir les dernières recettes directement dans votre boîte de réception !
+                Vous serez informé à chaque fois qu'une nouvelle recette est publiée.
+            </h3>
+            <p>Pour recevoir notre newsletter, vous devez d'abord vous inscrire sur notre site.</p>
+        <a href="{{ path('app_register') }}" style="text-decoration: underline; color: rgb(167, 199, 150);">S'inscrire</a>
+    {% endif %}
+</div>
+    <section class="networks">
+        <div class="contenair mt-2">
             <div class="icon facebook">
-                <span><img src="/images/logoFace.png" alt=""></span>
-              </div>
-              <div class="icon instagram">
-                <span><img src="/images/logoInsta.png" alt=""></span>
-              </div>
-              <div class="icon youtube">
-                <span><img src="/images/logoYoutube.png" alt=""></span>
-              </div>
+                <a href="https://www.facebook.com/LuckyDelice/" target="_blank">
+                    <span><img src="/images/logoFace.png" alt=""></span>
+                </a>
+            </div>
+            <div class="icon instagram">
+                <a href="https://www.instagram.com/luckydelices/" target="_blank">
+                    <span><img src="/images/logoInsta.png" alt=""></span>
+                </a>
+            </div>
+            <div class="icon youtube">
+                <a href="https://www.youtube.com/c/LuckyD%C3%A9lices/videos" target="_blank">
+                    <span><img src="/images/logoYoutube.png" alt=""></span>
+                </a>
+            </div>
         </div>
     </section>
-<div class="footer-info">
-    <div class="row">
-        <div class="col">
-            <h4 class="sitemap">Plan du site</h4>
-            <ul style="list-style-type: none">
-                <li><a href="{{ path('app_home') }}" class="site-link">Accueil</a></li>
-            </ul>
-        </div>
-        <div class="col">
-            <h4 class="sitemap">Entrées</h4>
-            <ul style="list-style-type: none">
-                <li><a href="{{ path('app_entrees') }}" class="site-link">Toutes les entrées</a></li>
-                <li><a href="{{ path('app_entrees') }}#apero" class="sub-site-link">Pour l'apéritif</a></li>
-                <li><a href="{{ path('app_entrees') }}#entree-froide" class="sub-site-link">Entrée froide</a></li>
-                <li><a href="{{ path('app_entrees') }}#entree-chaude" class="sub-site-link">Entrée chaude</a></li>
-            </ul>
-        </div>
-        <div class="col">
-            <h4 class="sitemap">Plats</h4>
-            <ul style="list-style-type: none">
-                <li><a href="{{ path('app_plats') }}" class="site-link">Tous les plats</a></li>
-                <li><a href="{{ path('app_plats') }}#poulet" class="sub-site-link">Poulet</a></li>
-                <li><a href="{{ path('app_plats') }}#boeuf" class="sub-site-link">Boeuf</a></li>
-                <li><a href="{{ path('app_plats') }}#porc" class="sub-site-link">Porc</a></li>
-                <li><a href="{{ path('app_plats') }}#canard" class="sub-site-link">Canard</a></li>
-                <li><a href="{{ path('app_plats') }}#poisson" class="sub-site-link">Poisson</a></li>
-                <li><a href="{{ path('app_plats') }}#vegetarien" class="sub-site-link">Végétarien</a></li>
-            </ul>
-        </div>
-        <div class="col">
-            <h4 class="sitemap">Desserts</h4>
-            <ul style="list-style-type: none">
-                <li><a href="{{ path('app_desserts') }}" class="site-link">Tous les desserts</a></li>
-                <li><a href="{{ path('app_desserts') }}#chocolat" class="sub-site-link">Chocolat</a></li>
-                <li><a href="{{ path('app_desserts') }}#fruit" class="sub-site-link">Fruit</a></li>
-                <li><a href="{{ path('app_desserts') }}#macaron" class="sub-site-link">Macaron</a></li>
-                <li><a href="{{ path('app_desserts') }}#autre" class="sub-site-link">Autres gourmandises</a></li>
-            </ul>
-        </div>
-        <div class="col">
-            <h4 class="sitemap">Liens légaux</h4>
-            <ul style="list-style-type: none">
-                <li><a href="{{ path('app_mentions') }}" class="sub-site-link">Mentions légales</a></li>
-                <li><a href="{{ path('app_politiques') }}" class="sub-site-link">Politiques de confidentialité</a></li>
-            </ul>
+
+    <div class="footer-info">
+        <div class="row">
+            <!-- Plan du site -->
+            <div class="col">
+                <h4 class="sitemap">Plan du site</h4>
+                <ul style="list-style-type: none">
+                    <li><a href="{{ path('app_home') }}" class="site-link">Accueil</a></li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4 class="sitemap">Entrées</h4>
+                <ul style="list-style-type: none">
+                    <li><a href="{{ path('app_entrees') }}" class="site-link">Toutes les entrées</a></li>
+                    <li><a href="{{ path('app_entrees') }}#apero" class="sub-site-link">Pour l'apéritif</a></li>
+                    <li><a href="{{ path('app_entrees') }}#entree-froide" class="sub-site-link">Entrée froide</a></li>
+                    <li><a href="{{ path('app_entrees') }}#entree-chaude" class="sub-site-link">Entrée chaude</a></li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4 class="sitemap">Plats</h4>
+                <ul style="list-style-type: none">
+                    <li><a href="{{ path('app_plats') }}" class="site-link">Tous les plats</a></li>
+                    <li><a href="{{ path('app_plats') }}#poulet" class="sub-site-link">Poulet</a></li>
+                    <li><a href="{{ path('app_plats') }}#boeuf" class="sub-site-link">Boeuf</a></li>
+                    <li><a href="{{ path('app_plats') }}#porc" class="sub-site-link">Porc</a></li>
+                    <li><a href="{{ path('app_plats') }}#canard" class="sub-site-link">Canard</a></li>
+                    <li><a href="{{ path('app_plats') }}#poisson" class="sub-site-link">Poisson</a></li>
+                    <li><a href="{{ path('app_plats') }}#vegetarien" class="sub-site-link">Végétarien</a></li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4 class="sitemap">Desserts</h4>
+                <ul style="list-style-type: none">
+                    <li><a href="{{ path('app_desserts') }}" class="site-link">Tous les desserts</a></li>
+                    <li><a href="{{ path('app_desserts') }}#chocolat" class="sub-site-link">Chocolat</a></li>
+                    <li><a href="{{ path('app_desserts') }}#fruit" class="sub-site-link">Fruit</a></li>
+                    <li><a href="{{ path('app_desserts') }}#macaron" class="sub-site-link">Macaron</a></li>
+                    <li><a href="{{ path('app_desserts') }}#autre" class="sub-site-link">Autres gourmandises</a></li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4 class="sitemap">Liens légaux</h4>
+                <ul style="list-style-type: none">
+                    <li><a href="{{ path('app_mentions') }}" class="sub-site-link">Mentions légales</a></li>
+                    <li><a href="{{ path('app_politiques') }}" class="sub-site-link">Politiques de confidentialité</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
-
     <div class="copyright">
         <p>&copy; {{ "now"|date("Y") }} LuckyDelices</p>
         <p>Made by Stéphanie Merluzzo</p>

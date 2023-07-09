@@ -14,9 +14,11 @@ class HomeController extends AbstractController
     public function index(RecipeRepository $recipeRepository): Response
     {
         $recentRecipes = $recipeRepository->findRecentRecipes(3);
+        $favoriteRecipes = $recipeRepository->findFavoriteRecipes();
 
         return $this->render('home/index.html.twig', [
             'recipes' => $recentRecipes,
+            'favoriteRecipes' => $favoriteRecipes,
         ]);
     }
 
@@ -46,6 +48,16 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'recipes' => $recentRecipes,
+        ]);
+    }
+
+    #[Route("/recipes/favorites", name: "favorite_recipes", methods: ["GET"])]
+    public function getFavoriteRecipes(RecipeRepository $recipeRepository): Response
+    {
+        $favoriteRecipes = $recipeRepository->findFavoriteRecipes();
+
+        return $this->render('home/index.html.twig', [
+            'recipes' => $favoriteRecipes,
         ]);
     }
 }

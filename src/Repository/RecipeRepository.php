@@ -89,12 +89,28 @@ public function searchRecipes($searchTerm, $searchBy)
 public function findRecentRecipes($limit)
 {
     return $this->createQueryBuilder('r')
-        ->orderBy('r.updatedAt', 'DESC')
+        ->orderBy('r.updatedAt', 'DESC') 
         ->setMaxResults($limit)
         ->getQuery()
         ->getResult();
 }
 
+public function findFavoriteRecipes()
+{
+    return $this->createQueryBuilder('r')
+        ->andWhere('r.favorite = true')
+        ->getQuery()
+        ->getResult();
+}
+
+public function findNewsletterRecipe(): ?Recipe
+{
+    return $this->createQueryBuilder('r')
+        ->setMaxResults(1)
+        ->orderBy('r.createdAt', 'DESC')
+        ->getQuery()
+        ->getOneOrNullResult();
+}
 //    public function findOneBySomeField($value): ?Recipe
 //    {
 //        return $this->createQueryBuilder('r')
