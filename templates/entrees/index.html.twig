@@ -27,9 +27,20 @@
                     <img src="/images/lucky2.png" />
                     <div class="card-body"> 
                         <p class="card-text">
-                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
-                                <i class="fa-regular fa-bookmark float-end"></i>
+                          {% if app.user %}
+                          <div class="user-logged-in">
+                            {% set isUserLiked = recipe.id in likedRecipeIds %}
+                            {% if isUserLiked %}
+                            <a href="#" class="bookmark liked" data-recipe-id="{{ recipe.id }}">
+                              <i class="fas fa-bookmark float-end"></i>
                             </a>
+                            {% else %}
+                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
+                              <i class="far fa-bookmark float-end"></i>
+                            </a>
+                            {% endif %}
+                          </div>
+                          {% endif %}
                             <ul>
                                 <li>Temps : <span>{{ recipe.time }}</span></li>
                                 <li>Lien Youtube : <span><a href="{{ recipe.youtube }}">Cliquez ici</a></span></li>
@@ -43,7 +54,9 @@
             </div> 
             {% endfor %}
         </div>
-    </div> 
+    </div>
+    <button class="prev-apero btn btn-add active">Précédent</button>
+    <button class="next-apero btn btn-add active">Suivant</button> 
 </section>
 <section class="entrees-froides">
   <h2 id="entree-froide">Mes entrées froides</h2>
@@ -59,9 +72,20 @@
                     <img src="/images/lucky2.png" />
                     <div class="card-body"> 
                         <p class="card-text">
-                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
-                                <i class="fa-regular fa-bookmark float-end"></i>
+                          {% if app.user %}
+                          <div class="user-logged-in">
+                            {% set isUserLiked = recipe.id in likedRecipeIds %}
+                            {% if isUserLiked %}
+                            <a href="#" class="bookmark liked" data-recipe-id="{{ recipe.id }}">
+                              <i class="fas fa-bookmark float-end"></i>
                             </a>
+                            {% else %}
+                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
+                              <i class="far fa-bookmark float-end"></i>
+                            </a>
+                            {% endif %}
+                          </div>
+                          {% endif %}
                             <ul>
                                 <li>Temps : <span>{{ recipe.time }}</span></li>
                                 <li>Lien Youtube : <span><a href="{{ recipe.youtube }}">Cliquez ici</a></span></li>
@@ -75,7 +99,10 @@
             </div> 
             {% endfor %}
         </div>
-    </div>  
+    </div>
+
+        <button class="prev-entrees-froides btn btn-add active">Précédent</button>
+        <button class="next-entrees-froides btn btn-add active">Suivant</button>
 </section>
 <section class="entrees-chaudes">
   <h2 id="entree-chaude">Mes entrées chaudes</h2>
@@ -91,9 +118,20 @@
                     <img src="/images/lucky2.png" />
                     <div class="card-body"> 
                         <p class="card-text">
-                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
-                                <i class="fa-regular fa-bookmark float-end"></i>
+                          {% if app.user %}
+                          <div class="user-logged-in">
+                            {% set isUserLiked = recipe.id in likedRecipeIds %}
+                            {% if isUserLiked %}
+                            <a href="#" class="bookmark liked" data-recipe-id="{{ recipe.id }}">
+                              <i class="fas fa-bookmark float-end"></i>
                             </a>
+                            {% else %}
+                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
+                              <i class="far fa-bookmark float-end"></i>
+                            </a>
+                            {% endif %}
+                          </div>
+                          {% endif %}
                             <ul>
                                 <li>Temps : <span>{{ recipe.time }}</span></li>
                                 <li>Lien Youtube : <span><a href="{{ recipe.youtube }}">Cliquez ici</a></span></li>
@@ -108,6 +146,8 @@
             {% endfor %}
         </div>
     </div> 
+    <button class="prev-entrees-chaudes btn btn-add active">Précédent</button>
+    <button class="next-entrees-chaudes btn btn-add active">Suivant</button>
 </section>
 <section class="sauce">
   <h2 id="sauces">Mes sauces</h2>
@@ -123,9 +163,20 @@
                     <img src="/images/lucky2.png" />
                     <div class="card-body"> 
                         <p class="card-text">
-                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
-                                <i class="fa-regular fa-bookmark float-end"></i>
+                          {% if app.user %}
+                          <div class="user-logged-in">
+                            {% set isUserLiked = recipe.id in likedRecipeIds %}
+                            {% if isUserLiked %}
+                            <a href="#" class="bookmark liked" data-recipe-id="{{ recipe.id }}">
+                              <i class="fas fa-bookmark float-end"></i>
                             </a>
+                            {% else %}
+                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
+                              <i class="far fa-bookmark float-end"></i>
+                            </a>
+                            {% endif %}
+                          </div>
+                          {% endif %}
                             <ul>
                                 <li>Temps : <span>{{ recipe.time }}</span></li>
                                 <li>Lien Youtube : <span><a href="{{ recipe.youtube }}">Cliquez ici</a></span></li>
@@ -140,5 +191,85 @@
             {% endfor %}
         </div>
     </div>  
+    <button class="prev-sauces btn btn-add active">Précédent</button>
+    <button class="next-sauces btn btn-add active">Suivant</button>
 </section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  function setupCategoryNavigation(categorySelector, prevButtonSelector, nextButtonSelector) {
+    var categoryRecipes = document.querySelectorAll(categorySelector + ' .card');
+    var categoryIndex = 0;
+    var recipeCount = 5;
+
+    for (var i = recipeCount; i < categoryRecipes.length; i++) {
+      categoryRecipes[i].style.display = 'none';
+    }
+
+    var prevButton = document.querySelector(prevButtonSelector);
+    var nextButton = document.querySelector(nextButtonSelector);
+
+    var categorySection = document.querySelector(categorySelector);
+
+    function checkButtons() {
+      if (categoryIndex === 0) {
+        prevButton.style.display = 'none';
+      } else {
+        prevButton.style.display = 'block';
+      }
+
+      if (categoryIndex + recipeCount >= categoryRecipes.length) {
+        nextButton.style.display = 'none';
+      } else {
+        nextButton.style.display = 'block';
+      }
+    }
+
+    nextButton.addEventListener('click', function() {
+      for (var i = categoryIndex; i < categoryIndex + recipeCount; i++) {
+        if (categoryRecipes[i]) {
+          categoryRecipes[i].style.display = 'none';
+        }
+      }
+
+      categoryIndex += recipeCount;
+      for (var i = categoryIndex; i < categoryIndex + recipeCount; i++) {
+        if (categoryRecipes[i]) {
+          categoryRecipes[i].style.display = 'block';
+        }
+      }
+
+      checkButtons();
+
+      categorySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    prevButton.addEventListener('click', function() {
+      for (var i = categoryIndex; i < categoryIndex + recipeCount; i++) {
+        if (categoryRecipes[i]) {
+          categoryRecipes[i].style.display = 'none';
+        }
+      }
+
+      categoryIndex -= recipeCount;
+      for (var i = categoryIndex; i < categoryIndex + recipeCount; i++) {
+        if (categoryRecipes[i]) {
+          categoryRecipes[i].style.display = 'block';
+        }
+      }
+
+      checkButtons();
+
+      categorySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    checkButtons();
+  }
+
+  setupCategoryNavigation('.apero', '.prev-apero', '.next-apero');
+  setupCategoryNavigation('.entrees-froides', '.prev-entrees-froides', '.next-entrees-froides');
+  setupCategoryNavigation('.entrees-chaudes', '.prev-entrees-chaudes', '.next-entrees-chaudes');
+  setupCategoryNavigation('.sauces', '.prev-sauces', '.next-sauces');
+});
+
+</script>
 {% endblock %}

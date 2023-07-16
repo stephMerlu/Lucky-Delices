@@ -3,6 +3,13 @@
 {% block title %}Mon compte{% endblock %}
 
 {% block body %}
+    {% for flashType, flashMessages in app.flashes %}
+        {% for flashMessage in flashMessages %}
+            <div class="alert alert-{{ flashType }}">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+    {% endfor %}
     <div class="container my-5">
         <h1 class="mb-5">Mon compte</h1>
 
@@ -43,9 +50,9 @@
                     </div>
                     <div class="card-body">
                         <dl class="row">
-                            <dt class="col-sm-4">Mon nom de famille:</dt>
-                            <dd class="col-sm-8">{{ firstName }}</dd>
                             <dt class="col-sm-4">Mon prénom:</dt>
+                            <dd class="col-sm-8">{{ firstName }}</dd>
+                            <dt class="col-sm-4">Mon nom de famille:</dt>
                             <dd class="col-sm-8">{{ lastName }}</dd>
                             <dt class="col-sm-4">Ma description:</dt>
                             <dd class="col-sm-8">{{ description }}</dd>
@@ -53,10 +60,9 @@
                     </div>
                 </div>
             </div>
+            <a href="{{ path('user_profile_edit') }}" class="btn btn-add active float-end">Modifier le profil</a>
         </div>
 
-        <a href="{{ path('user_profile_edit') }}" class="btn btn-add active float-end">Modifier le profil</a>
-    
             <div class="row mt-5">
             <div class="col-md-12">
                 <h2>Recettes aimées</h2>
@@ -73,5 +79,6 @@
                 {% endif %}
             </div>
         </div>
+        <a href="{{ path('delete_account') }}" class="btn btn-danger float-end mt-5" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')">Supprimer le compte</a>
     </div>
 {% endblock %}

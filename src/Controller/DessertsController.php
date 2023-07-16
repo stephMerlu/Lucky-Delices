@@ -17,12 +17,28 @@ class DessertsController extends AbstractController
         $macaronRecipes = $recipeRepository->findByCategory("Macaron");
         $autresGourmandissesRecipes = $recipeRepository->findByCategory("Autres gourmandises");
     
+        $user = $this->getUser();
+        $likedRecipeIds = [];
+        
+        if ($user) {
+            $likeds = $user->getLikeds();
+            $likeds->initialize(); 
+
+            foreach ($likeds as $liked) {
+                $likedRecipe = $liked->getRecipe();
+                if ($likedRecipe) {
+                    $likedRecipeIds[] = $likedRecipe->getId();
+                }
+            }
+        }
+
         return $this->render('desserts/index.html.twig', [
             'controller_name' => 'DessertsController',
             'chocolatRecipes' => $chocolatRecipes,
             'fruitRecipes' => $fruitRecipes,
             'macaronRecipes' => $macaronRecipes,
             'autresGourmandissesRecipes' => $autresGourmandissesRecipes,
+            'likedRecipeIds' => $likedRecipeIds,
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Recipe;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -111,6 +112,20 @@ public function findNewsletterRecipe(): ?Recipe
         ->getQuery()
         ->getOneOrNullResult();
 }
+
+public function findByLikedRecipesByUser(User $user): array
+{
+    $likedRecipes = $this->createQueryBuilder('r')
+        ->select('r.id')
+        ->join('r.likeds', 'l')
+        ->andWhere('l.user = :user')
+        ->setParameter('user', $user)
+        ->getQuery()
+        ->getScalarResult();
+
+    return array_column($likedRecipes, 'id');
+}
+
 //    public function findOneBySomeField($value): ?Recipe
 //    {
 //        return $this->createQueryBuilder('r')

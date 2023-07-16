@@ -28,8 +28,13 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_recipe_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, RecipeRepository $recipeRepository, MailerInterface $mailer, UserRepository $userRepository): Response
-    {
+    public function new(
+        Request $request, 
+        RecipeRepository $recipeRepository, 
+        MailerInterface $mailer, 
+        UserRepository $userRepository
+        ): Response {
+
         $recipe = new Recipe();
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
@@ -46,7 +51,8 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    private function sendNewsletter(Recipe $recipe, MailerInterface $mailer, UserRepository $userRepository): void
+    private function sendNewsletter(
+        Recipe $recipe, MailerInterface $mailer, UserRepository $userRepository): void
     {
         $users = $userRepository->findBy(['newsletterSubscription' => true]);
     
@@ -64,7 +70,8 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_recipe_show', methods: ['GET'])]
-    public function show(Recipe $recipe, CommentRepository $commentRepository): Response
+    public function show(
+        Recipe $recipe, CommentRepository $commentRepository): Response
     {
         $comments = $commentRepository->showCommentsByRecipeId($recipe->getId());
         return $this->render('recipe/show.html.twig', [
@@ -74,7 +81,8 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_recipe_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
+    public function edit(
+        Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
     {
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
@@ -92,7 +100,8 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_recipe_delete', methods: ['POST'])]
-    public function delete(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
+    public function delete(
+        Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $recipe->getId(), $request->request->get('_token'))) {
             $recipeRepository->remove($recipe, true);

@@ -14,8 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class PresentationRecetteController extends AbstractController
 {
     #[Route('/presentation/recette/{id}', name: 'app_presentation_recette')]
-    public function index(Request $request, RecipeRepository $recipeRepository, CommentRepository $commentRepository, int $id): Response
-    {
+    public function index(
+        Request $request, 
+        RecipeRepository $recipeRepository, 
+        CommentRepository $commentRepository, 
+        int $id
+        ): Response {
         $recipe = $recipeRepository->find($id);
         
         $comment = new Comment();
@@ -24,7 +28,8 @@ class PresentationRecetteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setUser($this->getUser());
-            $comment->setCommentRecipe($recipe);            $commentRepository->save($comment, true);
+            $comment->setCommentRecipe($recipe);            
+            $commentRepository->save($comment, true);
             $this->addFlash('success', 'Comment added successfully!');
             return $this->redirectToRoute('app_presentation_recette', ['id' => $id]);
         }

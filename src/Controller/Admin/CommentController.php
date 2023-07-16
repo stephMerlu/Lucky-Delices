@@ -25,8 +25,12 @@ class CommentController extends AbstractController
     }
 
     #[Route('/new/{CommentRecipe}', name: 'app_admin_comment_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CommentRepository $commentRepository, $recipeId): Response
-    {
+    public function new(
+        Request $request, 
+        CommentRepository $commentRepository, 
+        $recipeId
+        ): Response {
+
         $comment = new Comment();
         $recipe = $commentRepository->getEntityManager()->getRepository('App:Recipe')->find($recipeId);
         $comment->setRecipe($recipe);
@@ -54,8 +58,12 @@ class CommentController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_comment_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Comment $comment, CommentRepository $commentRepository): Response
-    {
+    public function edit(
+        Request $request, 
+        Comment $comment, 
+        CommentRepository $commentRepository
+        ): Response {
+
         $form = $this->createForm(CommentAdminType::class, $comment);
         $form->handleRequest($request);
 
@@ -72,8 +80,12 @@ class CommentController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_comment_delete', methods: ['POST'])]
-    public function delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
-    {
+    public function delete(
+        Request $request, 
+        Comment $comment, 
+        CommentRepository $commentRepository
+        ): Response {
+            
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment, true);
         }

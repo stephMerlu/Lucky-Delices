@@ -25,9 +25,10 @@ class UserProfile
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\OneToOne(targetEntity: User::class, inversedBy: 'userProfile')]
+    #[ORM\OneToOne(targetEntity: User::class, inversedBy: 'userProfile', cascade: ["persist", "remove"])]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private ?User $user = null;
+    
     
     #[ORM\ManyToOne(targetEntity: UserProfile::class, inversedBy: 'userProfiles')]
     #[ORM\JoinColumn(name: 'parent_profile_id', referencedColumnName: 'id')]

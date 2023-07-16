@@ -44,7 +44,6 @@ class NewsletterController extends AbstractController
                     $userRepository->save($existingUser, true);
                 }
 
-                // Envoi de l'e-mail de confirmation
                 $this->sendConfirmationEmail($email);
 
                 return $this->redirectToRoute('app_newsletter', ['success' => 'subscribed']);
@@ -78,7 +77,6 @@ class NewsletterController extends AbstractController
                     $userRepository->save($existingUser, true);
                 }
 
-                // Envoi de l'e-mail de confirmation
                 $this->sendConfirmationEmail($email);
 
                 return $this->redirectToRoute('app_footer_newsletter', ['success' => 'subscribed']);
@@ -97,7 +95,7 @@ class NewsletterController extends AbstractController
         $message = (new Email())
             ->from('newsletter@example.com')
             ->to($email)
-            ->subject('Confirmation d\'inscription à la newsletter')
+            ->subject("Confirmation d'inscription à la newsletter")
             ->html($this->twig->render('newsletter/confirmation.html.twig'));
 
         $this->mailer->send($message);

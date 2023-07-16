@@ -24,6 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UserProfileController extends AbstractController
 {
@@ -32,58 +33,73 @@ class UserProfileController extends AbstractController
     public function index(
         Request $request,
         UserRepository $userRepository,
-        UserProfileRepository $userProfileRepository,
         LikedRepository $likedRepository
     ): Response {
         $user = $this->getUser();
-        if (!$user instanceof User) {
-            return $this->redirectToRoute('app_login');
+        
+        $likedRecipes = $likedRepository->findByUser($user);
+        
+        $likedRecipeIds = [];
+        foreach ($likedRecipes as $liked) {
+            $recipe = $liked->getRecipe();
+            $likedRecipeIds[] = $recipe->getId();
         }
-    
-        $userProfile = $user->getUserProfile() ?? new UserProfile();
-    
+        
+        $userProfile = $user->getUserProfile();
+        
         $form = $this->createForm(UserProfileType::class, $userProfile);
         $form->handleRequest($request);
-    
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setUserProfile($userProfile);
+            $user->setNewsletterSubscription($userProfile->isNewsletterSubscription());
             $userRepository->save($user, true);
             $this->addFlash('success', 'Your profile has been updated.');
-    
+        
             return $this->redirectToRoute('app_home');
         }
-    
+        
+        $newsletterSubscription = $user->isNewsletterSubscription();
+        
         $firstName = null;
-        $lastName = null;
-        $description = null;
-        $email = null;
-        $newsletterSubscription = false;
         if ($userProfile instanceof UserProfile) {
             $firstName = $userProfile->getFirstName();
-            $lastName = $userProfile->getLastName();
-            $description = $userProfile->getDescription();
-            $email = $userProfile->getEmail();
-            $newsletterSubscription = $user->isNewsletterSubscription();
         } else {
             $firstName = $user->getUsername();
-            $newsletterSubscription = $user->isNewsletterSubscription();
         }
-    
-        $likedRecipes = $likedRepository->findLikedRecipesByUserProfile($userProfile);
-    
+        
+        $lastName = null;
+        if ($userProfile instanceof UserProfile) {
+            $lastName = $userProfile->getLastName();
+        }
+        
+        $description = null;
+        if ($userProfile instanceof UserProfile) {
+            $description = $userProfile->getDescription();
+        }
+
+        $likedRecipeIds = [];
+        foreach ($likedRecipes as $liked) {
+            $recipe = $liked->getRecipe();
+            $likedRecipeIds[] = $recipe->getId();
+        }
+        
+        
         return $this->render('user_profile/index.html.twig', [
             'user' => $user,
             'userProfile' => $userProfile,
-            'lastName' => $lastName,
-            'firstName' => $firstName,
-            'description' => $description ?? null,
-            'email' => $email ?? null,
-            'newsletterSubscription' => $newsletterSubscription,
             'form' => $form->createView(),
             'likedRecipes' => $likedRecipes,
+            'likedRecipeIds' => $likedRecipeIds,
+            'newsletterSubscription' => $newsletterSubscription,
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'description' => $description ?? null,
+            'likedRecipeIds' => $likedRecipeIds,
         ]);
     }
+    
 
+    
     #[Route('/user/profile/edit', name: 'user_profile_edit')]
     #[IsGranted("ROLE_USER")]
     public function edit(
@@ -91,6 +107,7 @@ class UserProfileController extends AbstractController
         UserProfileRepository $userProfileRepository,
         UserRepository $userRepository
     ): Response {
+
         $user = $this->getUser();
 
         $userProfile = $user->getUserProfile();
@@ -132,6 +149,7 @@ class UserProfileController extends AbstractController
         UserPasswordHasherInterface $passwordHasher,
         UserRepository $userRepository
     ): Response {
+
         $user = $this->getUser();
 
         $form = $this->createForm(ChangePasswordType::class, $user);
@@ -157,8 +175,14 @@ class UserProfileController extends AbstractController
     
     #[Route('/presentation/recipe/{recipeId}', name: 'presentation_recipe', methods: ['GET', 'POST'])]
     #[IsGranted("ROLE_USER")]
-    public function showRecipe(int $recipeId, Request $request, RecipeRepository $recipeRepository, CommentRepository $commentRepository, EntityManagerInterface $entityManager): Response 
-    {
+    public function showRecipe(
+        int $recipeId, 
+        Request $request, 
+        RecipeRepository $recipeRepository, 
+        CommentRepository $commentRepository, 
+        EntityManagerInterface $entityManager
+    ): Response {
+
         $recipe = $recipeRepository->find($recipeId);
         $comments = $commentRepository->findBy([
             'validated' => true,
@@ -186,8 +210,6 @@ class UserProfileController extends AbstractController
             'commentForm' => $commentForm->createView(),
         ]);
     }
-    
-    
 
     #[Route('/like-recipe/{recipeId}', name: 'like_recipe', methods: ['POST', 'DELETE'])]
     #[IsGranted("ROLE_USER")]
@@ -195,23 +217,24 @@ class UserProfileController extends AbstractController
         Request $request,
         int $recipeId,
         LikedRepository $likedRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        TokenStorageInterface $tokenStorage
     ): JsonResponse {
         $user = $this->getUser();
         $recipe = $entityManager->getRepository(Recipe::class)->find($recipeId);
-
+    
         if (!$user || !$recipe) {
             return $this->json(['success' => false, 'error' => 'User or recipe not found']);
         }
-
+    
         $liked = $likedRepository->findOneBy(['user' => $user, 'recipe' => $recipe]);
-
+    
         if ($request->isMethod('POST')) {
             if (!$liked) {
                 $liked = new Liked();
                 $liked->setUser($user);
                 $liked->setRecipe($recipe);
-
+    
                 $likedRepository->save($liked, true);
             }
         } elseif ($request->isMethod('DELETE')) {
@@ -219,24 +242,71 @@ class UserProfileController extends AbstractController
                 $likedRepository->remove($liked, true);
             }
         }
-
-        return $this->json(['success' => true]);
-    }
-
-    #[Route('/unsubscribe-newsletter', name: 'unsubscribe_newsletter')]
-    public function unsubscribeNewsletter(UserRepository $userRepository): Response
-    {
-        $user = $this->getUser();
     
-        if ($user instanceof User) {
-            $user->setNewsletterSubscription(false);
-            $userRepository->save($user, true);
+        $likedRecipes = $likedRepository->findByUser($user);
     
-            // Affichez un message de confirmation ou redirigez l'utilisateur vers une autre page
-            $this->addFlash('success', 'Vous avez été désinscrit de la newsletter avec succès.');
+        $likedRecipeIds = [];
+        foreach ($likedRecipes as $liked) {
+            $recipe = $liked->getRecipe();
+            $likedRecipeIds[] = $recipe->getId();
         }
     
-        return $this->redirectToRoute('app_user_profile');
+        $isUserLoggedIn = $tokenStorage->getToken() !== null;
+    
+        return $this->json(['success' => true, 'likedRecipeIds' => $likedRecipeIds, 'isUserLoggedIn' => $isUserLoggedIn]);
     }
+        
+    #[Route('/unsubscribe-newsletter', name: 'unsubscribe_newsletter')]
+    public function unsubscribeNewsletter(UserRepository $userRepository): Response
+{
+    $user = $this->getUser();
+
+    if ($user instanceof User) {
+        $user->setNewsletterSubscription(false);
+        $userRepository->save($user, true);
+
+        $this->addFlash('success', 'Vous avez été désinscrit de la newsletter avec succès.');
+    }
+
+    return $this->redirectToRoute('app_user_profile');
+}
+
+    #[Route('/user/delete-account', name: 'delete_account')]
+    #[IsGranted("ROLE_USER")]
+    public function deleteAccount(
+        UserRepository $userRepository, 
+        UserProfileRepository $userProfileRepository,
+        CommentRepository $commentRepository,
+        LikedRepository $likedRepository,
+        EntityManagerInterface $entityManager,
+        TokenStorageInterface $tokenStorage
+    ): Response {
+        
+        $user = $this->getUser();
+    
+        $userLikes = $likedRepository->findBy(['user' => $user]);
+        foreach ($userLikes as $like) {
+            $likedRepository->remove($like, true);
+        }
+
+        $userProfile = $user->getUserProfile();
+        if ($userProfile) {
+            $userProfileRepository->remove($userProfile, true);
+        }
+    
+        $userComments = $commentRepository->findBy(['user' => $user]);
+        foreach ($userComments as $comment) {
+            $commentRepository->remove($comment, true);
+        }
+    
+        $userRepository->remove($user, true);
+        $entityManager->flush();
+    
+        $tokenStorage->setToken(null);
+    
+        $this->addFlash('success', 'Votre compte a bien été supprimé.');
+    
+        return $this->redirectToRoute('app_home');
+    }    
 }
 

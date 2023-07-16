@@ -23,8 +23,11 @@ class HomeController extends AbstractController
     }
 
     #[Route("/recipes/recent", name: "recent_recipes", methods: ["GET"])]
-    public function getRecentRecipes(RecipeRepository $recipeRepository, UploaderHelper $uploaderHelper): JsonResponse
-    {
+    public function getRecentRecipes(
+        RecipeRepository $recipeRepository, 
+        UploaderHelper $uploaderHelper
+        ): JsonResponse {
+            
         $recentRecipes = $recipeRepository->findRecentRecipes(3);
 
         $jsonData = [];

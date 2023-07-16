@@ -52,8 +52,12 @@ class IngredientController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_ingredient_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Ingredient $ingredient, IngredientRepository $ingredientRepository): Response
-    {
+    public function edit(
+        Request $request, 
+        Ingredient $ingredient, 
+        IngredientRepository $ingredientRepository
+        ): Response {
+
         $form = $this->createForm(IngredientType::class, $ingredient);
         $form->handleRequest($request);
 
@@ -70,8 +74,12 @@ class IngredientController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_ingredient_delete', methods: ['POST'])]
-    public function delete(Request $request, Ingredient $ingredient, IngredientRepository $ingredientRepository): Response
-    {
+    public function delete(
+        Request $request, 
+        Ingredient $ingredient, 
+        IngredientRepository $ingredientRepository
+        ): Response {
+            
         if ($this->isCsrfTokenValid('delete'.$ingredient->getId(), $request->request->get('_token'))) {
             $ingredientRepository->remove($ingredient, true);
         }

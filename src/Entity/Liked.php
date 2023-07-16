@@ -47,4 +47,22 @@ class Liked
 
         return $this;
     }
+
+    public function isLikedByUser(User $user): bool
+{
+    foreach ($this->likeds as $liked) {
+        if ($liked->getUser() === $user) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+
+
+
+
+
 }

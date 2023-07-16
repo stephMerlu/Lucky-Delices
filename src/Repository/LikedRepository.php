@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Liked;
+use App\Entity\User;
 use App\Entity\UserProfile;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -65,19 +66,30 @@ class LikedRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-    /**
-     * Returns an array of Liked objects for the given user profile.
-     *
-     * @param UserProfile $userProfile
-     * @return Liked[]
-     */
-    public function findLikedRecipesByUserProfile(UserProfile $userProfile): array
-    {
-        return $this->createQueryBuilder('l')
-            ->leftJoin('l.recipe', 'r')
-            ->andWhere('l.user = :user')
-            ->setParameter('user', $userProfile->getUser())
-            ->getQuery()
-            ->getResult();
+public function findByUser(User $user): array
+{
+    return $this->createQueryBuilder('liked')
+        ->join('liked.recipe', 'recipe')
+        ->andWhere('liked.user = :user')
+        ->setParameter('user', $user)
+        ->getQuery()
+        ->getResult();
+}
+
+
+public function findByRecipeIdsByUser(User $user): array
+{
+    $likedEntities = $this->findByUser($user);
+    $recipeIds = [];
+
+    foreach ($likedEntities as $liked) {
+        $recipe = $liked->getRecipe();
+        $recipeIds[] = $recipe->getId();
     }
+
+    return $recipeIds;
+}
+
+
+
 }

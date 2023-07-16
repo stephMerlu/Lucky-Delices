@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(targetEntity: UserProfile::class, mappedBy: 'user', cascade: ['remove'])]
     private ?UserProfile $userProfile = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Liked::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Liked::class, cascade: ["persist", "remove"])]
     private Collection $likeds;
 
     #[ORM\Column(nullable: true)]

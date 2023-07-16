@@ -16,7 +16,22 @@ class StarterController extends AbstractController
         $entreeFroideRecipes = $recipeRepository->findByCategory("Entrée froide");
         $entreeChaudeRecipes = $recipeRepository->findByCategory("Entrée chaude");
         $saucesRecipes = $recipeRepository->findByCategory("Les sauces");
+
+
+        $user = $this->getUser();
+        $likedRecipeIds = [];
         
+        if ($user) {
+            $likeds = $user->getLikeds();
+            $likeds->initialize(); 
+
+            foreach ($likeds as $liked) {
+                $likedRecipe = $liked->getRecipe();
+                if ($likedRecipe) {
+                    $likedRecipeIds[] = $likedRecipe->getId();
+                }
+            }
+        }
     
         return $this->render('entrees/index.html.twig', [
             'controller_name' => 'EntreesController',
@@ -24,6 +39,7 @@ class StarterController extends AbstractController
             'entreeFroideRecipes' => $entreeFroideRecipes,
             'entreeChaudeRecipes' => $entreeChaudeRecipes,
             'saucesRecipes' => $saucesRecipes,
+            'likedRecipeIds' => $likedRecipeIds,
         ]);
     }
 }

@@ -29,13 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const bookmarks = document.querySelectorAll('.bookmark');
   bookmarks.forEach(bookmark => {
     const recipeId = bookmark.dataset.recipeId;
-    const isLiked = localStorage.getItem(recipeId) === 'liked';
-
-    if (isLiked) {
-      bookmark.classList.add('liked');
-      const icon = bookmark.querySelector('i');
-      icon.classList.add('fas');
-    }
+    const likeRecipe = bookmark.dataset.likeRecipe;
 
     bookmark.addEventListener('click', function(event) {
       event.preventDefault();
@@ -51,9 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.toggle('liked');
             const icon = this.querySelector('i');
             icon.classList.toggle('fas');
-
-            const newState = this.classList.contains('liked') ? 'liked' : 'unliked';
-            localStorage.setItem(recipeId, newState);
           }
         })
         .catch(error => {
@@ -62,3 +53,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+

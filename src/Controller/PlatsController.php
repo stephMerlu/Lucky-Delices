@@ -18,6 +18,21 @@ class PlatsController extends AbstractController
         $canardRecipes = $recipeRepository->findByCategory("Canard");
         $poissonRecipes = $recipeRepository->findByCategory("Poisson");
         $vegetarienRecipes = $recipeRepository->findByCategory("Végétarien");
+
+        $user = $this->getUser();
+        $likedRecipeIds = [];
+        
+        if ($user) {
+            $likeds = $user->getLikeds();
+            $likeds->initialize(); 
+
+            foreach ($likeds as $liked) {
+                $likedRecipe = $liked->getRecipe();
+                if ($likedRecipe) {
+                    $likedRecipeIds[] = $likedRecipe->getId();
+                }
+            }
+        }
     
         return $this->render('plats/index.html.twig', [
             'controller_name' => 'PlatsController',
@@ -27,6 +42,7 @@ class PlatsController extends AbstractController
             'canardRecipes' => $canardRecipes,
             'poissonRecipes' => $poissonRecipes,
             'vegetarienRecipes' => $vegetarienRecipes,
+            'likedRecipeIds' => $likedRecipeIds,
         ]);
     }
 }
