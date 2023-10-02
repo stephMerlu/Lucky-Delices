@@ -12,7 +12,7 @@
 <section class="presentation">
   <div class="row">
     <div class="col-sm-6">
-      <img class="crepe" src="/images/20220330_185609.jpg" alt="">
+      <img class="crepe" src="/images/20220330_185609.jpg" alt="Une crèpe avec un coeur">
     </div>
     <div class="col-sm-6">
       <div class="text">
@@ -28,7 +28,7 @@
   <div class="cards">
     {% for recipe in recipes %}
       <div class="card">
-        <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}">
+        <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}" title="{{ recipe.name }}">
           <div class="card-image">
             <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" />
           </div>
@@ -45,15 +45,12 @@
     {% endfor %}
   </div>
 </section>
-
-
+<section class="video">
+  <h2 class="title">Ma sélection du mois </h2>
+  <div class="video-responsive">
+    <iframe src="https://www.youtube.com/embed/e7LmBozXsH8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
 </section>
-    <section class="video">
-          <h2 class="title">Ma sélection du mois </h2>
-    <div class="video-responsive">
-        <iframe src="https://www.youtube.com/embed/e7LmBozXsH8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-    </section>
 <section class="favorites">
   <h1>Vos recettes favorites</h1>
   <div class="cards">

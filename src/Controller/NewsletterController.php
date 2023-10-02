@@ -28,67 +28,34 @@ class NewsletterController extends AbstractController
     #[Route('/newsletter', name: 'app_newsletter')]
     public function index(Request $request, UserRepository $userRepository): Response
     {
-        $newsletter = new Newsletter();
-
-        $form = $this->createForm(NewsletterType::class, $newsletter);
+        $form = $this->createForm(NewsletterType::class);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
-            $email = $newsletter->getEmail();
-
+            $email = $form->get('email')->getData();
+    
             $existingUser = $userRepository->findOneBy(['email' => $email]);
-
+    
             if ($existingUser) {
                 if (!$existingUser->isNewsletterSubscription()) {
                     $existingUser->setNewsletterSubscription(true);
                     $userRepository->save($existingUser, true);
                 }
-
+    
                 $this->sendConfirmationEmail($email);
-
+    
                 return $this->redirectToRoute('app_newsletter', ['success' => 'subscribed']);
             }
-
+    
             return $this->redirectToRoute('app_newsletter', ['error' => 'user_not_found']);
         }
-
+    
         return $this->render('newsletter/index.html.twig', [
             'controller_name' => 'NewsletterController',
             'form' => $form->createView(),
         ]);
     }
-
-    #[Route('_base/footer', name: 'app_footer')]
-    public function footerAction(Request $request, UserRepository $userRepository): Response
-    {
-        $newsletter = new Newsletter();
-
-        $form = $this->createForm(NewsletterType::class, $newsletter);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $email = $newsletter->getEmail();
-
-            $existingUser = $userRepository->findOneBy(['email' => $email]);
-
-            if ($existingUser) {
-                if (!$existingUser->isNewsletterSubscription()) {
-                    $existingUser->setNewsletterSubscription(true);
-                    $userRepository->save($existingUser, true);
-                }
-
-                $this->sendConfirmationEmail($email);
-
-                return $this->redirectToRoute('app_footer_newsletter', ['success' => 'subscribed']);
-            }
-
-            return $this->redirectToRoute('app_footer_newsletter', ['error' => 'user_not_found']);
-        }
-
-        return $this->render('_base/footer.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
+    
 
     private function sendConfirmationEmail(string $email)
     {

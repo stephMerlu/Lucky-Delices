@@ -8,28 +8,44 @@
     {% endfor %}
 
     <div class="text-center">
-    <div class="card my-5 d-inline-block mx-auto">
-        <div class="card-header my-custom-header text-center align-items-center d-flex justify-content-center">
-            <h1 class="h3 mb-0 fw-normal">Inscription</h1>
-        </div>
-        <div class="card-body">
-            {{ form_start(registrationForm) }}
-                {{ form_row(registrationForm.email, {'attr': {'class': 'mb-3 ms-2'}}) }}
-                {{ form_row(registrationForm.username, {
-                    label: 'Nom d\'utilisateur',
-                    'attr': {'class': 'mb-3 ms-2'}
-                }) }}
-                {{ form_row(registrationForm.plainPassword, {
-                    label: 'Mot de passe',
-                    'attr': {'class': 'mb-3 ms-2'}
-                }) }}
-                {{ form_row(registrationForm.agreeTerms, {
-                    label: 'J\'accepte les conditions d\'utilisation',
-                    'attr': {'class': 'mb-3 ms-2'}
-                }) }}
+        <div class="card my-5 d-inline-block mx-auto">
+            <div class="card-header my-custom-header text-center align-items-center d-flex justify-content-center">
+                <h1 class="h3 mb-0 fw-normal">Inscription</h1>
+            </div>
+            <div class="card-body">
+                {{ form_start(registrationForm) }}
+                    <div class="mb-3">
+                        {{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_row(registrationForm.username, {
+                            label: 'Nom d\'utilisateur',
+                            'attr': {'class': 'form-control'}
+                        }) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_row(registrationForm.plainPassword.first, {
+                            label: 'Mot de passe',
+                            'attr': {'class': 'form-control'}
+                        }) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_row(registrationForm.plainPassword.second, {
+                            label: 'Confirmez le mot de passe',
+                            'attr': {'class': 'form-control'}
+                        }) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_row(registrationForm.agreeTerms, {
+                            label: 'J\'accepte les conditions d\'utilisation',
+                            'attr': {'class': 'form-check-input'}
+                        }) }}
+                    </div>
 
-                <button type="submit" class="btn btn-add active mt-3">S'inscrire</button>
-            {{ form_end(registrationForm) }}
+                    <button type="submit" class="btn btn-add active mt-3">S'inscrire</button>
+                {{ form_end(registrationForm) }}
+            </div>
         </div>
     </div>
 {% endblock %}
+

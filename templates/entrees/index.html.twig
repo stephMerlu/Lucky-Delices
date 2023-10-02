@@ -1,275 +1,104 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello StarterController!{% endblock %}
+{% block title %}
+  Hello StarterController!
+{% endblock %}
 
 {% block body %}
-<section class="presentation-entree">
-    <h1>Les Entrées</h1>
-    <img src="/images/Le soleil pesto.jpg" alt="">
+  <section class="presentation-entree">
+    <h1>
+      {{ category.name }}
+    </h1>
+    <img src="{{ image }}" alt="">
     <ul class="choix">
-        <li><a href="#apero">Pour l'apéritif</a></li>
-        <li><a href="#entree-froide">Les entrées froides</a></li>
-        <li><a href="#entree-chaude">Les entrées chaudes</a></li>
-        <li><a href="#sauces">Les sauces</a></li>
+      {% for subCategory in category.subcategories %}
+        <li>
+          <a href="#cat-{{ subCategory.id }}">
+            {{ subCategory.name }}
+          </a>
+        </li>
+      {% endfor %}
     </ul>
-</section>
-<section class="apero">
-  <h2 id="apero">Pour l'apéritif</h2>
-    <div class="painting-presentation">
-        <div class="cards">
-            {% for recipe in aperoRecipes %}
-            <div class="card">
-                <div class="card__face card__face--front">
-                    <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" />
-                    <h5 class="card-title">{{ recipe.name }}</h5>
-                </div>
-                <div class="card__face card__face--back">
-                    <img src="/images/lucky2.png" />
-                    <div class="card-body"> 
-                        <p class="card-text">
-                          {% if app.user %}
-                          <div class="user-logged-in">
-                            {% set isUserLiked = recipe.id in likedRecipeIds %}
-                            {% if isUserLiked %}
-                            <a href="#" class="bookmark liked" data-recipe-id="{{ recipe.id }}">
-                              <i class="fas fa-bookmark float-end"></i>
-                            </a>
-                            {% else %}
-                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
-                              <i class="far fa-bookmark float-end"></i>
-                            </a>
-                            {% endif %}
-                          </div>
-                          {% endif %}
-                            <ul>
-                                <li>Temps : <span>{{ recipe.time }}</span></li>
-                                <li>Lien Youtube : <span><a href="{{ recipe.youtube }}">Cliquez ici</a></span></li>
-                                <li>Difficulté : <span>{{ recipe.level }}</span></li>
-                                <li>Nombre de personnes : <span>{{ recipe.people }}</span></li>
-                            </ul>
-                        </p>
-                        <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}" class="btn btn-primary">Voir la recette</a>
-                    </div>
-                </div>
-            </div> 
-            {% endfor %}
-        </div>
-    </div>
-    <button class="prev-apero btn btn-add active">Précédent</button>
-    <button class="next-apero btn btn-add active">Suivant</button> 
-</section>
-<section class="entrees-froides">
-  <h2 id="entree-froide">Mes entrées froides</h2>
-    <div class="painting-presentation">
-        <div class="cards">
-            {% for recipe in entreeFroideRecipes %}
-            <div class="card">
-                <div class="card__face card__face--front">
-                    <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" />
-                    <h5 class="card-title">{{ recipe.name }}</h5>
-                </div>
-                <div class="card__face card__face--back">
-                    <img src="/images/lucky2.png" />
-                    <div class="card-body"> 
-                        <p class="card-text">
-                          {% if app.user %}
-                          <div class="user-logged-in">
-                            {% set isUserLiked = recipe.id in likedRecipeIds %}
-                            {% if isUserLiked %}
-                            <a href="#" class="bookmark liked" data-recipe-id="{{ recipe.id }}">
-                              <i class="fas fa-bookmark float-end"></i>
-                            </a>
-                            {% else %}
-                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
-                              <i class="far fa-bookmark float-end"></i>
-                            </a>
-                            {% endif %}
-                          </div>
-                          {% endif %}
-                            <ul>
-                                <li>Temps : <span>{{ recipe.time }}</span></li>
-                                <li>Lien Youtube : <span><a href="{{ recipe.youtube }}">Cliquez ici</a></span></li>
-                                <li>Difficulté : <span>{{ recipe.level }}</span></li>
-                                <li>Nombre de personnes : <span>{{ recipe.people }}</span></li>
-                            </ul>
-                        </p>
-                        <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}" class="btn btn-primary">Voir la recette</a>
-                    </div>
-                </div>
-            </div> 
-            {% endfor %}
-        </div>
-    </div>
+  </section>
 
-        <button class="prev-entrees-froides btn btn-add active">Précédent</button>
-        <button class="next-entrees-froides btn btn-add active">Suivant</button>
-</section>
-<section class="entrees-chaudes">
-  <h2 id="entree-chaude">Mes entrées chaudes</h2>
-    <div class="painting-presentation">
-        <div class="cards">
-            {% for recipe in entreeChaudeRecipes %}
-            <div class="card">
-                <div class="card__face card__face--front">
-                    <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" />
-                    <h5 class="card-title">{{ recipe.name }}</h5>
-                </div>
-                <div class="card__face card__face--back">
-                    <img src="/images/lucky2.png" />
-                    <div class="card-body"> 
-                        <p class="card-text">
-                          {% if app.user %}
-                          <div class="user-logged-in">
-                            {% set isUserLiked = recipe.id in likedRecipeIds %}
-                            {% if isUserLiked %}
-                            <a href="#" class="bookmark liked" data-recipe-id="{{ recipe.id }}">
-                              <i class="fas fa-bookmark float-end"></i>
-                            </a>
-                            {% else %}
-                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
-                              <i class="far fa-bookmark float-end"></i>
-                            </a>
-                            {% endif %}
-                          </div>
-                          {% endif %}
-                            <ul>
-                                <li>Temps : <span>{{ recipe.time }}</span></li>
-                                <li>Lien Youtube : <span><a href="{{ recipe.youtube }}">Cliquez ici</a></span></li>
-                                <li>Difficulté : <span>{{ recipe.level }}</span></li>
-                                <li>Nombre de personnes : <span>{{ recipe.people }}</span></li>
-                            </ul>
-                        </p>
-                        <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}" class="btn btn-primary">Voir la recette</a>
-                    </div>
-                </div>
-            </div> 
-            {% endfor %}
-        </div>
-    </div> 
-    <button class="prev-entrees-chaudes btn btn-add active">Précédent</button>
-    <button class="next-entrees-chaudes btn btn-add active">Suivant</button>
-</section>
-<section class="sauce">
-  <h2 id="sauces">Mes sauces</h2>
-    <div class="painting-presentation">
-        <div class="cards">
-            {% for recipe in saucesRecipes %}
-            <div class="card">
-                <div class="card__face card__face--front">
-                    <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" />
-                    <h5 class="card-title">{{ recipe.name }}</h5>
-                </div>
-                <div class="card__face card__face--back">
-                    <img src="/images/lucky2.png" />
-                    <div class="card-body"> 
-                        <p class="card-text">
-                          {% if app.user %}
-                          <div class="user-logged-in">
-                            {% set isUserLiked = recipe.id in likedRecipeIds %}
-                            {% if isUserLiked %}
-                            <a href="#" class="bookmark liked" data-recipe-id="{{ recipe.id }}">
-                              <i class="fas fa-bookmark float-end"></i>
-                            </a>
-                            {% else %}
-                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
-                              <i class="far fa-bookmark float-end"></i>
-                            </a>
-                            {% endif %}
-                          </div>
-                          {% endif %}
-                            <ul>
-                                <li>Temps : <span>{{ recipe.time }}</span></li>
-                                <li>Lien Youtube : <span><a href="{{ recipe.youtube }}">Cliquez ici</a></span></li>
-                                <li>Difficulté : <span>{{ recipe.level }}</span></li>
-                                <li>Nombre de personnes : <span>{{ recipe.people }}</span></li>
-                            </ul>
-                        </p>
-                        <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}" class="btn btn-primary">Voir la recette</a>
-                    </div>
-                </div>
-            </div> 
-            {% endfor %}
-        </div>
-    </div>  
-    <button class="prev-sauces btn btn-add active">Précédent</button>
-    <button class="next-sauces btn btn-add active">Suivant</button>
-</section>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  function setupCategoryNavigation(categorySelector, prevButtonSelector, nextButtonSelector) {
-    var categoryRecipes = document.querySelectorAll(categorySelector + ' .card');
-    var categoryIndex = 0;
-    var recipeCount = 5;
+  {% for subCategory in category.subcategories %}
+    {% include 'entrees/_carousel.html.twig' with { subCategory: subCategory } %}
+  {% endfor %}
 
-    for (var i = recipeCount; i < categoryRecipes.length; i++) {
-      categoryRecipes[i].style.display = 'none';
-    }
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function setupCategoryNavigation(categorySelector, prevButtonSelector, nextButtonSelector) {
+        var categoryRecipes = document.querySelectorAll(categorySelector + ' .card');
+        var categoryIndex = 0;
+        var recipeCount = 5;
 
-    var prevButton = document.querySelector(prevButtonSelector);
-    var nextButton = document.querySelector(nextButtonSelector);
-
-    var categorySection = document.querySelector(categorySelector);
-
-    function checkButtons() {
-      if (categoryIndex === 0) {
-        prevButton.style.display = 'none';
-      } else {
-        prevButton.style.display = 'block';
-      }
-
-      if (categoryIndex + recipeCount >= categoryRecipes.length) {
-        nextButton.style.display = 'none';
-      } else {
-        nextButton.style.display = 'block';
-      }
-    }
-
-    nextButton.addEventListener('click', function() {
-      for (var i = categoryIndex; i < categoryIndex + recipeCount; i++) {
-        if (categoryRecipes[i]) {
+        for (var i = recipeCount; i < categoryRecipes.length; i++) {
           categoryRecipes[i].style.display = 'none';
         }
-      }
 
-      categoryIndex += recipeCount;
-      for (var i = categoryIndex; i < categoryIndex + recipeCount; i++) {
-        if (categoryRecipes[i]) {
-          categoryRecipes[i].style.display = 'block';
+        var prevButton = document.querySelector(prevButtonSelector);
+        var nextButton = document.querySelector(nextButtonSelector);
+
+        var categorySection = document.querySelector(categorySelector);
+
+        function checkButtons() {
+          if (categoryIndex === 0) {
+            prevButton.style.display = 'none';
+          } else {
+            prevButton.style.display = 'block';
+          }
+
+          if (categoryIndex + recipeCount >= categoryRecipes.length) {
+            nextButton.style.display = 'none';
+          } else {
+            nextButton.style.display = 'block';
+          }
         }
+
+        nextButton.addEventListener('click', function() {
+          for (var i = categoryIndex; i < categoryIndex + recipeCount; i++) {
+            if (categoryRecipes[i]) {
+              categoryRecipes[i].style.display = 'none';
+            }
+          }
+
+          categoryIndex += recipeCount;
+          for (var i = categoryIndex; i < categoryIndex + recipeCount; i++) {
+            if (categoryRecipes[i]) {
+              categoryRecipes[i].style.display = 'block';
+            }
+          }
+
+          checkButtons();
+
+          categorySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        prevButton.addEventListener('click', function() {
+          for (var i = categoryIndex; i < categoryIndex + recipeCount; i++) {
+            if (categoryRecipes[i]) {
+              categoryRecipes[i].style.display = 'none';
+            }
+          }
+
+          categoryIndex -= recipeCount;
+          for (var i = categoryIndex; i < categoryIndex + recipeCount; i++) {
+            if (categoryRecipes[i]) {
+              categoryRecipes[i].style.display = 'block';
+            }
+          }
+
+          checkButtons();
+
+          categorySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        checkButtons();
       }
 
-      checkButtons();
-
-      categorySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      {% for subCategory in category.subcategories %}
+        setupCategoryNavigation('.cat-{{ subCategory.id }}', '.prev-{{ subCategory.id }}', '.next-{{ subCategory.id }}');
+      {% endfor %}
     });
-
-    prevButton.addEventListener('click', function() {
-      for (var i = categoryIndex; i < categoryIndex + recipeCount; i++) {
-        if (categoryRecipes[i]) {
-          categoryRecipes[i].style.display = 'none';
-        }
-      }
-
-      categoryIndex -= recipeCount;
-      for (var i = categoryIndex; i < categoryIndex + recipeCount; i++) {
-        if (categoryRecipes[i]) {
-          categoryRecipes[i].style.display = 'block';
-        }
-      }
-
-      checkButtons();
-
-      categorySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
-    checkButtons();
-  }
-
-  setupCategoryNavigation('.apero', '.prev-apero', '.next-apero');
-  setupCategoryNavigation('.entrees-froides', '.prev-entrees-froides', '.next-entrees-froides');
-  setupCategoryNavigation('.entrees-chaudes', '.prev-entrees-chaudes', '.next-entrees-chaudes');
-  setupCategoryNavigation('.sauces', '.prev-sauces', '.next-sauces');
-});
-
-</script>
+  </script>
 {% endblock %}

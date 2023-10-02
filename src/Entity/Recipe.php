@@ -47,8 +47,8 @@ class Recipe
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[Vich\UploadableField(mapping:"recipe", fileNameProperty:"image")]
-    private ?File $imageFile = null; 
+    #[Vich\UploadableField(mapping: "recipe", fileNameProperty: "image")]
+    private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
@@ -74,6 +74,7 @@ class Recipe
         $this->comment = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->likeds = new ArrayCollection();
+        $this->updatedAt = new \DateTimeImmutable('now');
     }
 
     public function getId(): ?int
@@ -228,7 +229,7 @@ class Recipe
      * Set the value of imageFile
      *
      * @return  self
-     */ 
+     */
     public function setImageFile(File $image = null)
     {
         $this->imageFile = $image;

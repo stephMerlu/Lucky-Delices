@@ -30,7 +30,7 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Category $entity, bool $flush = false, $registry): void
+    public function remove(Category $entity,  $registry, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
         parent::__construct($registry, Category::class);

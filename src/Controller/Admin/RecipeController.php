@@ -3,10 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Recipe;
-use App\Repository\UserRepository;
 use App\Form\RecipeType;
 use Symfony\Component\Mime\Email;
+use App\Repository\UserRepository;
 use App\Repository\RecipeRepository;
+use App\Repository\CommentRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,8 +24,10 @@ class RecipeController extends AbstractController
     #[Route('/', name: 'app_admin_recipe_index', methods: ['GET'])]
     public function index(RecipeRepository $recipeRepository): Response
     {
+        $recipes = $recipeRepository->findBy([], ['id' => 'DESC']); 
+    
         return $this->render('admin/recipe/index.html.twig', [
-            'recipes' => $recipeRepository->findAll(),
+            'recipes' => $recipes,
         ]);
     }
 
@@ -101,12 +105,16 @@ class RecipeController extends AbstractController
 
     #[Route('/{id}', name: 'app_admin_recipe_delete', methods: ['POST'])]
     public function delete(
-        Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
-    {
+        Request $request,
+        Recipe $recipe,
+        RecipeRepository $recipeRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
         if ($this->isCsrfTokenValid('delete' . $recipe->getId(), $request->request->get('_token'))) {
-            $recipeRepository->remove($recipe, true);
+            $entityManager->remove($recipe);
+            $entityManager->flush();
         }
-
+    
         return $this->redirectToRoute('app_admin_recipe_index', [], Response::HTTP_SEE_OTHER);
     }
 }

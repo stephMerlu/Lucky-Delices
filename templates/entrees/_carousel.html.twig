@@ -1,0 +1,78 @@
+<section class="cat-section cat-{{ subCategory.id }}">
+    <h2 id="cat-{{ subCategory.id }}">
+        {{ subCategory.name }}
+    </h2>
+    <div class="painting-presentation">
+        <div class="cards">
+            {% for recipe in subCategory.recipes %}
+                <div class="card">
+                    <div class="card__face card__face--front">
+                        <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" />
+                        <h5 class="card-title">
+                            {{ recipe.name }}
+                        </h5>
+                    </div>
+                    <div class="card__face card__face--back">
+                        <img src="/images/lucky2.png" />
+                        <div class="card-body">
+                            <p class="card-text">
+                                {% if app.user %}
+                                    <div class="user-logged-in">
+                                        {% if recipe in app.user.getLikeds %}
+                                            <a href="#" class="bookmark liked" data-recipe-id="{{ recipe.id }}">
+                                                <i class="fas fa-bookmark float-end"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="#" class="bookmark" data-recipe-id="{{ recipe.id }}">
+                                                <i class="far fa-bookmark float-end"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                <ul>
+                                    <li>
+                                        Temps :                                
+                                        <span>
+                                            {{ recipe.time }}
+                                        </span>
+                                    </li>
+                                    <li>
+                                        Lien Youtube :               
+                                        <span>
+                                            <a href="{{ recipe.youtube }}">
+                                                Cliquez ici                                           
+                                            </a>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        Difficulté :                                   
+                                        <span>
+                                            {{ recipe.level }}
+                                        </span>
+                                    </li>
+                                    <li>
+                                        Nombre de personnes :                                
+                                        <span>
+                                            {{ recipe.people }}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </p>
+                            <a href="{{ path('app_presentation_recette', {id: recipe.id}) }}" class="btn btn-primary">
+                                Voir la recette                  
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-center w-100">
+        <button class="prev-{{ subCategory.id }} btn btn-add active">
+            Précédent
+        </button>
+        <button class="next-{{ subCategory.id }} btn btn-add active">
+            Suivant
+        </button>
+    </div>
+</section>

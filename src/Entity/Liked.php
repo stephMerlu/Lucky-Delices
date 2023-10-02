@@ -17,6 +17,7 @@ class Liked
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'likeds')]
+    #[ORM\JoinColumn(name: "recipe_id", referencedColumnName: "id", onDelete: "CASCADE")]
     private ?Recipe $recipe = null;
 
     public function getId(): ?int
@@ -49,20 +50,13 @@ class Liked
     }
 
     public function isLikedByUser(User $user): bool
-{
-    foreach ($this->likeds as $liked) {
-        if ($liked->getUser() === $user) {
-            return true;
+    {
+        foreach ($this->likeds as $liked) {
+            if ($liked->getUser() === $user) {
+                return true;
+            }
         }
+
+        return false;
     }
-
-    return false;
-}
-
-
-
-
-
-
-
 }

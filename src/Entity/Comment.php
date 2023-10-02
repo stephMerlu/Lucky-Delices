@@ -18,6 +18,7 @@ class Comment
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'comment')]
+    #[ORM\JoinColumn(name: "recipe_id", referencedColumnName: "id", onDelete: "CASCADE")]
     private ?Recipe $commentRecipe = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]

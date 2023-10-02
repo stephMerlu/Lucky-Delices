@@ -48,22 +48,22 @@
         <div class="col-md-7 mb-3">{{ form_label(form.imageFile, null, {'label_attr': {'class': 'my-custom-label'}}) }}</div>
         <div class="col-md-10">{{ form_widget(form.imageFile) }}</div>
     </div>
-    <div class="row mb-3 ms-2">
+  {#   <div class="row mb-3 ms-2">
         <div class="col-md-7 mb-3"></div>
         <div class="col-md-10">
             <div {{ stimulus_controller('form-collection', {
-                    index: form.images|length > 0 ? form.images|last.vars.name + 1 : 0,
+                    index: form.images|length > 0 ? form.images|last.vars.image + 1 : 0,
                     prototype: form_widget(form.images.vars.prototype)
                 }) }}>
                 <ul class="images" {{ stimulus_target('form-collection', 'collectionContainer') }}>
                     {% for image in form.images %}
-                        <li>{{ form_row(image.name) }}</li>
+                        <li>{{ form_row(image.image) }}</li>
                     {% endfor %}
                 </ul>
                 <button type="button" {{ stimulus_action('form-collection', 'addCollectionElement') }}>Ajouter une autre image</button>
             </div>
         </div>
-    </div>
+    </div>#}
     <div class="text-center">
         <button class="btn btn-add active mt-2">{{ button_label|default('Enregistrer') }}</button>
     </div>

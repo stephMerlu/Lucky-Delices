@@ -34,7 +34,7 @@ class RecipeType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Etapes',
-                'required' => true,
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'Les étapes de la recette'
                 ]

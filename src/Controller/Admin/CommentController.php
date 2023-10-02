@@ -19,10 +19,13 @@ class CommentController extends AbstractController
     #[Route('/', name: 'app_admin_comment_index', methods: ['GET'])]
     public function index(CommentRepository $commentRepository): Response
     {
+        $comments = $commentRepository->findBy([], ['createdAt' => 'DESC']);
+        
         return $this->render('admin/comment/index.html.twig', [
-            'comments' => $commentRepository->findAll(),
+            'comments' => $comments,
         ]);
     }
+    
 
     #[Route('/new/{CommentRecipe}', name: 'app_admin_comment_new', methods: ['GET', 'POST'])]
     public function new(

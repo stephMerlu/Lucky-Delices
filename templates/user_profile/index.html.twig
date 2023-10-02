@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Mon compte{% endblock %}
-
+{% block title %}
+    Mon compte
+    
+{% endblock %}
 {% block body %}
     {% for flashType, flashMessages in app.flashes %}
         {% for flashMessage in flashMessages %}
@@ -11,74 +12,151 @@
         {% endfor %}
     {% endfor %}
     <div class="container my-5">
-        <h1 class="mb-5">Mon compte</h1>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <h2>Mes identifiants</h2>
-                    </div>
-                    <div class="card-body">
-                        <dl class="row">
-                            <dt class="col-sm-4 mt-2">Mon e-mail:</dt>
-                            <dd class="col-sm-8 mt-2">{{ app.user.email }}</dd>
-                            <dt class="col-sm-4 mt-2">Mon username:</dt>
-                            <dd class="col-sm-8 mt-2">{{ app.user.username }}</dd>
-                            <dt class="col-sm-4 mt-3">Mon mot de passe:</dt>
-                            <dd class="col-sm-8 mt-2"><a href="{{ path('change_password') }}" class="btn btn-add active">Changer mon mot de passe</a></dd>
-                            {% if newsletterSubscription %}
-                                <dt class="col-sm-4 mt-2">Inscrit à la newsletter:</dt>
-                                <dd class="col-sm-8 mt-2">Oui</dd>
-                                <dt class="col-sm-4 mt-2"></dt>
-                                <dd class="col-sm-8 mt-2"><a href="{{ path('unsubscribe_newsletter') }}" class="btn btn-add active">Se désinscrire</a></dd>
-                            {% else %}
-                                <dt class="col-sm-4 mt-2">Inscrit à la newsletter:</dt>
-                                <dd class="col-sm-8 mt-2">Non</dd>
-                                <dt class="col-sm-4 mt-2"></dt>
-                                <dd class="col-sm-8 mt-2"><a href="{{ path('app_newsletter') }}" class="btn btn-add active">S'inscrire</a></dd>
-                            {% endif %}
-                        </dl>
-                    </div>
+        <h1 class="mb-5">
+            Mon compte      
+        </h1>
+        <div class="d-flex justify-content-between">
+            <div class="card flex-fill mr-2">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-user"></i>
+                        Mes identifiants            
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4 mt-2">
+                            <i class="far fa-envelope"></i>
+                            Mon e-mail:
+                                                
+                        </dt>
+                        <dd class="col-sm-8 mt-2">
+                            {{ app.user.email }}
+                        </dd>
+                        <dt class="col-sm-4 mt-2">
+                            <i class="far fa-user-circle"></i>
+                            Mon username:
+                                                
+                        </dt>
+                        <dd class="col-sm-8 mt-2">
+                            {{ app.user.username }}
+                        </dd>
+                        <dt class="col-sm-4 mt-3">
+                            <i class="fas fa-lock"></i>
+                            Mon mot de passe:
+                                                
+                        </dt>
+                        <dd class="col-sm-8 mt-2">
+                            <a href="{{ path('change_password') }}" class="btn btn-add active">
+                                Changer mon mot de passe
+                                                        
+                            </a>
+                        </dd>
+                        {% if newsletterSubscription %}
+                            <dt class="col-sm-4 mt-2">
+                                <i class="far fa-check-circle"></i>
+                                Inscrit à la newsletter:
+                                                        
+                            </dt>
+                            <dd class="col-sm-8 mt-2">
+                                Oui
+                                                        
+                            </dd>
+                            <dt class="col-sm-4 mt-2"></dt>
+                            <dd class="col-sm-8 mt-2">
+                                <a href="{{ path('unsubscribe_newsletter') }}" class="btn btn-add active">
+                                    Se désinscrire
+                                                                
+                                </a>
+                            </dd>
+                        {% else %}
+                            <dt class="col-sm-4 mt-2">
+                                <i class="far fa-times-circle"></i>
+                                Inscrit à la newsletter:
+                                                        
+                            </dt>
+                            <dd class="col-sm-8 mt-2">
+                                Non
+                                                        
+                            </dd>
+                            <dt class="col-sm-4 mt-2"></dt>
+                            <dd class="col-sm-8 mt-2">
+                                <a href="{{ path('app_newsletter') }}" class="btn btn-add active">
+                                    S'inscrire
+                                                                
+                                </a>
+                            </dd>
+                        {% endif %}
+                    </dl>
                 </div>
             </div>
-
-            <div class="col-md-6">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <h2>Mes informations</h2>
-                    </div>
-                    <div class="card-body">
-                        <dl class="row">
-                            <dt class="col-sm-4">Mon prénom:</dt>
-                            <dd class="col-sm-8">{{ firstName }}</dd>
-                            <dt class="col-sm-4">Mon nom de famille:</dt>
-                            <dd class="col-sm-8">{{ lastName }}</dd>
-                            <dt class="col-sm-4">Ma description:</dt>
-                            <dd class="col-sm-8">{{ description }}</dd>
-                        </dl>
-                    </div>
+            <div class="card flex-fill ml-2">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-info-circle"></i>
+                        Mes informations         
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">
+                            <i class="far fa-user"></i>
+                            Mon prénom:
+                                                
+                        </dt>
+                        <dd class="col-sm-8">
+                            {{ firstName }}
+                        </dd>
+                        <dt class="col-sm-4">
+                            <i class="far fa-user"></i>
+                            Mon nom de famille:
+                                                
+                        </dt>
+                        <dd class="col-sm-8">
+                            {{ lastName }}
+                        </dd>
+                        <dt class="col-sm-4">
+                            <i class="far fa-comment"></i>
+                            Ma description:
+                                                
+                        </dt>
+                        <dd class="col-sm-8">
+                            {{ description }}
+                        </dd>
+                    </dl>
+                    <a href="{{ path('user_profile_edit') }}" class="btn btn-add active mt-5 float-end">
+                        Modifier le profil     
+                    </a>
                 </div>
             </div>
-            <a href="{{ path('user_profile_edit') }}" class="btn btn-add active float-end">Modifier le profil</a>
         </div>
-
-            <div class="row mt-5">
+        <div class="row mt-5">
             <div class="col-md-12">
-                <h2>Recettes aimées</h2>
+                <h2>
+                    Recettes aimées
+                                    
+                </h2>
                 {% if likedRecipes is empty %}
-                    <p>Aucune recette aimée pour le moment.</p>
+                    <p>
+                        Aucune recette aimée pour le moment.
+                                            
+                    </p>
                 {% else %}
                     <ul>
-                    {% for liked in likedRecipes %}
-                    <li>
-                        <a href="{{ path('presentation_recipe', {'recipeId': liked.recipe.id}) }}" class="site-link">{{ liked.recipe.name }}</a>
-                    </li>                
-                {% endfor %}
+                        {% for liked in likedRecipes %}
+                            <li>
+                                <a href="{{ path('presentation_recipe', {'recipeId': liked.recipe.id}) }}" class="site-link">
+                                    {{ liked.recipe.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
                     </ul>
                 {% endif %}
             </div>
         </div>
-        <a href="{{ path('delete_account') }}" class="btn btn-danger float-end mt-5" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')">Supprimer le compte</a>
+        <a href="{{ path('delete_account') }}" class="btn btn-danger float-end mt-5" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')">
+            Supprimer le compte
+                    
+        </a>
     </div>
 {% endblock %}

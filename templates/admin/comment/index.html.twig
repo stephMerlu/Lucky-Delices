@@ -2,13 +2,14 @@
 {% extends 'admin_with_table.html.twig' %}
 
 {% block table_content %}
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Content</th>
-                <th>CreatedAt</th>
-                <th>Validated</th>
-                <th>actions</th>
+                <th>Commentaires</th>
+                <th>Date de création</th>
+                <th>Valider</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -17,7 +18,7 @@
                 <td>{{ comment.id }}</td>
                 <td>{{ comment.content }}</td>
                 <td>{{ comment.createdAt ? comment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ comment.validated ? 'Yes' : 'No' }}</td>
+                <td class="{{ comment.validated ? 'bg-success' : 'bg-danger' }}">{{ comment.validated ? 'Oui' : 'Non' }}</td>
                 <td>
                     <a href="{{ path('app_admin_comment_show', {'id': comment.id}) }}"><i class="fa-solid fa-eye me-3"></i></a>
                     <a href="{{ path('app_admin_comment_edit', {'id': comment.id}) }}"><i class="fa-solid fa-pen"></i></a>
@@ -25,9 +26,9 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Aucun commentaire trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
-
+    </table>
 {% endblock %}

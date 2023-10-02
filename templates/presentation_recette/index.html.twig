@@ -1,89 +1,154 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello PrésentationRecetteController!{% endblock %}
-
+{% block title %}
+    Hello PrésentationRecetteController!
+        
+    
+{% endblock %}
 {% block body %}
     <header class="container-fluid py-3">
         <div class="container">
-            <h1 class="text-center mt-3">{{ recipe.name }}</h1>
+            <h1 class="text-center mt-3">
+                {{ recipe.name }}
+            </h1>
             <img src="{{ vich_uploader_asset(recipe, 'imageFile') }}" alt="Praluline" class="mx-auto d-block mt-5" width="300px">
-            <h2 class="text-center mt-4">{{ recipe.subtitle }}</h2>
-        </div>
-    </header>
-
-    <main class="container my-5">
-        <section class="row d-flex align-items-center">
-            <article class="col-md-6 text-center">
-                <p>Il vous faudra en moyenne pour réaliser ce mets : {{ recipe.time }} minutes.</p>
-                <p>Cette recette est {{ recipe.level }} à préparer.</p>
-                <p>Avec les quantités ci-dessous, vous cuisinez pour {{ recipe.people }} personnes.</p>
-                <p>N'hésitez pas à regarder la vidéo Youtube pour plus de facilité.</p>
-            </article>
-            <div class="col-md-6 text-center">
-                <img src="/images/lucky-recette.png" alt="" width="400px"> 
+                <h2 class="text-center mt-4">
+                    {{ recipe.subtitle }}
+                </h2>
             </div>
-        </section>
-
-        <div class="text-center">
-            <a href="{{ recipe.youtube }}" class="btn btn-add active mt-4">Voir la vidéo Youtube</a>
-        </div>
-
-        <section class="row my-5">
-            <article class="col-md-6">
-                <h3>Les ingrédients pour réaliser cette recette</h3>
-                <ul>
-                    {% for ingredient in recipe.getIngredient() %}
-                        <li>{{ ingredient }}</li>
-                    {% endfor %}
-                </ul>
-            </article>
-            <article class="col-md-6">
-                <h3>Description de la recette</h3>
-                <p>{{ recipe.getDescription() }}</p>
-            </article>
-        </section>
-
-        <section class="comments">
-            <h2>Commentaires</h2>
-            <div class="comments-list">
-{% for comment in comments %}
-    <div class="comment">
-{% if comment.user is not null %}
-    <h3>{{ comment.user.username }}</h3>
-{% endif %}        
-<p>{{ comment.createdAt|date('d/m/Y') }}</p>
-        <p>{{ comment.content }}</p>
-    </div>
-{% endfor %}
-            </div>
-        </section>
-
-        {% if not app.user %}
-            <div class="alert alert-info" role="alert">
-                Seuls les utilisateurs inscrits peuvent laisser un commentaire.
-                <a href="{{ path('app_register') }}" class="alert-link">Inscrivez-vous maintenant !</a>
-            </div>
-        {% else %}
-            <section class="comment-form">
-                <form method="POST">
-                    <h3>Laissez un commentaire</h3>
-                    {{ form_start(commentForm) }}
-                    <div class="form-group">
-                      {{ form_widget(commentForm.content, {'attr': {'class': 'form-control'}}) }}
+        </header>
+        <main class="container my-5">
+            <section class="row d-flex align-items-center">
+                <article class="col-md-6 text-center">
+                    <p>
+                        Il vous faudra en moyenne pour réaliser ce mets : 
+                                                                        
+                                                
+                        {{ recipe.time }}
+                        minutes.
+                                                                    
+                                            
+                    </p>
+                    <p>
+                        Cette recette est 
+                                                                        
+                                                
+                        {{ recipe.level }}
+                        à préparer.
+                                                                    
+                                            
+                    </p>
+                    <p>
+                        Avec les quantités ci-dessous, vous cuisinez pour 
+                                                                        
+                                                
+                        {{ recipe.people }}
+                        personnes.
+                                                                    
+                                            
+                    </p>
+                    <p>
+                        N'hésitez pas à regarder la vidéo Youtube pour plus de facilité.
+                                                                    
+                                            
+                    </p>
+                </article>
+                <div class="col-md-6 text-center">
+                    <img src="/images/lucky-recette.png" alt="" width="400px"></div>
+                </section>
+                <div class="text-center">
+                    <a href="{{ recipe.youtube }}" class="btn btn-add active mt-4">
+                        Voir la vidéo Youtube
+                                                                    
+                                            
+                    </a>
+                </div>
+                <section class="row my-5">
+                    <article class="col-md-6">
+                        <h3>
+                            Les ingrédients pour réaliser cette recette
+                                                                                
+                                                    
+                        </h3>
+                        <ul>
+                            {% for ingredient in recipe.getIngredient() %}
+                                <li>
+                                    {{ ingredient }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </article>
+                    <article class="col-md-6">
+                        <h3>
+                            Description de la recette
+                                                                                
+                                                    
+                        </h3>
+                        <p>
+                            {{ recipe.getDescription()|nl2br }}
+                        </p>
+                    </article>
+                </section>
+                <section class="comments">
+                    <h2>
+                        Commentaires
+                                                                    
+                                            
+                    </h2>
+                    <div class="comments-list">
+                        {% for comment in comments %}
+                            <div class="comment">
+                                {% if comment.user is not null %}
+                                    <h3>
+                                        {{ comment.user.username }}
+                                    </h3>
+                                {% endif %}
+                                <p>
+                                    {{ comment.createdAt|date('d/m/Y') }}
+                                </p>
+                                <p>
+                                    {{ comment.content }}
+                                </p>
+                            </div>
+                        {% endfor %}
                     </div>
-                        <button type="submit" class="btn btn-add active mt-3" onclick="showMessage()">Envoyer</button>
-                    {{ form_end(commentForm) }}
-                </form>
-            </section>
-        {% endif %}
-    </main>
-<script>
-    function showMessage() {
-        alert('Votre commentaire a été envoyé avec succès et sera publié une fois validé.');
-    }
-</script>
-{% endblock %}
-
-
-
-
+                </section>
+                {% if not app.user %}
+                    <div class="alert alert-info" role="alert">
+                        Seuls les utilisateurs inscrits peuvent laisser un commentaire.
+                                                                                        
+                                                                        
+                                                
+                        <a href="{{ path('app_register') }}" class="alert-link">
+                            Inscrivez-vous maintenant !
+                                                                                
+                                                    
+                        </a>
+                    </div>
+                {% else %}
+                    <section class="comment-form">
+                        <form method="POST">
+                            <h3>
+                                Laissez un commentaire
+                                                                                            
+                                                            
+                            </h3>
+                            {{ form_start(commentForm) }}
+                            <div class="form-group">
+                                {{ form_widget(commentForm.content, {'attr': {'class': 'form-control' }}
+                                ) }}
+                                                                                                                    
+                                                                                            
+                                                            
+                            </div>
+                            <button type="submit" class="btn btn-add active mt-3" onsubmit="showMessage()">
+                                Envoyer
+                                                                                            
+                                                            
+                            </button>
+                            {{ form_end(commentForm) }}
+                        </form>
+                    </section>
+                {% endif %}
+            </main>
+        {% endblock %}
+        

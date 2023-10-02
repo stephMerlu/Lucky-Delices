@@ -11,10 +11,11 @@
                 <th>Nbs de personnes</th>
                 <th>Niveau de difficulté</th>
                 <th>Image</th>
-                <th>actions</th>
+                <th>Actions</th>
                 <th>Sous Titre</th>
                 <th>Temps</th>
                 <th>Favorite</th>
+                <th>Likes</th>
             </tr>
         </thead>
         <tbody>
@@ -34,6 +35,11 @@
                 <td>{{ recipe.subtitle }}</td>
                 <td>{{ recipe.time }}</td>
                 <td>{{ recipe.favorite }}</td>
+                <td>
+                    {% for like in recipe.getLikeds() %}
+                        {{ like.getUser().getUsername() }}<br>
+                    {% endfor %}
+                </td>
             </tr>
         {% else %}
             <tr>
