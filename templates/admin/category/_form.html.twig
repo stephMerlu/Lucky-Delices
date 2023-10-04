@@ -1,5 +1,7 @@
 {{ form_start(form) }}
-    {{ form_row(form.name, {'label_attr': {'class': 'my-custom-label'}, 'attr': {'class': 'mb-3 ms-2 form-control'}}) }}
-    {{ form_row(form.parent, {'label_attr': {'class': 'my-custom-label'}, 'attr': {'class': 'mb-3 ms-2 form-control'}}) }}
-    <button class="btn btn-add active mt-2">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_row(form.name, {'label': 'Nom','label_attr': {'class': 'my-custom-label'}, 'attr': {'class': 'mb-3 ms-2 form-control'}}) }}
+    {{ form_row(form.parent, {'label': 'Catégorie', 'label_attr': {'class': 'my-custom-label'}, 'attr': {'class': 'mb-3 ms-2 form-control'}}) }}
+    <div class="text-center">
+        <button class="btn btn-add active mt-2">{{ button_label|default('Enregistrer') }}</button>
+    </div>
 {{ form_end(form) }}

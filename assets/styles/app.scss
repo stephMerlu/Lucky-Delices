@@ -789,8 +789,6 @@ path {
     }
   }
 
-
-
   img {
     width: 28%;
     margin-top: 5%;
@@ -813,6 +811,20 @@ path {
 
     }
   }
+
+  // &.animated-section {
+  //   animation: slideDown 2s ease-in-out;
+  //   animation-fill-mode: forwards;
+  // }
+  
+  // @keyframes slideDown {
+  //   0% {
+  //     transform: translateY(-100%);
+  //   }
+  //   100% {
+  //     transform: translateY(0%);
+  //   }
+  // }
 
   .choix {
     display: flex;
@@ -976,4 +988,8 @@ path {
 
 .newsletter--top {
   margin-top: 50px;
+}
+
+.presentation-category {
+  
 }

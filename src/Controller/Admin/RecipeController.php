@@ -24,8 +24,8 @@ class RecipeController extends AbstractController
     #[Route('/', name: 'app_admin_recipe_index', methods: ['GET'])]
     public function index(RecipeRepository $recipeRepository): Response
     {
-        $recipes = $recipeRepository->findBy([], ['id' => 'DESC']); 
-    
+        $recipes = $recipeRepository->findBy([], ['id' => 'DESC']);
+
         return $this->render('admin/recipe/index.html.twig', [
             'recipes' => $recipes,
         ]);
@@ -33,22 +33,22 @@ class RecipeController extends AbstractController
 
     #[Route('/new', name: 'app_admin_recipe_new', methods: ['GET', 'POST'])]
     public function new(
-        Request $request, 
-        RecipeRepository $recipeRepository, 
-        MailerInterface $mailer, 
+        Request $request,
+        RecipeRepository $recipeRepository,
+        MailerInterface $mailer,
         UserRepository $userRepository
-        ): Response {
+    ): Response {
 
         $recipe = new Recipe();
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
             $recipeRepository->save($recipe, true);
             $this->sendNewsletter($recipe, $mailer, $userRepository);
             return $this->redirectToRoute('app_admin_recipe_index', [], Response::HTTP_SEE_OTHER);
         }
-    
+
         return $this->renderForm('admin/recipe/new.html.twig', [
             'recipe' => $recipe,
             'form' => $form,
@@ -56,10 +56,12 @@ class RecipeController extends AbstractController
     }
 
     private function sendNewsletter(
-        Recipe $recipe, MailerInterface $mailer, UserRepository $userRepository): void
-    {
+        Recipe $recipe,
+        MailerInterface $mailer,
+        UserRepository $userRepository
+    ): void {
         $users = $userRepository->findBy(['newsletterSubscription' => true]);
-    
+
         foreach ($users as $user) {
             $email = (new Email())
                 ->from('hello@example.com')
@@ -68,26 +70,17 @@ class RecipeController extends AbstractController
                 ->html($this->renderView('newsletter/email.html.twig', [
                     'recipe' => $recipe,
                 ]));
-    
+
             $mailer->send($email);
         }
     }
 
-    #[Route('/{id}', name: 'app_admin_recipe_show', methods: ['GET'])]
-    public function show(
-        Recipe $recipe, CommentRepository $commentRepository): Response
-    {
-        $comments = $commentRepository->showCommentsByRecipeId($recipe->getId());
-        return $this->render('recipe/show.html.twig', [
-            'recipe' => $recipe,
-            'comments' => $comments,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_admin_recipe_edit', methods: ['GET', 'POST'])]
     public function edit(
-        Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
-    {
+        Request $request,
+        Recipe $recipe,
+        RecipeRepository $recipeRepository
+    ): Response {
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
@@ -114,7 +107,7 @@ class RecipeController extends AbstractController
             $entityManager->remove($recipe);
             $entityManager->flush();
         }
-    
+
         return $this->redirectToRoute('app_admin_recipe_index', [], Response::HTTP_SEE_OTHER);
     }
 }

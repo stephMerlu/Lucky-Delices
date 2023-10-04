@@ -94,18 +94,29 @@ class RecipeType extends AbstractType
                 'choice_label' => 'name',
                 'placeholder' => 'Choisis une catégorie',
             ])
-            ->add('ingredient', EntityType::class, [
+            // ->add('ingredient', EntityType::class, [
+            //     'label' => 'Ingrédient',
+            //     'required' => true,
+            //     'class' => Ingredient::class,
+            //     'multiple' => true,
+            //     'expanded' => true,
+            //     'query_builder' => function (IngredientRepository $repository) {
+            //         return $repository->createQueryBuilder('i')
+            //             ->orderBy('i.name', 'ASC');
+            //     },
+            //     'choice_label' => 'name',
+            //     'placeholder' => 'Choisissez des ingrédients',
+            // ])
+            ->add('ingredient', IngredientAutocompleteField::class, [
                 'label' => 'Ingrédient',
+                'placeholder' => 'Choisissez des ingrédients',
                 'required' => true,
                 'class' => Ingredient::class,
                 'multiple' => true,
-                'expanded' => true,
                 'query_builder' => function (IngredientRepository $repository) {
                     return $repository->createQueryBuilder('i')
                         ->orderBy('i.name', 'ASC');
                 },
-                'choice_label' => 'name',
-                'placeholder' => 'Choisissez des ingrédients',
             ])
             ->add('subtitle', TextType::class, [
                 'label' => 'Sous-titre',

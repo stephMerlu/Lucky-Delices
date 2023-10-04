@@ -19,6 +19,8 @@
         {{ form_label(form.isVerified, 'Compte vérifié', {'label_attr': {'class': 'my-custom-label'}}) }}
         {{ form_widget(form.isVerified) }}
     </div>
-    <button class="btn btn-add active mt-2">{{ button_label|default('Enregistrer') }}</button>
+    <div class="text-center">
+        <button class="btn btn-add active mt-2">{{ button_label|default('Enregistrer') }}</button>
+    </div>
 {{ form_end(form) }}
 

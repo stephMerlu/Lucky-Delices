@@ -104,15 +104,6 @@ public function findFavoriteRecipes()
         ->getResult();
 }
 
-public function findNewsletterRecipe(): ?Recipe
-{
-    return $this->createQueryBuilder('r')
-        ->setMaxResults(1)
-        ->orderBy('r.createdAt', 'DESC')
-        ->getQuery()
-        ->getOneOrNullResult();
-}
-
 public function findByLikedRecipesByUser(User $user): array
 {
     $likedRecipes = $this->createQueryBuilder('r')

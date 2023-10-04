@@ -13,7 +13,7 @@ class PlatsController extends AbstractController
     #[Route('/plats', name: 'app_plats')]
     public function index(CategoryRepository $categoryRepository): Response
     {
-        $category = $categoryRepository->findOneBy(['name' => 'Plat']);
+        $category = $categoryRepository->findOneBy(['name' => 'Les Plats']);
 
         return $this->render('entrees/index.html.twig', [
             'category' => $category,

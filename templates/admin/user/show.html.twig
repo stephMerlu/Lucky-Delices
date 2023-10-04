@@ -2,35 +2,33 @@
 {% extends 'admin_with_table.html.twig' %}
 
 {% block table_content %}
+    <table>
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>Id : </th>
                 <td>{{ user.id }}</td>
             </tr>
             <tr>
-                <th>Email</th>
+                <th>Email : </th>
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>Roles</th>
+                <th>Roles : </th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
             </tr>
             <tr>
-                <th>Password</th>
+                <th>Mot de passe : </th>
                 <td>{{ user.password }}</td>
             </tr>
             <tr>
-                <th>Username</th>
+                <th>Username : </th>
                 <td>{{ user.username }}</td>
             </tr>
             <tr>
-                <th>IsVerified</th>
-                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                <th>Vérifié : </th>
+                <td>{{ user.isVerified ? 'Oui' : 'Non' }}</td>
             </tr>
         </tbody>
-    <div class="d-flex justify-content-between">
-        <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}" class="btn btn-add active mt-2">Modifier</a>
-        {{ include('admin/user/_delete_form.html.twig') }}
-    </div>
+    </table>    
     <a href="{{ path('app_admin_user_index') }}" class="btn btn-return active mt-2 mb-2">Retour à la liste</a>
 {% endblock %}

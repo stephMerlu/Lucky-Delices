@@ -13,7 +13,7 @@ class DessertsController extends AbstractController
     #[Route('/desserts', name: 'app_desserts')]
     public function index(CategoryRepository $categoryRepository): Response
     {
-        $category = $categoryRepository->findOneBy(['name' => 'Dessert']);
+        $category = $categoryRepository->findOneBy(['name' => 'Les Desserts']);
 
         return $this->render('entrees/index.html.twig', [
             'category' => $category,

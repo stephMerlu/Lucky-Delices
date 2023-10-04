@@ -1,10 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block title %}
     Hello PrésentationRecetteController!
-        
-    
 {% endblock %}
 {% block body %}
+    {% for flashType, flashMessages in app.flashes %}
+        {% for flashMessage in flashMessages %}
+            <div class="alert alert-{{ flashType }}">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+    {% endfor %}
     <header class="container-fluid py-3">
         <div class="container">
             <h1 class="text-center mt-3">
@@ -21,33 +26,40 @@
                 <article class="col-md-6 text-center">
                     <p>
                         Il vous faudra en moyenne pour réaliser ce mets : 
+                                                                                                
                                                                         
                                                 
                         {{ recipe.time }}
                         minutes.
+                                                                                            
                                                                     
                                             
                     </p>
                     <p>
                         Cette recette est 
+                                                                                                
                                                                         
                                                 
                         {{ recipe.level }}
                         à préparer.
+                                                                                            
                                                                     
                                             
                     </p>
                     <p>
                         Avec les quantités ci-dessous, vous cuisinez pour 
+                                                                                                
                                                                         
                                                 
                         {{ recipe.people }}
                         personnes.
+                                                                                            
                                                                     
                                             
                     </p>
                     <p>
                         N'hésitez pas à regarder la vidéo Youtube pour plus de facilité.
+                                                                                            
                                                                     
                                             
                     </p>
@@ -58,6 +70,7 @@
                 <div class="text-center">
                     <a href="{{ recipe.youtube }}" class="btn btn-add active mt-4">
                         Voir la vidéo Youtube
+                                                                                            
                                                                     
                                             
                     </a>
@@ -66,6 +79,7 @@
                     <article class="col-md-6">
                         <h3>
                             Les ingrédients pour réaliser cette recette
+                                                                                                            
                                                                                 
                                                     
                         </h3>
@@ -80,6 +94,7 @@
                     <article class="col-md-6">
                         <h3>
                             Description de la recette
+                                                                                                            
                                                                                 
                                                     
                         </h3>
@@ -91,6 +106,7 @@
                 <section class="comments">
                     <h2>
                         Commentaires
+                                                                                            
                                                                     
                                             
                     </h2>
@@ -115,11 +131,13 @@
                 {% if not app.user %}
                     <div class="alert alert-info" role="alert">
                         Seuls les utilisateurs inscrits peuvent laisser un commentaire.
-                                                                                        
+                                                                                                                
+                                                                                                
                                                                         
                                                 
                         <a href="{{ path('app_register') }}" class="alert-link">
                             Inscrivez-vous maintenant !
+                                                                                                            
                                                                                 
                                                     
                         </a>
@@ -129,6 +147,7 @@
                         <form method="POST">
                             <h3>
                                 Laissez un commentaire
+                                                                                                                            
                                                                                             
                                                             
                             </h3>
@@ -136,12 +155,14 @@
                             <div class="form-group">
                                 {{ form_widget(commentForm.content, {'attr': {'class': 'form-control' }}
                                 ) }}
-                                                                                                                    
+                                                                                                                                                    
+                                                                                                                            
                                                                                             
                                                             
                             </div>
                             <button type="submit" class="btn btn-add active mt-3" onsubmit="showMessage()">
                                 Envoyer
+                                                                                                                            
                                                                                             
                                                             
                             </button>

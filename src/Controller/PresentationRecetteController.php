@@ -30,7 +30,7 @@ class PresentationRecetteController extends AbstractController
             $comment->setUser($this->getUser());
             $comment->setCommentRecipe($recipe);            
             $commentRepository->save($comment, true);
-            $this->addFlash('success', 'Comment added successfully!');
+            $this->addFlash('success', 'Votre commentaire a bien été pris en compte, il sera affiché après vérification.');
             return $this->redirectToRoute('app_presentation_recette', ['id' => $id]);
         }
 

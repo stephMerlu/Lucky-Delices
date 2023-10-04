@@ -13,7 +13,7 @@ class StarterController extends AbstractController
     #[Route('/entrees', name: 'app_entrees')]
     public function index(CategoryRepository $categoryRepository): Response
     {
-        $category = $categoryRepository->findOneBy(['name' => 'Entrée']);
+        $category = $categoryRepository->findOneBy(['name' => 'Les Entrées']);
 
         return $this->render('entrees/index.html.twig', [
             'category' => $category,

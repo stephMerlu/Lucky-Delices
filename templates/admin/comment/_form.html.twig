@@ -1,7 +1,10 @@
 {{ form_start(form) }}
-    {{ form_row(form.content, {'label_attr': {'class': 'my-custom-label'}, 'attr': {'class': 'mb-3 ms-2 form-control'}}) }}
-    {{ form_row(form.commentRecipe, {'label_attr': {'class': 'my-custom-label'}, 'attr': {'class': 'mb-3 ms-2'}}) }}
-    {{ form_row(form.user, {'label_attr': {'class': 'my-custom-label'}, 'attr': {'class': 'mb-3 ms-2'}}) }}
-    {{ form_row(form.validated, {'label_attr': {'class': 'my-custom-label'}, 'attr': {'class': 'mb-3 ms-2'}}) }}
-    <button class="btn btn-add active mt-2">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_row(form.content, {'label': 'Nom de la recette', 'label_attr': {'class': 'my-custom-label'}, 'attr': {'class': 'mb-3 ms-2 form-control' }}) }}
+    {{ form_row(form.commentRecipe, {'label': 'Commentaire', 'label_attr': {'class': 'my-custom-label'}, 'attr': {'class': 'mb-3 ms-2' }}) }}
+    {{ form_row(form.validated, {'label': 'Validé', 'label_attr': {'class': 'my-custom-label'}, 'attr': {'class': 'mb-3 ms-2' }}) }}
+    {{ form_row(form.user, {'label_attr': {'class': 'my-custom-label d-none'}, 'attr': {'class': 'mb-3 ms-2 d-none' }}) }}
+    {{ form_row(form.createdAt, {'label_attr': {'class': 'my-custom-label d-none'}, 'attr': {'class': 'mb-3 ms-2 d-none' }}) }}
+    <div class="text-center">
+        <button class="btn btn-add active mt-2">{{ button_label|default('Enregistrer') }}</button>
+    </div>
 {{ form_end(form) }}
