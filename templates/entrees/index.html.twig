@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block body %}
-  <section class="presentation-entree animated-section">
+  <section class="presentation-entree">
     <h1>
       {{ category.name }}
     </h1>
-    <img src="{{ image }}" alt="">
+      <img src="{{ image }}" alt="" data-aos="flip-right" data-aos-duration="1000" data-aos-delay="300">
     <ul class="choix">
       {% for subCategory in category.subcategories %}
         <li>
@@ -24,9 +24,12 @@
   {% for subCategory in category.subcategories %}
     {% include 'entrees/_carousel.html.twig' with { subCategory: subCategory } %}
   {% endfor %}
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      console.log(AOS)
+      AOS.init();
+      console.log('test2')
       function setupCategoryNavigation(categorySelector, prevButtonSelector, nextButtonSelector) {
         var categoryRecipes = document.querySelectorAll(categorySelector + ' .card');
         var categoryIndex = 0;
