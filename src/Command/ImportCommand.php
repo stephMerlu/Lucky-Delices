@@ -40,6 +40,7 @@ class ImportCommand extends Command
     }
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+                // Définition des catégories de recettes à importer
         $categories = [
             [
                 "name" => "Entrée",
@@ -62,23 +63,24 @@ class ImportCommand extends Command
         $client = Client::createFirefoxClient();
 
         foreach ($categories as $cat) {
-
+            // Récupération de la catégorie parente (Entrée, Plat, Dessert)
             $io->info(sprintf("Fetching %s recipe page", $cat['name']));
 
             $parent = $this->categoryRepository->findOneByName($cat['name']);
-
+            // Si la catégorie parente n'existe pas, on la crée
             if (empty($parent)) {
                 $parent = new Category();
                 $parent->setName($cat['name']);
                 $this->categoryRepository->save($parent, true);
             }
 
+            // Initialisation de la barre de progression
             $progressIndicator = new ProgressIndicator($output);
             $progressIndicator->start('Fecthing in progress...');
 
-
+            // Récupération de la page web de la catégorie
             $crawler = $client->request('GET', $cat['url']);
-            // Yes, this website is 100% written in JavaScript
+            // Extraction des sections de recettes depuis la page
             $sections = $crawler->filter('section')->each(function ($section) use ($progressIndicator) {
                 $progressIndicator->advance();
                 if ($section->children()->eq(0)->matches('h1')) {
@@ -102,8 +104,8 @@ class ImportCommand extends Command
 
             $progressIndicator->finish('Fecthing finished');
 
-            // $iterable can be array
             foreach ($sections as $section) {
+                // Importation des recettes de la section
                 $io->info(sprintf("Importing %s recipes", $section['title']));
 
                 $category = new Category;
@@ -141,7 +143,7 @@ class ImportCommand extends Command
 
     public function importRecette($url, $client, $io, $category)
     {
-        $crawler = $client->request('GET', $url); // Yes, this website is 100% written in JavaScript
+        $crawler = $client->request('GET', $url); 
         try {
             $name = $crawler->filter('h1')->text();
         } catch (\Throwable $th) {
@@ -212,6 +214,7 @@ class ImportCommand extends Command
         $response = $this->webClient->request("GET", "https://luckydelices.fr/$photo");
         file_put_contents($folder, $response->getContent());
 
+        // Création et enregistrement de l'objet Recipe dans la base de données
         $recette = new Recipe;
         $recette
             ->setName($name)
@@ -225,7 +228,7 @@ class ImportCommand extends Command
             ->setImage($photoName);
 
 
-
+        // Importation des ingrédients de la recette
         foreach ($ingredients as $ingredient) {
             $filtered_ingredients = array_filter($this->ingredients, function (Ingredient $object) use ($ingredient) {
                 return $object->getName() == $ingredient;

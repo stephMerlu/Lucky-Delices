@@ -1,21 +1,21 @@
 <footer>
-<div class="newsletter">
-    {% if app.user %}
-        <a href="{{ path('app_newsletter') }}" style="text-decoration: underline; color: rgb(167, 199, 150);">
-            <h3>
-                Inscrivez-vous à notre newsletter pour recevoir les dernières recettes directement dans votre boîte de réception !
-                Vous serez informé à chaque fois qu'une nouvelle recette est publiée.
-            </h3>
-        </a>
-    {% else %}
-            <h3>
-                Inscrivez-vous à notre newsletter pour recevoir les dernières recettes directement dans votre boîte de réception !
-                Vous serez informé à chaque fois qu'une nouvelle recette est publiée.
-            </h3>
+    <div class="newsletter">
+        {% if app.user %}
+            <a href="{{ path('app_newsletter') }}" style="text-decoration: underline; color: rgb(167, 199, 150);">
+                <h3>
+                    Inscrivez-vous à notre newsletter pour recevoir les dernières recettes directement dans votre boîte de réception !
+                    Vous serez informé à chaque fois qu'une nouvelle recette est publiée.
+                </h3>
+            </a>
+        {% else %}
+                <h3>
+                    Inscrivez-vous à notre newsletter pour recevoir les dernières recettes directement dans votre boîte de réception !
+                    Vous serez informé à chaque fois qu'une nouvelle recette est publiée.
+                </h3>
             <p>Pour recevoir notre newsletter, vous devez d'abord vous inscrire sur notre site.</p>
         <a href="{{ path('app_register') }}" style="text-decoration: underline; color: rgb(167, 199, 150);">S'inscrire</a>
-    {% endif %}
-</div>
+        {% endif %}
+    </div>
     <section class="networks">
         <div class="contenair mt-2">
             <div class="icon facebook">

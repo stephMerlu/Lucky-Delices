@@ -1,15 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-  Hello StarterController!
+  Lucky Délices - {{ category.name }}
 {% endblock %}
 
 {% block body %}
   <section class="presentation-entree">
-    <h1>
+    <h1 data-aos="fade-right"
+    data-aos-offset="400"
+    data-aos-duration="500"
+    data-aos-easing="ease-in-sine">
       {{ category.name }}
     </h1>
-      <img src="{{ image }}" alt="" data-aos="flip-right" data-aos-duration="1000" data-aos-delay="300">
+      <img src="{{ image }}" alt="" data-aos="zoom-in-down"  data-aos-duration="600" data-aos-delay="100">
     <ul class="choix">
       {% for subCategory in category.subcategories %}
         <li>

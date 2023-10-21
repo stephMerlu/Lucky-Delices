@@ -7,13 +7,6 @@ body {
   font-size: 18px;
 }
 
-h1,
-h2,
-h3 {
-  font-family: 'Lobster', cursive;
-  font-size: 28px;
-}
-
 h1 {
   color: $main-color;
   font-size: 42px;
@@ -21,6 +14,13 @@ h1 {
 
 h2 {
   color: $second-color;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Lobster', cursive;
+  font-size: 28px;
 }
 
 .site-link {
@@ -837,7 +837,7 @@ path {
     a {
       display: flex;
       flex-wrap: wrap;
-      font-size: 40px;
+      font-size: 30px;
       padding: 20px;
       color: rgb(167, 199, 150);
 
@@ -990,6 +990,29 @@ path {
   margin-top: 50px;
 }
 
-.presentation-category {
+/* print.css */
+@media print {
+  body {
+    font-size: 12pt; 
+  }
   
+  .no-print {
+    display: none;
+  }
+
+  img {
+    display: none;
+  }
+
+  .navbar {
+    display: none; 
+  }
+
+  footer {
+    display: none; 
+  }
+
+  .container {
+    width: 100%; 
+  }
 }
